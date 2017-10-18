@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
@@ -43,11 +44,11 @@ public class RegisterMailActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userMail = email.getText().toString();
-                String userPassword = password.getText().toString();
-                String userPassword2 = password2.getText().toString();
-                final String userFirstName = firstName.getText().toString();
-                final String userSecondName = secondName.getText().toString();
+                final String userMail = email.getText().toString().trim();
+                final String userPassword = password.getText().toString().trim();
+                String userPassword2 = password2.getText().toString().trim();
+                final String userFirstName = firstName.getText().toString().trim();
+                final String userSecondName = secondName.getText().toString().trim();
 
                 if (userMail != null && !userMail.isEmpty() &&
                         userPassword != null && !userPassword.isEmpty() &&
@@ -62,6 +63,8 @@ public class RegisterMailActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterMailActivity.this, LoginMailActivity.class);
+                                intent.putExtra("email", userMail);
+                                intent.putExtra("password", userPassword);
                                 intent.putExtra("firstName", userFirstName);
                                 intent.putExtra("secondName", userSecondName);
                                 startActivity(intent);
