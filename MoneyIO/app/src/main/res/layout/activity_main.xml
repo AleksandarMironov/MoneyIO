@@ -22,4 +22,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="register with e-mail"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/main_googlelogin_btn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
