@@ -7,17 +7,105 @@
     android:layout_height="match_parent"
     tools:context="io.money.moneyio.activities.HomeActivity">
 
-    <TextView
-        android:id="@+id/home_welcometext"
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome, "
-        android:textSize="40sp"/>
+        android:background="#69BF6A">
 
-    <Button
-        android:id="@+id/home_logout_btn"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/home_toolbar_sandwich_btn"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/sandwich"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:id="@+id/home_toolbar_app_name"
+                android:layout_width="250dp"
+                android:layout_height="45dp"
+                android:text="MoneyIO"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="serif"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dlContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="logout"/>
+        android:layout_below="@+id/tbHeader"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/home_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/home_drawer_menu"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:background="#586B8B">
+
+            <Button
+            android:text="income"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+            <Button
+                android:text="outcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:text="statistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:text="my profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:text="add friend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="alarms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="log out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="quit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

@@ -1,10 +1,15 @@
 package io.money.moneyio.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,30 +21,39 @@ import io.money.moneyio.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button logout;
-    private TextView welcome;
     private FirebaseAuth firebaseAuth;
     private String firstName, secondName;
+    private ImageButton sandwichButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        logout = (Button)findViewById(R.id.home_logout_btn);
-        welcome = (TextView)findViewById(R.id.home_welcometext);
+        getSupportActionBar().hide();
         firebaseAuth = FirebaseAuth.getInstance();
         firstName = getIntent().getStringExtra("firstName");
         secondName = getIntent().getStringExtra("secondName");
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        drawerDropMenuCreator();
+    }
 
-//        Toast.makeText(this, user.getDisplayName().toString(), Toast.LENGTH_SHORT).show();
-            welcome.setText(welcome.getText() + user.getDisplayName());
-        logout.setOnClickListener(new View.OnClickListener() {
+    public void drawerDropMenuCreator() {
+        sandwichButton = (ImageButton)findViewById(R.id.home_toolbar_sandwich_btn);
+        final DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
+
+        //drawer menu settings
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        drawerLayout.setStatusBarBackground(Color.TRANSPARENT);
+
+        //set functionality of the button
+        sandwichButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.signOut();
-                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                startActivity(intent);
+                if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    drawerLayout.openDrawer(Gravity.LEFT);
+                }
             }
         });
     }

@@ -29,6 +29,7 @@ public class LoginMailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_mail);
+        getSupportActionBar().hide();
         firebaseAuth = FirebaseAuth.getInstance();
         mail = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");

@@ -29,7 +29,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_register_mail);
         email = (EditText)findViewById(R.id.registermail_email);
         password = (EditText)findViewById(R.id.registermail_password);
