@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".activities.LoginMailActivity" />
         <activity android:name=".activities.RegisterMailActivity" />
-        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.HomeActivity"/>
     </application>
 
 </manifest>

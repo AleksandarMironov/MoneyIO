@@ -2,10 +2,12 @@ package io.money.moneyio.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Toast.makeText(MainActivity.this, "Sorry no AUTH is not ok", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Sorry, internet problem. Please try again.", Toast.LENGTH_SHORT).show();
                 Log.e("MoneyIO", result.getStatus().toString());
             }
         }
@@ -154,12 +156,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "Hello, " + ((user.getDisplayName() == null)? "" : user.getDisplayName()), Toast.LENGTH_SHORT).show();
                             Log.e("MoneyIO", "signInWithCredential:success");
                         } else {
                             Log.e("MoneyIO", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Authentication failed. Please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -167,17 +169,41 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static void verifyPermissions(Activity activity) {
-        // Check if we have write permission
         int permissionInternet = ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET);
         int permissionWrite = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if (permissionInternet != PackageManager.PERMISSION_GRANTED || permissionWrite != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
                     activity,
                     PERMISSIONS,
                     REQUEST_PERMISSION
             );
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+    AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+        a_builder.setMessage("Do you want to Exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("Quit");
+        alert.show();
     }
 }

@@ -1,9 +1,12 @@
 package io.money.moneyio.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.Utilities;
 
 public class LoginMailActivity extends AppCompatActivity {
 
@@ -29,7 +33,11 @@ public class LoginMailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_mail);
-        getSupportActionBar().hide();
+        try {
+            getSupportActionBar().hide();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         firebaseAuth = FirebaseAuth.getInstance();
         mail = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
@@ -53,33 +61,68 @@ public class LoginMailActivity extends AppCompatActivity {
                 String userMail = email.getText().toString().trim();
                 String userPasw = psw.getText().toString().trim();
 
-                if (userMail != null && !userMail.isEmpty() &&
-                        userPasw != null && !userPasw.isEmpty()) {
-                    firebaseAuth.signInWithEmailAndPassword(userMail, userPasw)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                                        if (user.getDisplayName() == null) {
-                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                    .setDisplayName(firstName.toString() + " " + secondName.toString()).build();
-
-                                            user.updateProfile(profileUpdates);
-                                        }
-                                        Intent intent = new Intent(LoginMailActivity.this, HomeActivity.class);
-                                        intent.putExtra("firstName", firstName);
-                                        intent.putExtra("secondName", secondName);
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(LoginMailActivity.this, "Invalid data", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                if(!Utilities.isMail(userMail)){
+                    email.setError("Invalid email");
+                    return;
                 }
 
+                if(!Utilities.checkString(userMail)){
+                    email.setError("Invalid symbols");
+                    return;
+                }
 
+                if(!Utilities.checkString(userPasw)){
+                    psw.setError("Invalid symbols");
+                    return;
+                }
+
+                firebaseAuth.signInWithEmailAndPassword(userMail, userPasw)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user.getDisplayName() == null) {
+                                        Log.e("MoneyIO", "user display name is null");
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(firstName.toString() + " " + secondName.toString()).build();
+
+                                        user.updateProfile(profileUpdates);
+                                    }
+                                    Intent intent = new Intent(LoginMailActivity.this, HomeActivity.class);
+                                    intent.putExtra("firstName", firstName);
+                                    intent.putExtra("secondName", secondName);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(LoginMailActivity.this, "Invalid data", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(LoginMailActivity.this);
+        a_builder.setMessage("Are you sure?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(LoginMailActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("Cancel logging");
+        alert.show();
     }
 }

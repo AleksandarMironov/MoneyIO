@@ -91,16 +91,19 @@
                 android:text="add friend" />
 
             <Button
+                android:id="@+id/home_alarms_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="alarms" />
 
             <Button
+                android:id="@+id/home_logout_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="log out" />
 
             <Button
+                android:id="@+id/home_quit_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="quit" />

@@ -1,7 +1,9 @@
 package io.money.moneyio.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.Utilities;
 
 public class RegisterMailActivity extends AppCompatActivity {
 
@@ -29,7 +32,11 @@ public class RegisterMailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        getSupportActionBar().hide();
+        try {
+            getSupportActionBar().hide();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_register_mail);
         email = (EditText)findViewById(R.id.registermail_email);
         password = (EditText)findViewById(R.id.registermail_password);
@@ -50,31 +57,89 @@ public class RegisterMailActivity extends AppCompatActivity {
                 final String userFirstName = firstName.getText().toString().trim();
                 final String userSecondName = secondName.getText().toString().trim();
 
-                if (userMail != null && !userMail.isEmpty() &&
-                        userPassword != null && !userPassword.isEmpty() &&
-                        userPassword2 != null && !userPassword2.isEmpty() &&
-                        userPassword.equals(userPassword2) &&
-                        userFirstName != null && !userFirstName.isEmpty() &&
-                        userSecondName != null && !userSecondName.isEmpty()) {
-                    firebaseAuth.createUserWithEmailAndPassword(userMail, userPassword)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterMailActivity.this, LoginMailActivity.class);
-                                intent.putExtra("email", userMail);
-                                intent.putExtra("password", userPassword);
-                                intent.putExtra("firstName", userFirstName);
-                                intent.putExtra("secondName", userSecondName);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(RegisterMailActivity.this, "Could not register successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                if(!Utilities.checkString(userMail)){
+                    email.setError("Invalid symbols");
+                    return;
                 }
+                if(!Utilities.isMail(userMail)){
+                    email.setError("Invalid email");
+                    return;
+                }
+                if(!Utilities.checkString(userPassword)){
+                    password.setError("Invalid symbols");
+                    return;
+                }
+                if(userPassword.length() < 6){
+                    password.setError("Password must be 6 symbols minimum");
+                    return;
+                }
+                if(!Utilities.checkString(userPassword2)){
+                    password2.setError("Invalid symbols");
+                    return;
+                }
+                if(!userPassword.equals(userPassword2)){
+                    password2.setError("Passwords does not match");
+                    return;
+                }
+                if(!Utilities.checkString(userFirstName)){
+                    firstName.setError("Invalid symbols");
+                    return;
+                }
+                if(!Utilities.checkString(userSecondName)){
+                    secondName.setError("Invalid symbols");
+                    return;
+                }
+
+                firebaseAuth.createUserWithEmailAndPassword(userMail, userPassword)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(firstName.toString() + " " + secondName.toString()).build();
+                                    try {
+                                        firebaseAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
+                                    } catch (NullPointerException e){
+                                        e.printStackTrace();
+                                    }
+                                    Intent intent = new Intent(RegisterMailActivity.this, LoginMailActivity.class);
+                                    intent.putExtra("email", userMail);
+                                    intent.putExtra("password", userPassword);
+                                    intent.putExtra("firstName", userFirstName);
+                                    intent.putExtra("secondName", userSecondName);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(RegisterMailActivity.this, "Could not register successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(RegisterMailActivity.this);
+        a_builder.setMessage("Do you want to cancel registration?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(RegisterMailActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("Cancel registration");
+        alert.show();
     }
 }
