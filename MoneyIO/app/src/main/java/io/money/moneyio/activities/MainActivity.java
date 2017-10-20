@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -49,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 2;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private EditText email, psw;
+    private EditText email;
+    private TextInputEditText psw;
     private Button registerMail;
     private SignInButton loginGoogle;
+    private View dummyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         email = (EditText)findViewById(R.id.loginmail_email);
-        psw = (EditText)findViewById(R.id.loginmail_password);
+        psw = (TextInputEditText)findViewById(R.id.loginmail_password);
         registerMail = (Button) findViewById(R.id.main_registermail_btn);
         loginGoogle = (SignInButton) findViewById(R.id.main_googlelogin_btn);
+        dummyView = findViewById(R.id.dummy);
     }
 
     private void chechForLoggedUser(){
@@ -146,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dummyView.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }

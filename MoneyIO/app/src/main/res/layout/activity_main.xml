@@ -17,26 +17,32 @@
         android:gravity="center"
         android:textSize="40sp" />
 
-    <EditText
-        android:id="@+id/loginmail_email"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/loginmail_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="UserName"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="Enter Email"
-        android:inputType="text"
-        android:layout_marginTop="50dp"
-        android:gravity="center"/>
+        app:passwordToggleEnabled="true">
 
-    <EditText
-        android:id="@+id/loginmail_password"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="15dp"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:gravity="center"/>
-
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/loginmail_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"/>
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/main_loginmail_btn"
@@ -58,4 +64,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+        <requestFocus/>
+    </View>
 </LinearLayout>
