@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,18 +31,15 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnOutcome, btnIncome, btnAlarms, btnQuit, btnLogOut;
     private ImageButton sandwichButton;
     private DrawerLayout drawerLayout;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        removeActionBar();
         Fragment_Outcome fragmentOutcome = new Fragment_Outcome();
         loadFragment(fragmentOutcome);
-        try {
-            getSupportActionBar().hide();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
@@ -50,13 +48,20 @@ public class HomeActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firstName = getIntent().getStringExtra("firstName");
         secondName = getIntent().getStringExtra("secondName");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebaseAuth.getCurrentUser();
+//        Toast.makeText(this, "HELLO " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
         drawerDropMenuCreator();
         outcomeDrawerMenuBtnListener();
         incomeDrawerMenuBtnListener();
         alarmsDrawerMenuBtnListener();
         quitDrawerMenuBtnListener();
         logOutDrawerMenuBtnListener();
+    }
+
+    private void removeActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     public void incomeDrawerMenuBtnListener() {

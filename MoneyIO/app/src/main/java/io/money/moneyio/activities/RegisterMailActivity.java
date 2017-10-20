@@ -34,14 +34,9 @@ public class RegisterMailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        try {
-            getSupportActionBar().hide();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
         setContentView(R.layout.activity_register_mail);
+        removeActionBar();
+        firebaseAuth = FirebaseAuth.getInstance();
         email = (EditText)findViewById(R.id.registermail_email);
         password = (EditText)findViewById(R.id.registermail_password);
         password2 = (EditText)findViewById(R.id.registermail_repeatpassword);
@@ -50,6 +45,12 @@ public class RegisterMailActivity extends AppCompatActivity {
         register = (Button)findViewById(R.id.registermail_register_btn);
         registerBtnListener();
         keyboardHideListener();
+    }
+
+    private void removeActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     public void keyboardHideListener(){
@@ -114,10 +115,8 @@ public class RegisterMailActivity extends AppCompatActivity {
                                     Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
                                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(firstName.toString() + " " + secondName.toString()).build();
-                                    try {
+                                    if (firebaseAuth.getCurrentUser() != null) {
                                         firebaseAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
-                                    } catch (NullPointerException e){
-                                        e.printStackTrace();
                                     }
                                     Intent intent = new Intent(RegisterMailActivity.this, LoginMailActivity.class);
                                     intent.putExtra("email", userMail);

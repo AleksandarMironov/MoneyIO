@@ -37,11 +37,7 @@ public class LoginMailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_mail);
-        try {
-            getSupportActionBar().hide();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        removeActionBar();
         firebaseAuth = FirebaseAuth.getInstance();
         mail = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
@@ -57,6 +53,12 @@ public class LoginMailActivity extends AppCompatActivity {
         }
         loginBtnListener();
         keyboardHideListener();
+    }
+
+    private void removeActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     public void keyboardHideListener(){

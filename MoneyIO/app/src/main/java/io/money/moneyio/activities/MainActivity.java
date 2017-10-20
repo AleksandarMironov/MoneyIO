@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        removeActionBar();
         verifyPermissions(this);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().requestIdToken(this.getString(R.string.default_web_client_id))
@@ -86,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         loginMailBtnListener();
         registerMailBtnListener();
         googleLoginBtnListener();
+    }
+
+    private void removeActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     public void loginMailBtnListener() {
