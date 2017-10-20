@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +26,6 @@ import io.money.moneyio.fragments.Fragment_Outcome;
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private String firstName, secondName;
     private Button btnOutcome, btnIncome, btnAlarms, btnQuit, btnLogOut;
     private ImageButton sandwichButton;
     private DrawerLayout drawerLayout;
@@ -38,24 +36,24 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         removeActionBar();
-        Fragment_Outcome fragmentOutcome = new Fragment_Outcome();
-        loadFragment(fragmentOutcome);
-        btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
-        btnIncome = (Button)findViewById(R.id.home_income_btn);
-        btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
-        btnQuit = (Button) findViewById(R.id.home_quit_btn);
-        btnLogOut = (Button) findViewById(R.id.home_logout_btn);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firstName = getIntent().getStringExtra("firstName");
-        secondName = getIntent().getStringExtra("secondName");
-        user = firebaseAuth.getCurrentUser();
-//        Toast.makeText(this, "HELLO " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+        loadFragment(new Fragment_Outcome());
+        initialiseElements();
         drawerDropMenuCreator();
         outcomeDrawerMenuBtnListener();
         incomeDrawerMenuBtnListener();
         alarmsDrawerMenuBtnListener();
         quitDrawerMenuBtnListener();
         logOutDrawerMenuBtnListener();
+    }
+
+    private void initialiseElements(){
+        btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
+        btnIncome = (Button)findViewById(R.id.home_income_btn);
+        btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
+        btnQuit = (Button) findViewById(R.id.home_quit_btn);
+        btnLogOut = (Button) findViewById(R.id.home_logout_btn);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
     }
 
     private void removeActionBar() {

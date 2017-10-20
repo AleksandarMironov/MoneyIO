@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginMailActivity" />
         <activity android:name=".activities.RegisterMailActivity" />
         <activity android:name=".activities.HomeActivity"/>
     </application>

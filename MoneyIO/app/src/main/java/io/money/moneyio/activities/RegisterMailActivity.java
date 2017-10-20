@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
@@ -29,13 +28,18 @@ public class RegisterMailActivity extends AppCompatActivity {
     private EditText email, password, password2, firstName, secondName;
     private Button register;
     private FirebaseAuth firebaseAuth;
-    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_mail);
         removeActionBar();
+        initialiseElements();
+        registerBtnListener();
+        keyboardHideListener();
+    }
+
+    private void initialiseElements(){
         firebaseAuth = FirebaseAuth.getInstance();
         email = (EditText)findViewById(R.id.registermail_email);
         password = (EditText)findViewById(R.id.registermail_password);
@@ -43,8 +47,6 @@ public class RegisterMailActivity extends AppCompatActivity {
         firstName = (EditText)findViewById(R.id.registermail_firstname);
         secondName = (EditText)findViewById(R.id.registermail_secondname);
         register = (Button)findViewById(R.id.registermail_register_btn);
-        registerBtnListener();
-        keyboardHideListener();
     }
 
     private void removeActionBar() {
@@ -54,7 +56,7 @@ public class RegisterMailActivity extends AppCompatActivity {
     }
 
     public void keyboardHideListener(){
-        layout = (LinearLayout) findViewById(R.id.register_activity);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.register_activity);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,11 +120,7 @@ public class RegisterMailActivity extends AppCompatActivity {
                                     if (firebaseAuth.getCurrentUser() != null) {
                                         firebaseAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
                                     }
-                                    Intent intent = new Intent(RegisterMailActivity.this, LoginMailActivity.class);
-                                    intent.putExtra("email", userMail);
-                                    intent.putExtra("password", userPassword);
-                                    intent.putExtra("firstName", userFirstName);
-                                    intent.putExtra("secondName", userSecondName);
+                                    Intent intent = new Intent(RegisterMailActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {

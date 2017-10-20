@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -29,13 +32,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.Utilities;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button loginMail, registerMail;
-    private SignInButton loginGoogle;
 
     private static final int REQUEST_PERMISSION = 1;
     private static String[] PERMISSIONS= {
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 2;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private EditText email, psw;
+    private Button registerMail;
+    private SignInButton loginGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         removeActionBar();
         verifyPermissions(this);
+        initialiseElements();
+        chechForLoggedUser();
+        registerMailBtnListener();
+        googleLoginBtnListener();
+        keyboardHideListener();
+        loginBtnListener();
+    }
+
+    private void initialiseElements(){
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().requestIdToken(this.getString(R.string.default_web_client_id))
                 .build();
@@ -62,14 +76,20 @@ public class MainActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(MainActivity.this, "Sorry no internet no register", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Sorry no internet to register", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        email = (EditText)findViewById(R.id.loginmail_email);
+        psw = (EditText)findViewById(R.id.loginmail_password);
+        registerMail = (Button) findViewById(R.id.main_registermail_btn);
+        loginGoogle = (SignInButton) findViewById(R.id.main_googlelogin_btn);
+    }
 
+    private void chechForLoggedUser(){
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -80,13 +100,56 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+    }
 
-        loginMail = (Button) findViewById(R.id.main_loginmail_btn);
-        registerMail = (Button) findViewById(R.id.main_registermail_btn);
-        loginGoogle = (SignInButton) findViewById(R.id.main_googlelogin_btn);
-        loginMailBtnListener();
-        registerMailBtnListener();
-        googleLoginBtnListener();
+    public void loginBtnListener() {
+        Button login = (Button) findViewById(R.id.main_loginmail_btn);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userMail = email.getText().toString().trim();
+                String userPasw = psw.getText().toString().trim();
+
+                if(!Utilities.isMail(userMail)){
+                    email.setError("Invalid email");
+                    return;
+                }
+
+                if(!Utilities.checkString(userMail)){
+                    email.setError("Invalid symbols");
+                    return;
+                }
+
+                if(!Utilities.checkString(userPasw)){
+                    psw.setError("Invalid symbols");
+                    return;
+                }
+
+                firebaseAuth.signInWithEmailAndPassword(userMail, userPasw)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Invalid user or password", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    public void keyboardHideListener(){
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout_main);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
     }
 
     private void removeActionBar() {
@@ -95,16 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loginMailBtnListener() {
-        loginMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginMailActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
 
     @Override
     protected void onStart() {
