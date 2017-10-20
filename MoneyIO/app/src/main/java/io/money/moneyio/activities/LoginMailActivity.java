@@ -1,5 +1,6 @@
 package io.money.moneyio.activities;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +31,7 @@ public class LoginMailActivity extends AppCompatActivity {
     private EditText email, psw;
     private Button login;
     private FirebaseAuth firebaseAuth;
+    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,18 @@ public class LoginMailActivity extends AppCompatActivity {
             psw.setText(password);
         }
         loginBtnListener();
+        keyboardHideListener();
+    }
+
+    public void keyboardHideListener(){
+        layout = (LinearLayout) findViewById(R.id.login_activity);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
     }
 
     public void loginBtnListener() {
