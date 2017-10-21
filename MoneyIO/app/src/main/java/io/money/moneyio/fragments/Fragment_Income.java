@@ -23,7 +23,6 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
     private View view;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private DatabaseReference myRef;
     private DatabaseReference finalMyRef;
     private Button save, one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
     private TextView moneyView;
@@ -34,7 +33,7 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_income, container, false);
         initialiseElements();
-        myRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.keepSynced(true);
         firebaseAuth = FirebaseAuth.getInstance();
         myRef = myRef.child(firebaseAuth.getCurrentUser().getUid());
@@ -141,7 +140,16 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
         if (moneyView.getText().toString().trim().equalsIgnoreCase("Insert price") || moneyView.getText().toString().equals("")) {
             moneyView.setText("0");
         }
-        moneyView.setText(moneyView.getText().toString() + dot);
+        String text = moneyView.getText().toString();
+        int countDots = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '.') {
+                countDots++;
+            }
+        }
+        if (countDots == 0) {
+            moneyView.setText(moneyView.getText().toString() + dot);
+        }
     }
 
     private void deleteOneChar() {
@@ -164,10 +172,11 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow(true, "test", Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, "test", Integer.parseInt(price)));
             } else {
-                finalMyRef.push().setValue(new MoneyFlow(true, "test", com, Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, "test", com, Integer.parseInt(price)));
             }
+            Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
         }

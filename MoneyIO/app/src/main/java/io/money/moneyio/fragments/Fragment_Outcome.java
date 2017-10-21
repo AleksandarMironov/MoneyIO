@@ -140,7 +140,16 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener {
         if (moneyView.getText().toString().trim().equalsIgnoreCase("Insert price") || moneyView.getText().toString().equals("")) {
             moneyView.setText("0");
         }
-        moneyView.setText(moneyView.getText().toString() + dot);
+        String text = moneyView.getText().toString();
+        int countDots = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '.') {
+                countDots++;
+            }
+        }
+        if (countDots == 0) {
+            moneyView.setText(moneyView.getText().toString() + dot);
+        }
     }
 
     private void deleteOneChar() {
@@ -167,6 +176,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener {
             } else {
                 finalMyRef.push().setValue(new MoneyFlow(true, "test", com, Integer.parseInt(price)));
             }
+            Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
         }
