@@ -121,13 +121,18 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/income_comment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Insert comment about your submission"
-        android:gravity="center_horizontal"/>
+        android:layout_height="wrap_content">
 
+        <EditText
+            android:id="@+id/income_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Insert comment about your submission"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/income_add_btn"

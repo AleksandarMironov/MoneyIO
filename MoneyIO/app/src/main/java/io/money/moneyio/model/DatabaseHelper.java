@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import io.money.moneyio.R;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper instance;
@@ -80,6 +82,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             out.add(new Type(c.getString(0), c.getString(1), c.getInt(2)));
+            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
+            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
+            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
+            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
+            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
+            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
+            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
+            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
+            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
+            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
+            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
+            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
+            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
+            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
+            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
         }
         c.close();
         return out;

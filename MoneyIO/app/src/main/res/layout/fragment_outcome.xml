@@ -53,19 +53,19 @@
             android:id="@+id/outcome_keyboard_4"
             android:layout_width="65dp"
             android:layout_height="45dp"
-            android:text="4"/>
+            android:text="4" />
 
         <Button
             android:id="@+id/outcome_keyboard_5"
             android:layout_width="65dp"
             android:layout_height="45dp"
-            android:text="5"/>
+            android:text="5" />
 
         <Button
             android:id="@+id/outcome_keyboard_6"
             android:layout_width="65dp"
             android:layout_height="45dp"
-            android:text="6"/>
+            android:text="6" />
 
     </LinearLayout>
 
@@ -127,6 +127,14 @@
         android:layout_height="wrap_content"
         android:hint="Insert comment about your submission"
         android:gravity="center_horizontal"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/outcome_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
 
 
     <Button
