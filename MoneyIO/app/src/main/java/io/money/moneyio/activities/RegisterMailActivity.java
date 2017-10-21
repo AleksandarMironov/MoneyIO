@@ -28,6 +28,7 @@ public class RegisterMailActivity extends AppCompatActivity {
     private EditText email, password, password2, firstName, secondName;
     private Button register;
     private FirebaseAuth firebaseAuth;
+    private View dummyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         firstName = (EditText)findViewById(R.id.registermail_firstname);
         secondName = (EditText)findViewById(R.id.registermail_secondname);
         register = (Button)findViewById(R.id.registermail_register_btn);
+        dummyView = findViewById(R.id.dummy_reg);
     }
 
     private void removeActionBar() {
@@ -60,6 +62,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dummyView.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }

@@ -19,54 +19,89 @@
         android:textSize="40sp"
         android:layout_marginBottom="10dp"/>
 
-    <EditText
-        android:id="@+id/registermail_email"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/registermail_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Email"
+            android:inputType="text"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="Email"
-        android:inputType="text"
-        android:gravity="center"
-        android:layout_marginTop="20dp"/>
+        app:passwordToggleEnabled="true">
 
     <EditText
         android:id="@+id/registermail_password"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:hint="Password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:passwordToggleEnabled="true">
 
     <EditText
         android:id="@+id/registermail_repeatpassword"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:hint="Repeat Password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
     <EditText
         android:id="@+id/registermail_firstname"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:hint="First Name"
         android:layout_marginTop="10dp"
         android:gravity="center"
         />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     <EditText
         android:id="@+id/registermail_secondname"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:hint="Second Name"
         android:gravity="center"
         android:layout_marginTop="10dp"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/registermail_register_btn"
@@ -78,5 +113,14 @@
         android:fontFamily="serif"
         android:textStyle="bold"
         android:textSize="20sp"/>
+
+    <View
+        android:id="@+id/dummy_reg"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+        <requestFocus/>
+    </View>
 
 </LinearLayout>

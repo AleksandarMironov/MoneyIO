@@ -123,9 +123,10 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
             case R.id.income_keyboard_del:
                 deleteOneChar();
                 break;
-            case R.id.income_comment:
-                addOutcomeLineToFirebase();
+            case R.id.income_add_btn:
+                addIncomeLineToFirebase();
                 break;
+
         }
     }
 
@@ -167,7 +168,7 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
     }
 
 
-    private void addOutcomeLineToFirebase() {
+    private void addIncomeLineToFirebase() {
         String price = moneyView.getText().toString().trim();
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {

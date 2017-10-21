@@ -1,7 +1,6 @@
 package io.money.moneyio.model;
 
 
-import android.icu.text.LocaleDisplayNames;
 import java.util.Calendar;
 
 public class MoneyFlow {
