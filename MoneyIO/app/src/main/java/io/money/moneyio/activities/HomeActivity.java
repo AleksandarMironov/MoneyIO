@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
@@ -47,9 +48,11 @@ public class HomeActivity extends AppCompatActivity {
         alarmsDrawerMenuBtnListener();
         quitDrawerMenuBtnListener();
         logOutDrawerMenuBtnListener();
+        keyboardHideListener();
     }
 
     private void initialiseElements(){
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //keep data sync offline
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
