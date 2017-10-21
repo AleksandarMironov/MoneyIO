@@ -79,24 +79,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(myRawQuery, null);
         c.moveToFirst();
         ArrayList<Type> out = new ArrayList<>();
+        out.add(new Type("TRUE", "type11", R.drawable.sandwich));
+        out.add(new Type("FALSE", "type21", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type31", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type12", R.drawable.sandwich));
+        out.add(new Type("FALSE", "type22", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type32" , R.drawable.sandwich));
+        out.add(new Type("TRUE", "type13", R.drawable.sandwich));
+        out.add(new Type("FALSE", "type23", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type33", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type14", R.drawable.sandwich));
+        out.add(new Type("FALSE", "type24", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type34" , R.drawable.sandwich));
+        out.add(new Type("TRUE", "type15", R.drawable.sandwich));
+        out.add(new Type("FALSE", "type25", R.drawable.sandwich));
+        out.add(new Type("TRUE", "type35", R.drawable.sandwich));
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             out.add(new Type(c.getString(0), c.getString(1), c.getInt(2)));
-            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
-            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
-            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
-            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
-            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
-            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
-            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
-            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
-            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
-            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
-            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
-            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
-            out.add(new Type("TRUE", "type1" + i, R.drawable.sandwich));
-            out.add(new Type("FALSE", "type2" + i, R.drawable.sandwich));
-            out.add(new Type("TRUE", "type3" + i , R.drawable.sandwich));
+
         }
         c.close();
         return out;

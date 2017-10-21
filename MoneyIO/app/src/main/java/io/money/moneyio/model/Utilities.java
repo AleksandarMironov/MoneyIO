@@ -8,7 +8,14 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Utilities {
+    //keep data sync offline
+    static {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
+
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){
             return false;
