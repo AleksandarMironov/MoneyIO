@@ -3,6 +3,9 @@ package io.money.moneyio.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import io.money.moneyio.R;
+import io.money.moneyio.model.DatabaseHelper;
 import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.Type;
+import io.money.moneyio.model.TypeRecyclerViewAdapter;
 
 public class Fragment_Income extends Fragment implements View.OnClickListener{
 
@@ -24,24 +33,38 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference finalMyRef;
+    private FirebaseUser firebaseUser;
     private Button save, one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
     private TextView moneyView;
     private EditText comment;
+    private RecyclerView recyclerView;
+    private TypeRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_income, container, false);
         initialiseElements();
+        startRecycler();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.keepSynced(true);
-        firebaseAuth = FirebaseAuth.getInstance();
         myRef = myRef.child(firebaseAuth.getCurrentUser().getUid());
         finalMyRef = myRef;
         return view;
     }
 
+    private void startRecycler() {
+        DatabaseHelper db = DatabaseHelper.getInstance(view.getContext());
+        final ArrayList<Type> types = db.getUserTypes(firebaseUser.getUid());
+        recyclerView = (RecyclerView)view.findViewById(R.id.income_recycler_view);
+        adapter = new TypeRecyclerViewAdapter(view.getContext(), types);
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2 , LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+    }
+
     private void initialiseElements() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         one = (Button) view.findViewById(R.id.income_keyboard_1);
         one.setOnClickListener(this);
         two = (Button) view.findViewById(R.id.income_keyboard_2);

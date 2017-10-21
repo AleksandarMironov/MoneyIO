@@ -3,6 +3,7 @@ package io.money.moneyio.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,15 +38,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener {
     private EditText comment;
     private DatabaseReference finalMyRef;
     private RecyclerView recyclerView;
-    TypeRecyclerViewAdapter adapter;
-
-
-//    MyRecyclerViewAdapter adapter;
-//    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//    adapter = new MyRecyclerViewAdapter(view.getContext(), offersData);
-//        adapter.setClickListener(this);
-//        recyclerView.setAdapter(adapter);
+    private TypeRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
@@ -64,8 +57,8 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener {
         DatabaseHelper db = DatabaseHelper.getInstance(view.getContext());
         final ArrayList<Type> types = db.getUserTypes(firebaseUser.getUid());
         recyclerView = (RecyclerView)view.findViewById(R.id.outcome_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter = new TypeRecyclerViewAdapter(view.getContext(), types);
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2 , LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }
 
@@ -100,9 +93,6 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener {
         save.setOnClickListener(this);
         moneyView = (TextView) view.findViewById(R.id.outcome_keyboard_result);
         comment = (EditText) view.findViewById(R.id.outcome_comment);
-//        recyclerView = (RecyclerView)view.findViewById(R.id.outcome_recycler_view);
-//        TypeRecyclerViewAdapter typeRecyclerViewAdapter = new TypeRecyclerViewAdapter(view.getContext(),firebaseUser, firebaseAuth, DatabaseHelper.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid()));
-//        recyclerView.setAdapter(typeRecyclerViewAdapter);
     }
 
     @Override
