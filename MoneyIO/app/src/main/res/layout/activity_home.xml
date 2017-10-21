@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:id="@+id/home_activity"
     tools:context="io.money.moneyio.activities.HomeActivity">
 
     <android.support.v7.widget.Toolbar

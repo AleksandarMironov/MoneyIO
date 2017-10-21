@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initialiseElements(){
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true); //keep data sync offline
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
@@ -131,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void keyboardHideListener(){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.register_activity);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.home_activity);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
