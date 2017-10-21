@@ -24,20 +24,20 @@
 
         <Button
             android:id="@+id/outcome_keyboard_1"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="1"/>
 
         <Button
             android:id="@+id/outcome_keyboard_2"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="2"/>
 
         <Button
             android:id="@+id/outcome_keyboard_3"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="3"/>
 
     </LinearLayout>
@@ -51,20 +51,20 @@
 
         <Button
             android:id="@+id/outcome_keyboard_4"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="4"/>
 
         <Button
             android:id="@+id/outcome_keyboard_5"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="5"/>
 
         <Button
             android:id="@+id/outcome_keyboard_6"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="6"/>
 
     </LinearLayout>
@@ -77,20 +77,20 @@
 
         <Button
             android:id="@+id/outcome_keyboard_7"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="7"/>
 
         <Button
             android:id="@+id/outcome_keyboard_8"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="8"/>
 
         <Button
             android:id="@+id/outcome_keyboard_9"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="9"/>
 
     </LinearLayout>
@@ -103,27 +103,34 @@
 
         <Button
             android:id="@+id/outcome_keyboard_dot"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="."/>
 
         <Button
             android:id="@+id/outcome_keyboard_0"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="0"/>
 
         <Button
             android:id="@+id/outcome_keyboard_del"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:text="DEL"/>
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/outcome_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Insert comment about your submission"
+        android:gravity="center_horizontal"/>
+
 
     <Button
-        android:id="@+id/out_test_btn"
+        android:id="@+id/outcome_add_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="add test" />

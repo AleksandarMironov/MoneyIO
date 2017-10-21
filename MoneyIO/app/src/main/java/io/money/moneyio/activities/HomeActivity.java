@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton sandwichButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
+    private static TextView currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,12 @@ public class HomeActivity extends AppCompatActivity {
         keyboardHideListener();
     }
 
+    private static void setCurrentFragment(String s) {
+        HomeActivity.currentFragment.setText(s);
+    }
+
     private void initialiseElements(){
+        currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
@@ -73,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Fragment_Income fragmentIncome = new Fragment_Income();
                 loadFragment(fragmentIncome);
+                setCurrentFragment("Income");
                 hideDrawer();
             }
         });
@@ -84,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Fragment_Outcome fragmentOutcome = new Fragment_Outcome();
                 loadFragment(fragmentOutcome);
+                setCurrentFragment("Outcome");
                 hideDrawer();
             }
         });
@@ -95,6 +104,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Fragment_Alarm fragmentAlarm = new Fragment_Alarm();
                 loadFragment(fragmentAlarm);
+                setCurrentFragment("Alarms");
                 hideDrawer();
             }
         });
