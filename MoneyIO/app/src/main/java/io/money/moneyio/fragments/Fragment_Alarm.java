@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -17,6 +18,7 @@ import io.money.moneyio.R;
 import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.activities.MainActivity;
 import io.money.moneyio.model.AlarmReceiver;
+import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Utilities;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -45,6 +47,11 @@ public class Fragment_Alarm extends Fragment {
                 //Utilities.notifyMe(view.getContext(), "Working :)");
             }
         });
+        StringBuffer sb =  new StringBuffer();
+        for(MoneyFlow m : Utilities.data){
+            sb.append(m.getType() + " " + m.getSum() + "\n");
+        }
+        ((TextView)view.findViewById(R.id.text_test)).setText(sb.toString());
         return view;
     }
 }
