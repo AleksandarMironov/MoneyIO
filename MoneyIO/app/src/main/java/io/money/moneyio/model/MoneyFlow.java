@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public class MoneyFlow {
     private boolean isExpense;
-    private String Type;
+    private String type;
     private long calendar;
     private String comment;
     private double sum;
@@ -15,7 +15,7 @@ public class MoneyFlow {
 
     public MoneyFlow(boolean isExpense, String type, String comment, double sum) {
         this.isExpense = isExpense;
-        Type = type;
+        this.type = type;
         this.calendar = Calendar.getInstance().getTimeInMillis();
         this.comment = comment;
         this.sum = sum;
@@ -30,7 +30,7 @@ public class MoneyFlow {
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public long getCalendar() {

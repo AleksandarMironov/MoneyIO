@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
+import io.money.moneyio.fragments.Fragment_DataHistory;
 import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Statistics;
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     private Button btnOutcome, btnIncome, btnStatistics, btnAlarms, btnQuit, btnLogOut;
-    private ImageButton sandwichButton;
+    private ImageButton sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
     DatabaseReference myDatabaseRef;
@@ -83,6 +84,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         myDatabaseRef = FirebaseDatabase.getInstance().getReference().child(firebaseAuth.getCurrentUser().getUid());
         readDatabase();
+        statisticsButton = (ImageButton)findViewById(R.id.home_toolbar_statistics_icon_btn);
+        statisticsButton.setOnClickListener(this);
     }
 
     private void readDatabase(){
@@ -260,6 +263,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.home_quit_btn:
                 exit();
                 break;
+            case R.id.home_toolbar_statistics_icon_btn:
+                loadFragment(new Fragment_DataHistory());
+                setCurrentFragment("My Stats");
         }
     }
 
