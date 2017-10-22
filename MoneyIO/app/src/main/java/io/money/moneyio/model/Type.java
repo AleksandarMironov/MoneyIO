@@ -13,8 +13,8 @@ public class Type {
         this.pictureId = pid;
     }
 
-    public boolean isExpense() {
-        return true;
+    public String getExpense() {
+        return isExpense;
     }
 
     public String getType() {

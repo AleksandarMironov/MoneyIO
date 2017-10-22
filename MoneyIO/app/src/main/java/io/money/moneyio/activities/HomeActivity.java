@@ -35,6 +35,7 @@ import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_DataHistory;
 import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
+import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Utilities;
@@ -44,7 +45,7 @@ import static android.R.id.list;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth firebaseAuth;
-    private Button btnOutcome, btnIncome, btnStatistics, btnAlarms, btnQuit, btnLogOut;
+    private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnQuit, btnLogOut;
     private ImageButton sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
@@ -77,6 +78,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnIncome.setOnClickListener(this);
         btnStatistics = (Button)findViewById(R.id.home_statistics_btn);
         btnStatistics.setOnClickListener(this);
+        btnProfile = (Button)findViewById(R.id.home_myProfile_btn);
+        btnProfile.setOnClickListener(this);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
         btnAlarms.setOnClickListener(this);
         btnQuit = (Button) findViewById(R.id.home_quit_btn);
@@ -206,6 +209,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Fragment_Outcome homeFragment = new Fragment_Outcome();
             loadFragment(homeFragment);
+            setCurrentFragment("Outcome");
+            statisticsButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -246,14 +251,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.home_income_btn:
                 drawerMenuButtonsAction("Income", new Fragment_Income());
+                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_outcome_btn:
                 drawerMenuButtonsAction("Outcome", new Fragment_Outcome());
+                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_statistics_btn:
                 drawerMenuButtonsAction("Statistics", new Fragment_Statistics());
+                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_myProfile_btn:
+                drawerMenuButtonsAction("My Profile", new Fragment_Profile());
+                statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_add_friend_btn:
                 break;

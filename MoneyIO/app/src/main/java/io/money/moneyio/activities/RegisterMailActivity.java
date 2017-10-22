@@ -119,7 +119,7 @@ public class RegisterMailActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
                                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(firstName.toString() + " " + secondName.toString()).build();
+                                            .setDisplayName(userFirstName + " " + userSecondName).build();
                                     if (firebaseAuth.getCurrentUser() != null) {
                                         firebaseAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
                                     }

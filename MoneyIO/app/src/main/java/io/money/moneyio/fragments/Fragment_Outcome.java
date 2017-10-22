@@ -56,8 +56,14 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
     private void startRecycler() {
         DatabaseHelper db = DatabaseHelper.getInstance(view.getContext());
         final ArrayList<Type> types = db.getUserTypes(firebaseUser.getUid());
+        ArrayList<Type> typeFilter = new ArrayList<>();
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).getExpense().equalsIgnoreCase("false")) {
+                typeFilter.add(types.get(i));
+            }
+        }
         recyclerView = (RecyclerView)view.findViewById(R.id.outcome_recycler_view);
-        adapter = new TypeRecyclerViewAdapter(view.getContext(), types);
+        adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilter);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2 , LinearLayoutManager.HORIZONTAL, false));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
