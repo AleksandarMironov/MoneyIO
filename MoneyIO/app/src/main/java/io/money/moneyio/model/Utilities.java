@@ -12,11 +12,15 @@ import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class Utilities {
     //keep data sync offline
 //    static {
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //    }
+
+    public static ArrayList<MoneyFlow> data;
 
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){

@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,13 +22,23 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Statistics;
+import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.Utilities;
+
+import static android.R.id.list;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -36,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton sandwichButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
+    DatabaseReference myDatabaseRef;
     private static TextView currentFragment;
 
     @Override
@@ -56,6 +68,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialiseElements(){
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnOutcome.setOnClickListener(this);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
@@ -67,8 +81,40 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnQuit = (Button) findViewById(R.id.home_quit_btn);
         btnQuit.setOnClickListener(this);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
+        myDatabaseRef = FirebaseDatabase.getInstance().getReference().child(firebaseAuth.getCurrentUser().getUid());
+        readDatabase();
+    }
+
+    private void readDatabase(){
+        Utilities.data = new ArrayList<>();
+        final DatabaseReference mref = myDatabaseRef;
+        mref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
+                Utilities.data.add(t);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void removeActionBar() {
