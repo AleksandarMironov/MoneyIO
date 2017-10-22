@@ -37,6 +37,14 @@
                 android:textStyle="bold"
                 android:fontFamily="serif"/>
 
+            <ImageButton
+                android:id="@+id/home_toolbar_statistics_icon_btn"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/statistics_icon"
+                android:background="#ffffff"/>
+
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
