@@ -20,6 +20,9 @@
         </activity>
         <activity android:name=".activities.RegisterMailActivity" />
         <activity android:name=".activities.HomeActivity"/>
+
+        <receiver android:name=".model.AlarmReceiver"
+            android:enabled="true" />
     </application>
 
 </manifest>

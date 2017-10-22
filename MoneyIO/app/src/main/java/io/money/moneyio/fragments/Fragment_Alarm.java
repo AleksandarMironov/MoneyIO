@@ -1,5 +1,8 @@
 package io.money.moneyio.fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -8,8 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Calendar;
+
 import io.money.moneyio.R;
+import io.money.moneyio.activities.HomeActivity;
+import io.money.moneyio.activities.MainActivity;
+import io.money.moneyio.model.AlarmReceiver;
 import io.money.moneyio.model.Utilities;
+
+import static android.content.Context.ALARM_SERVICE;
 
 
 public class Fragment_Alarm extends Fragment {
@@ -22,7 +32,17 @@ public class Fragment_Alarm extends Fragment {
        ((Button)view.findViewById(R.id.test_alert)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.notifyMe(view.getContext(), "Working :)");
+
+                final Intent myIntent = new Intent(view.getContext(), AlarmReceiver.class);
+
+                // Get the alarm manager service
+                AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(ALARM_SERVICE);
+                myIntent.putExtra("message", "test text send");
+                PendingIntent pending_intent = PendingIntent.getBroadcast(view.getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 600, pending_intent); // 1 min alarm !!!!!!!!!!!!!!!!!!!!!!!!!1
+                //Utilities.notifyMe(view.getContext(), "Working :)");
             }
         });
         return view;
