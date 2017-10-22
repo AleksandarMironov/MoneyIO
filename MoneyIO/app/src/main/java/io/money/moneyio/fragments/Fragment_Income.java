@@ -205,4 +205,5 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

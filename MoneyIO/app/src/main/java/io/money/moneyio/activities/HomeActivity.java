@@ -27,11 +27,12 @@ import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
+import io.money.moneyio.fragments.Fragment_Statistics;
 
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private Button btnOutcome, btnIncome, btnAlarms, btnQuit, btnLogOut;
+    private Button btnOutcome, btnIncome, btnStatistics, btnAlarms, btnQuit, btnLogOut;
     private ImageButton sandwichButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         initialiseElements();
         drawerDropMenuCreator();
         outcomeDrawerMenuBtnListener();
+        statistics();
         incomeDrawerMenuBtnListener();
         alarmsDrawerMenuBtnListener();
         quitDrawerMenuBtnListener();
@@ -61,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
+        btnStatistics = (Button)findViewById(R.id.home_statistics_btn);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
         btnQuit = (Button) findViewById(R.id.home_quit_btn);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
@@ -72,6 +75,18 @@ public class HomeActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+    }
+
+    public void statistics() {
+        btnStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment_Statistics s = new Fragment_Statistics();
+                loadFragment(s);
+                setCurrentFragment("Statistics");
+                hideDrawer();
+            }
+        });
     }
 
     public void incomeDrawerMenuBtnListener() {

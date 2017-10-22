@@ -8,18 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
 
 public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerViewAdapter.MyViewHolder>{
 
-    Context context;
-    ArrayList<Type> types;
-    LayoutInflater inflater;
+    private Context context;
+    private ArrayList<Type> types;
+    private LayoutInflater inflater;
+    private ItemClickListener mClickListener;
 
     public TypeRecyclerViewAdapter(Context context, ArrayList<Type> types) {
         inflater = LayoutInflater.from(context);
@@ -51,7 +49,7 @@ public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerVi
         return types.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
         TextView text;
@@ -60,7 +58,26 @@ public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerVi
             super(row);
             this.image = image;
             this.text = text;
-
+            row.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) {
+                mClickListener.onItemClick(view, getAdapterPosition());
+            }
+        }
+    }
+
+    public Type getItem(int id) {
+        return types.get(id);
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
