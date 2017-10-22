@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:hint="Your type"
             android:textColor="#000000"
             android:textSize="20sp"/>
@@ -103,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="Income"/>
                 <RadioButton
                     android:id="@+id/profile_outcome_radio"

@@ -8,13 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.DatabaseHelper;
+import io.money.moneyio.model.Utilities;
 
 public class Fragment_Profile extends Fragment {
 
@@ -31,6 +35,7 @@ public class Fragment_Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         initialiseElements();
+        addType();
         return view;
     }
 
@@ -50,5 +55,28 @@ public class Fragment_Profile extends Fragment {
     private void setValues() {
         email.setText(email.getText() + firebaseUser.getEmail().toString());
         names.setText(names.getText() + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+    }
+
+    private void addType() {
+        saveType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String typeNew = type.getText().toString();
+                String checked = ((RadioButton)view.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
+
+                if (!Utilities.checkString(typeNew)){
+                    Toast.makeText(getContext(), "Invalid type", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (checked.equalsIgnoreCase("income")) {
+                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "TRUE", typeNew, R.mipmap.ic_launcher);
+                    Toast.makeText(view.getContext(), "Income type added", Toast.LENGTH_SHORT).show();
+                } else if(checked.equalsIgnoreCase("outcome")) {
+                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "FALSE", typeNew, R.mipmap.ic_launcher);
+                    Toast.makeText(view.getContext(), "Outcome type added", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
