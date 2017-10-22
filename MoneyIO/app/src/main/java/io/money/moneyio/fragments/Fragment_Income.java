@@ -27,7 +27,7 @@ import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Type;
 import io.money.moneyio.model.TypeRecyclerViewAdapter;
 
-public class Fragment_Income extends Fragment implements View.OnClickListener{
+public class Fragment_Income extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
 
     private View view;
     private FirebaseAuth firebaseAuth;
@@ -59,6 +59,7 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
         recyclerView = (RecyclerView)view.findViewById(R.id.income_recycler_view);
         adapter = new TypeRecyclerViewAdapter(view.getContext(), types);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2 , LinearLayoutManager.HORIZONTAL, false));
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -89,8 +90,6 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
         dot.setOnClickListener(this);
         delete = (Button) view.findViewById(R.id.income_keyboard_del);
         delete.setOnClickListener(this);
-        save = (Button) view.findViewById(R.id.income_add_btn);
-        save.setOnClickListener(this);
         moneyView = (TextView) view.findViewById(R.id.income_keyboard_result);
         comment = (EditText) view.findViewById(R.id.income_comment);
     }
@@ -146,9 +145,6 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
             case R.id.income_keyboard_del:
                 deleteOneChar();
                 break;
-            case R.id.income_add_btn:
-                addIncomeLineToFirebase();
-                break;
 
         }
     }
@@ -190,15 +186,18 @@ public class Fragment_Income extends Fragment implements View.OnClickListener{
         }
     }
 
-
-    private void addIncomeLineToFirebase() {
+    @Override
+    public void onItemClick(View view, int position) {
+        Type type = adapter.getItem(position);
         String price = moneyView.getText().toString().trim();
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow(false, "test", Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), Double.parseDouble(price)));
+                moneyView.setText("Insert price");
             } else {
-                finalMyRef.push().setValue(new MoneyFlow(false, "test", com, Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), com, Double.parseDouble(price)));
+                moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {

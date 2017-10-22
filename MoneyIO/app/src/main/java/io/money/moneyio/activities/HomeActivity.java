@@ -29,7 +29,7 @@ import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Statistics;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth firebaseAuth;
     private Button btnOutcome, btnIncome, btnStatistics, btnAlarms, btnQuit, btnLogOut;
@@ -46,11 +46,6 @@ public class HomeActivity extends AppCompatActivity {
         loadFragment(new Fragment_Outcome());
         initialiseElements();
         drawerDropMenuCreator();
-        outcomeDrawerMenuBtnListener();
-        statistics();
-        incomeDrawerMenuBtnListener();
-        alarmsDrawerMenuBtnListener();
-        quitDrawerMenuBtnListener();
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
     }
@@ -62,10 +57,15 @@ public class HomeActivity extends AppCompatActivity {
     private void initialiseElements(){
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
+        btnOutcome.setOnClickListener(this);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
+        btnIncome.setOnClickListener(this);
         btnStatistics = (Button)findViewById(R.id.home_statistics_btn);
+        btnStatistics.setOnClickListener(this);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
+        btnAlarms.setOnClickListener(this);
         btnQuit = (Button) findViewById(R.id.home_quit_btn);
+        btnQuit.setOnClickListener(this);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -75,54 +75,6 @@ public class HomeActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-    }
-
-    public void statistics() {
-        btnStatistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment_Statistics s = new Fragment_Statistics();
-                loadFragment(s);
-                setCurrentFragment("Statistics");
-                hideDrawer();
-            }
-        });
-    }
-
-    public void incomeDrawerMenuBtnListener() {
-        btnIncome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment_Income fragmentIncome = new Fragment_Income();
-                loadFragment(fragmentIncome);
-                setCurrentFragment("Income");
-                hideDrawer();
-            }
-        });
-    }
-
-    public void outcomeDrawerMenuBtnListener() {
-        btnOutcome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment_Outcome fragmentOutcome = new Fragment_Outcome();
-                loadFragment(fragmentOutcome);
-                setCurrentFragment("Outcome");
-                hideDrawer();
-            }
-        });
-    }
-
-    public void alarmsDrawerMenuBtnListener() {
-        btnAlarms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment_Alarm fragmentAlarm = new Fragment_Alarm();
-                loadFragment(fragmentAlarm);
-                setCurrentFragment("Alarms");
-                hideDrawer();
-            }
-        });
     }
 
     public void logOutDrawerMenuBtnListener() {
@@ -165,14 +117,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public void quitDrawerMenuBtnListener() {
-        btnQuit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exit();
-            }
-        });
-    }
+
     public void drawerDropMenuCreator() {
         sandwichButton = (ImageButton)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
@@ -244,5 +189,37 @@ public class HomeActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
         }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_income_btn:
+                drawerMenuButtonsAction("Income", new Fragment_Income());
+                break;
+            case R.id.home_outcome_btn:
+                drawerMenuButtonsAction("Outcome", new Fragment_Outcome());
+                break;
+            case R.id.home_statistics_btn:
+                drawerMenuButtonsAction("Statistics", new Fragment_Statistics());
+                break;
+            case R.id.home_myProfile_btn:
+                break;
+            case R.id.home_add_friend_btn:
+                break;
+            case R.id.home_alarms_btn:
+                drawerMenuButtonsAction("Alarms", new Fragment_Alarm());
+                break;
+            case R.id.home_quit_btn:
+                exit();
+                break;
+        }
+    }
+
+    private void drawerMenuButtonsAction(String fragmentTitle, Fragment fragment) {
+        loadFragment(fragment);
+        setCurrentFragment(fragmentTitle);
+        hideDrawer();
     }
 }

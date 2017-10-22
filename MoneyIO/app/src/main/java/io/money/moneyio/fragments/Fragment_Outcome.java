@@ -33,7 +33,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private Button save, one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
+    private Button one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
     private TextView moneyView;
     private EditText comment;
     private DatabaseReference finalMyRef;
@@ -90,8 +90,6 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         dot.setOnClickListener(this);
         delete = (Button) view.findViewById(R.id.outcome_keyboard_del);
         delete.setOnClickListener(this);
-//        save = (Button) view.findViewById(R.id.outcome_add_btn);
-//        save.setOnClickListener(this);
         moneyView = (TextView) view.findViewById(R.id.outcome_keyboard_result);
         comment = (EditText) view.findViewById(R.id.outcome_comment);
     }
@@ -147,9 +145,6 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
             case R.id.outcome_keyboard_del:
                 deleteOneChar();
                 break;
-//            case R.id.outcome_add_btn:
-//                addOutcomeLineToFirebase();
-//                break;
         }
     }
 
@@ -190,22 +185,6 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         }
     }
 
-
-//    private void addOutcomeLineToFirebase() {
-//        String price = moneyView.getText().toString().trim();
-//        String com = comment.getText().toString().trim();
-//        if (!price.equalsIgnoreCase("Insert price")) {
-//            if (com == null) {
-//                finalMyRef.push().setValue(new MoneyFlow(true, "test", Double.parseDouble(price)));
-//            } else {
-//                finalMyRef.push().setValue(new MoneyFlow(true, "test", com, Double.parseDouble(price)));
-//            }
-//            Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     @Override
     public void onItemClick(View view, int position) {
         Type type = adapter.getItem(position);
@@ -213,9 +192,11 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), Double.parseDouble(price)));
+                moneyView.setText("Insert price");
             } else {
-                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), com, Integer.parseInt(price)));
+                finalMyRef.push().setValue(new MoneyFlow(false, type.getType(), com, Double.parseDouble(price)));
+                moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {

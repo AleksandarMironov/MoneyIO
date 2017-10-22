@@ -82,12 +82,14 @@
 
 
             <Button
+                android:id="@+id/home_myProfile_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="my profile" />
 
 
             <Button
+                android:id="@+id/home_add_friend_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="add friend" />

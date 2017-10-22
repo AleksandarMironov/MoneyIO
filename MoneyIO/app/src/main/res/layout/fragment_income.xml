@@ -11,9 +11,10 @@
             android:id="@+id/income_keyboard_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="Insert price"
             android:gravity="center_horizontal"
-            android:textSize="40sp"/>
+            android:textSize="35sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -129,8 +130,12 @@
             android:id="@+id/income_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Insert comment about your submission"
-            android:gravity="center_horizontal"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:hint="Insert comment about your submission" />
 
     </LinearLayout>
 
@@ -139,13 +144,9 @@
         android:id="@+id/income_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/income_add_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add test" />
 
 </LinearLayout>

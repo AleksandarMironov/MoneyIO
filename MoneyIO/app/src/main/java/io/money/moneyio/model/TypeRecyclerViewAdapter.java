@@ -58,7 +58,8 @@ public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerVi
             super(row);
             this.image = image;
             this.text = text;
-            row.setOnClickListener(this);
+            image.setOnClickListener(this);
+            text.setOnClickListener(this);
         }
 
         @Override
