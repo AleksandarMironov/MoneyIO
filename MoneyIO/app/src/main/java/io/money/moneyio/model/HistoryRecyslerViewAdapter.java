@@ -3,6 +3,7 @@ package io.money.moneyio.model;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,11 +54,17 @@ public class HistoryRecyslerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
         MoneyFlow moneyFlow = data.get(position);
+
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());
         holder.price.setText(Double.toString(moneyFlow.getSum())); ///TODO edit string, fix calendar
         holder.date.setText(new SimpleDateFormat("d MMM yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
-        holder.image.setImageResource(R.drawable.statistics_icon);
+        if (moneyFlow.getExpense().equals("true")) {
+            holder.image.setImageResource(R.drawable.outcome_icon);//outcome
+        } else {
+            holder.image.setImageResource(R.drawable.sandwich);//income
+        }
+
     }
 
 

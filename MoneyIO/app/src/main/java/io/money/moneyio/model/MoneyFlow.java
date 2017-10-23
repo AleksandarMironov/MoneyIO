@@ -4,7 +4,7 @@ package io.money.moneyio.model;
 import java.util.Calendar;
 
 public class MoneyFlow {
-    private boolean isExpense;
+    private String expense;
     private String type;
     private long calendar;
     private String comment;
@@ -13,20 +13,20 @@ public class MoneyFlow {
     public MoneyFlow() {
     }
 
-    public MoneyFlow(boolean isExpense, String type, String comment, double sum) {
-        this.isExpense = isExpense;
+    public MoneyFlow(String expense, String type, String comment, double sum) {
+        this.expense = expense;
         this.type = type;
         this.calendar = Calendar.getInstance().getTimeInMillis();
         this.comment = comment;
         this.sum = sum;
     }
 
-    public MoneyFlow(boolean isExpense, String type, double sum) {
-        this(isExpense, type, "", sum);
+    public MoneyFlow(String expense, String type, double sum) {
+        this(expense, type, "", sum);
     }
 
-    public boolean isExpense() {
-        return isExpense;
+    public String getExpense() {
+        return expense;
     }
 
     public String getType() {
