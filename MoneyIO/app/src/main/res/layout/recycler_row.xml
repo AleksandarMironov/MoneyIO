@@ -4,10 +4,10 @@
     android:layout_marginRight="5dp"
     android:layout_height="wrap_content">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/row_image"
             android:layout_width="50dp"
-            android:layout_height="45dp" />
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/row_text"

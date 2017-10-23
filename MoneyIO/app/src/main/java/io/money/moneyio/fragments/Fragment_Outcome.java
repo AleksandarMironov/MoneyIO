@@ -63,7 +63,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         final ArrayList<Type> types = db.getUserTypes(firebaseUser.getUid());
         ArrayList<Type> typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).getExpense().equalsIgnoreCase("false")) {
+            if (types.get(i).getExpense().equalsIgnoreCase("true")) {
                 typeFilter.add(types.get(i));
             }
         }
