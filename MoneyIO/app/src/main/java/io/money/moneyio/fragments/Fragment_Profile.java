@@ -76,10 +76,12 @@ public class Fragment_Profile extends Fragment {
                 }
 
                 if (checked.equalsIgnoreCase("income")) {
-                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "TRUE", typeNew, R.mipmap.ic_launcher);
-                    Toast.makeText(view.getContext(), "Income type added", Toast.LENGTH_SHORT).show();
-                } else if(checked.equalsIgnoreCase("outcome")) {
                     DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "FALSE", typeNew, R.mipmap.ic_launcher);
+                    Toast.makeText(view.getContext(), "Income type added", Toast.LENGTH_SHORT).show();
+
+
+                } else if(checked.equalsIgnoreCase("outcome")) {
+                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "TRUE", typeNew, R.mipmap.ic_launcher);
                     Toast.makeText(view.getContext(), "Outcome type added", Toast.LENGTH_SHORT).show();
                 }
             }
