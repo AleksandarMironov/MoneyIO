@@ -3,7 +3,6 @@ package io.money.moneyio.model;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,13 @@ import java.util.Date;
 
 import io.money.moneyio.R;
 
-public class HistoryRecyslerViewAdapter extends RecyclerView.Adapter<HistoryRecyslerViewAdapter.MyHolder>{
+public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.MyHolder>{
 
     private Context context;
     private ArrayList<MoneyFlow> data;
     private LayoutInflater inflater;
 
-    public HistoryRecyslerViewAdapter(Context context, ArrayList<MoneyFlow> data) {
+    public HistoryRecyclerViewAdapter(Context context, ArrayList<MoneyFlow> data) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.data = data;
@@ -45,7 +44,7 @@ public class HistoryRecyslerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     }
 
     @Override
-    public HistoryRecyslerViewAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoryRecyclerViewAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.recycler_histoy_row, parent, false);
         MyHolder viewHolder = new MyHolder(view);
         return viewHolder;
@@ -58,11 +57,11 @@ public class HistoryRecyslerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());
         holder.price.setText(Double.toString(moneyFlow.getSum()));
-        holder.date.setText(new SimpleDateFormat("d MMM yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
+        holder.date.setText(new SimpleDateFormat("d-MMM-yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
         if (moneyFlow.getExpense().equals("true")) {
             holder.image.setImageResource(R.drawable.outcome_icon);//outcome
         } else {
-            holder.image.setImageResource(R.drawable.sandwich);//income
+            holder.image.setImageResource(R.drawable.income_icon);//income
         }
 
     }
