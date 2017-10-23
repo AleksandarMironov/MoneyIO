@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnQuit, btnLogOut;
-    private ImageButton sandwichButton, statisticsButton;
+    private ImageView sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
     DatabaseReference myDatabaseRef;
@@ -69,6 +70,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseElements(){
+        sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
+        drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -87,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         myDatabaseRef = FirebaseDatabase.getInstance().getReference().child(firebaseAuth.getCurrentUser().getUid());
         readDatabase();
-        statisticsButton = (ImageButton)findViewById(R.id.home_toolbar_statistics_icon_btn);
+        statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
     }
 
@@ -171,8 +174,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void drawerDropMenuCreator() {
-        sandwichButton = (ImageButton)findViewById(R.id.home_toolbar_sandwich_btn);
-        drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
 
         //drawer menu settings
         drawerLayout.setScrimColor(Color.TRANSPARENT);

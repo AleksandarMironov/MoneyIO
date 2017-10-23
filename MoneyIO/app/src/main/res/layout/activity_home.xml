@@ -18,13 +18,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/home_toolbar_sandwich_btn"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sandwich"
-                android:background="#ffffff"/>
+                android:src="@drawable/sandwich" />
 
             <TextView
                 android:id="@+id/home_toolbar_app_name"
@@ -37,13 +36,12 @@
                 android:textStyle="bold"
                 android:fontFamily="serif"/>
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/home_toolbar_statistics_icon_btn"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/statistics_icon"
-                android:background="#ffffff"/>
+                android:src="@drawable/statistics_icon" />
 
         </LinearLayout>
 
