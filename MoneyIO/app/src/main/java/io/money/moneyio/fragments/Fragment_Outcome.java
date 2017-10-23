@@ -1,5 +1,6 @@
 package io.money.moneyio.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
     private DatabaseReference finalMyRef;
     private RecyclerView recyclerView;
     private TypeRecyclerViewAdapter adapter;
+    private View dummyView;
 
     @Nullable
     @Override
@@ -50,6 +54,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         myRef.keepSynced(true);
         myRef = myRef.child(firebaseAuth.getCurrentUser().getUid());
         finalMyRef = myRef;
+        keyboardHideListener();
         return view;
     }
 
@@ -98,6 +103,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         delete.setOnClickListener(this);
         moneyView = (TextView) view.findViewById(R.id.outcome_keyboard_result);
         comment = (EditText) view.findViewById(R.id.outcome_comment);
+        dummyView = view.findViewById(R.id.dummy_outcome);
     }
 
     @Override
@@ -208,6 +214,18 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         } else {
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void keyboardHideListener(){
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.fragment_outcome);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dummyView.requestFocus();
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
     }
 }
 

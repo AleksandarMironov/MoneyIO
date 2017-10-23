@@ -55,8 +55,8 @@ public class HistoryRecyslerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         MoneyFlow moneyFlow = data.get(position);
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());
-        holder.price.setText("" + moneyFlow.getSum()); ///TODO edit string, fix calendar
-        holder.date.setText(new SimpleDateFormat("HH:mm:ss").format(new Date(moneyFlow.getCalendar())));
+        holder.price.setText(Double.toString(moneyFlow.getSum())); ///TODO edit string, fix calendar
+        holder.date.setText(new SimpleDateFormat("d MMM yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
         holder.image.setImageResource(R.drawable.statistics_icon);
     }
 

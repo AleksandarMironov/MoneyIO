@@ -1,13 +1,16 @@
 package io.money.moneyio.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ public class Fragment_Profile extends Fragment {
     private EditText salary, type;
     private RadioGroup radioGroup;
     private Button dayOfSalary, saveType;
+    private View dummyView;
 
     @Nullable
     @Override
@@ -36,6 +40,7 @@ public class Fragment_Profile extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         initialiseElements();
         addType();
+        keyboardHideListener();
         return view;
     }
 
@@ -49,6 +54,7 @@ public class Fragment_Profile extends Fragment {
         radioGroup = (RadioGroup)view.findViewById(R.id.profile_radiogr_kind);
         dayOfSalary = (Button)view.findViewById(R.id.profile_choose_date);
         saveType = (Button)view.findViewById(R.id.profile_save_btn);
+        dummyView = view.findViewById(R.id.dummy_profile);
         setValues();
     }
 
@@ -76,6 +82,18 @@ public class Fragment_Profile extends Fragment {
                     DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "FALSE", typeNew, R.mipmap.ic_launcher);
                     Toast.makeText(view.getContext(), "Outcome type added", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    public void keyboardHideListener(){
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dummyView.requestFocus();
+                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
     }
