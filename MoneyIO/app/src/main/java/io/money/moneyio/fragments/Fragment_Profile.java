@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,17 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import io.money.moneyio.R;
 import io.money.moneyio.model.DatabaseHelper;
+import io.money.moneyio.model.HistoryRecyclerViewAdapter;
+import io.money.moneyio.model.ShowCustomTypesRecyclerViewAdapter;
+import io.money.moneyio.model.Type;
 import io.money.moneyio.model.Utilities;
 
-public class Fragment_Profile extends Fragment {
+public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecyclerViewAdapter.ItemClickListener{
 
     private View view;
     private FirebaseAuth firebaseAuth;
@@ -33,15 +41,44 @@ public class Fragment_Profile extends Fragment {
     private RadioGroup radioGroup;
     private Button dayOfSalary, saveType;
     private View dummyView;
+    private RecyclerView recyclerView;
+    private ArrayList<Type> typeFilter;
+    private ShowCustomTypesRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         initialiseElements();
+        startRecycler();
         addType();
         keyboardHideListener();
         return view;
+    }
+
+    private void startRecycler() {
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_profile);
+        final ArrayList<Type> types = DatabaseHelper.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid());
+        typeFilter = new ArrayList<>();
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).getPictureId() == R.mipmap.ic_launcher) {
+                typeFilter.add(types.get(i));
+            }
+        }
+        adapter = new ShowCustomTypesRecyclerViewAdapter(view.getContext(), typeFilter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        typeFilter.remove(position);
+        recyclerView.removeViewAt(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, typeFilter.size());
+        adapter.notifyDataSetChanged();
+        //database delete method
+        startRecycler();
     }
 
     private void initialiseElements() {
@@ -78,11 +115,12 @@ public class Fragment_Profile extends Fragment {
                 if (checked.equalsIgnoreCase("income")) {
                     DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "FALSE", typeNew, R.mipmap.ic_launcher);
                     Toast.makeText(view.getContext(), "Income type added", Toast.LENGTH_SHORT).show();
-
+                    startRecycler();
 
                 } else if(checked.equalsIgnoreCase("outcome")) {
                     DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "TRUE", typeNew, R.mipmap.ic_launcher);
                     Toast.makeText(view.getContext(), "Outcome type added", Toast.LENGTH_SHORT).show();
+                    startRecycler();
                 }
             }
         });

@@ -9,8 +9,7 @@
         android:id="@+id/row_history_img"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="30dp"
-        android:src="@drawable/common_google_signin_btn_text_dark"/>
+        android:layout_height="30dp"/>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
