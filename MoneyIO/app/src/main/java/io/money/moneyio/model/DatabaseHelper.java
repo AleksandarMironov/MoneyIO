@@ -72,9 +72,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (b != -1);
     }
 
-    public void deleteType(String userID) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        db.delete(USERS_TABLE_CREATE, "user=?", new String[] {userID});
+    public void deleteType(String userID, String category, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "DELETE FROM " + TABLE_SETINGS
+                + " WHERE " + T_SETINGS_COL_1 + " = \"" + userID + "\" AND " + T_SETINGS_COL_2 + " = \"" + category + "\" AND " +
+                T_SETINGS_COL_3 + " = \"" + type + "\";";
+        db.execSQL(myRawQuery);
     }
 
     public ArrayList<Type> getUserTypes(String userID){

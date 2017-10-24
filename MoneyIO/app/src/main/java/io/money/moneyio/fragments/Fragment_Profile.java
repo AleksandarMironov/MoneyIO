@@ -76,6 +76,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     @Override
     public void onItemClick(View view, int position) {
+        db.deleteType(firebaseUser.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
         typeFilter.remove(position);
         recyclerView.removeViewAt(position);
         adapter.notifyItemRemoved(position);
