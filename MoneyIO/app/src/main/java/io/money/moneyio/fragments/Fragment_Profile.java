@@ -2,6 +2,8 @@ package io.money.moneyio.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import io.money.moneyio.model.Utilities;
 public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecyclerViewAdapter.ItemClickListener{
 
     private View view;
+    private DatabaseHelper db;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private TextView email, names;
@@ -67,6 +70,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         }
         adapter = new ShowCustomTypesRecyclerViewAdapter(view.getContext(), typeFilter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -76,12 +80,11 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         recyclerView.removeViewAt(position);
         adapter.notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, typeFilter.size());
-        adapter.notifyDataSetChanged();
-        //database delete method
-        startRecycler();
+        Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
     }
 
     private void initialiseElements() {
+        db = DatabaseHelper.getInstance(view.getContext());
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         email = (TextView)view.findViewById(R.id.profile_email);

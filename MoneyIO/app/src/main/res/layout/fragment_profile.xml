@@ -5,16 +5,6 @@
     android:id="@+id/fragment_profile">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profile Settings"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:fontFamily="serif"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-
-    <TextView
         android:id="@+id/profile_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
