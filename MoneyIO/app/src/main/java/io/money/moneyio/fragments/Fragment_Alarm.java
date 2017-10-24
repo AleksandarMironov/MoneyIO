@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,14 +37,18 @@ public class Fragment_Alarm extends Fragment {
             public void onClick(View v) {
 
                 final Intent myIntent = new Intent(view.getContext(), AlarmReceiver.class);
+                final Intent myIntent2 = new Intent(view.getContext(), AlarmReceiver.class);
 
                 // Get the alarm manager service
                 AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(ALARM_SERVICE);
                 myIntent.putExtra("message", "test text send");
                 PendingIntent pending_intent = PendingIntent.getBroadcast(view.getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+                myIntent2.putExtra("message", "second notification");
+                PendingIntent pending_intent2 = PendingIntent.getBroadcast(view.getContext(), 0, myIntent2, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 600, pending_intent); // 1 min alarm !!!!!!!!!!!!!!!!!!!!!!!!!1
+                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 60000, pending_intent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 120000, pending_intent2);
                 //Utilities.notifyMe(view.getContext(), "Working :)");
             }
         });

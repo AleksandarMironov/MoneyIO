@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         drawerDropMenuCreator();
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
+        readDatabase();
     }
 
     private static void setCurrentFragment(String s) {
@@ -89,7 +90,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnQuit.setOnClickListener(this);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         myDatabaseRef = FirebaseDatabase.getInstance().getReference().child(firebaseAuth.getCurrentUser().getUid());
-        readDatabase();
         statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
     }
@@ -275,8 +275,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 exit();
                 break;
             case R.id.home_toolbar_statistics_icon_btn:
-                loadFragment(new Fragment_DataHistory());
-                setCurrentFragment("My Stats");
+                drawerMenuButtonsAction("My Stats", new Fragment_DataHistory());
+                break;
         }
     }
 
