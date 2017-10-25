@@ -17,11 +17,6 @@ import java.util.ArrayList;
 import io.money.moneyio.activities.MainActivity;
 
 public class Utilities {
-    //keep data sync offline
-//    static {
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-//    }
-
     public static ArrayList<MoneyFlow> data;
 
     public static boolean checkString(String str){

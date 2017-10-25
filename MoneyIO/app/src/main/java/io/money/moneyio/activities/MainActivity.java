@@ -41,6 +41,7 @@ import io.money.moneyio.model.Utilities;
 
 public class MainActivity extends AppCompatActivity {
 
+    static boolean isFirebasePersistence = false;
     private static final int REQUEST_PERMISSION = 1;
     private static String[] PERMISSIONS= {
             Manifest.permission.INTERNET,
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setPersistence();
         removeActionBar();
         verifyPermissions(this);
         initialiseElements();
@@ -70,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
         keyboardHideListener();
         loginBtnListener();
     }
+
+    //keep data sync offline
+    private void setPersistence(){
+        if(!isFirebasePersistence){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            isFirebasePersistence = true;
+        }
+    }
+
 
     private void initialiseElements(){
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
