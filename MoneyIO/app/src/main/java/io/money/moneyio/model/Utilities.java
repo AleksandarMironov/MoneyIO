@@ -14,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import io.money.moneyio.activities.MainActivity;
+
 public class Utilities {
     //keep data sync offline
 //    static {
@@ -34,7 +36,7 @@ public class Utilities {
     }
 
     public static void notifyMe(Context context, String message){
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent("io.money.moneyio.activities.MainActivity"), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context.getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)

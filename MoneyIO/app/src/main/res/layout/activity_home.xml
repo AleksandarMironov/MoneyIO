@@ -10,7 +10,8 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:background="#69BF6A">
 
         <LinearLayout
@@ -47,11 +48,18 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/dlContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="25"
         android:layout_below="@+id/tbHeader">
 
         <FrameLayout

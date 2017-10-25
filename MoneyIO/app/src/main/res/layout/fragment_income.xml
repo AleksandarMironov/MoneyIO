@@ -136,7 +136,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:hint="Insert comment about your submission" />
+            android:hint="Insert comment" />
 
     </LinearLayout>
 
