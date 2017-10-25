@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterMailActivity" />
-        <activity android:name=".activities.HomeActivity"/>
+        <activity android:name=".activities.HomeActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <receiver android:name=".model.AlarmReceiver"
             android:enabled="true" />

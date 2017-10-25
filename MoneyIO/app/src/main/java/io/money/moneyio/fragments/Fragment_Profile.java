@@ -116,15 +116,12 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     return;
                 }
 
-                if (checked.equalsIgnoreCase("income")) {
-                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "FALSE", typeNew, R.mipmap.ic_launcher);
-                    Toast.makeText(view.getContext(), "Income type added", Toast.LENGTH_SHORT).show();
+                boolean ch = db.addType(firebaseUser.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.mipmap.ic_launcher);
+                if(ch) {
+                    Toast.makeText(view.getContext(), "Type added", Toast.LENGTH_SHORT).show();
                     startRecycler();
-
-                } else if(checked.equalsIgnoreCase("outcome")) {
-                    DatabaseHelper.getInstance(view.getContext()).addType(firebaseUser.getUid(), "TRUE", typeNew, R.mipmap.ic_launcher);
-                    Toast.makeText(view.getContext(), "Outcome type added", Toast.LENGTH_SHORT).show();
-                    startRecycler();
+                } else {
+                    Toast.makeText(view.getContext(), "Already exists", Toast.LENGTH_SHORT).show();
                 }
             }
         });
