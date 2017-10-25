@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T_SETINGS_COL_3 = "type";
     private static final String T_SETINGS_COL_4 = "imageid";
 
-    private static final String USERS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS" + TABLE_SETINGS +
+    private static final String USERS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETINGS +
             " (" + T_SETINGS_COL_1 + " TEXT, " +
             T_SETINGS_COL_2 + " TEXT, " +
             T_SETINGS_COL_3 + " TEXT, " +
