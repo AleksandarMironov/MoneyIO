@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private RecyclerView recyclerView;
     private ArrayList<Type> typeFilter;
     private ShowCustomTypesRecyclerViewAdapter adapter;
+    private long mLastClickTime;
 
     @Nullable
     @Override
@@ -56,6 +58,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         startRecycler();
         addType();
         keyboardHideListener();
+        mLastClickTime = SystemClock.elapsedRealtime();
         return view;
     }
 
@@ -76,6 +79,10 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     @Override
     public void onItemClick(View view, int position) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 700){
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         db.deleteType(firebaseUser.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
         typeFilter.remove(position);
         recyclerView.removeViewAt(position);
