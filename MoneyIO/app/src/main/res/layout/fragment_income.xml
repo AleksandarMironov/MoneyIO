@@ -15,6 +15,7 @@
             android:textColor="#000000"
             android:text="Insert price"
             android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:textSize="35sp"/>
     </LinearLayout>
 
