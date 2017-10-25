@@ -40,6 +40,9 @@ import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Utilities;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 import static android.R.id.list;
 
@@ -64,6 +67,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
         readDatabase();
+        showCaseView();
+    }
+
+    private void showCaseView() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(400);
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, firebaseAuth.getCurrentUser().getUid());
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(sandwichButton,
+                "By clicking this button, you open the application menu.", "GOT IT");
+
+        sequence.addSequenceItem(statisticsButton,
+                "By clicking this button, you can check some statistics about you incomes and expenses.", "GOT IT");
+
+        sequence.start();
     }
 
     private static void setCurrentFragment(String s) {
