@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -37,7 +39,9 @@ public class Fragment_Statistics extends Fragment {
 
     private View view;
     private PieChart pie;
-    private Button incomeExpenseYear;
+    private CombinedChart combinedChart;
+    private HorizontalBarChart horizontalBarChart;
+    private Button incomeExpenseYearBtn, incomeExpenseMonthBtn, incomeExpenseDayBtn;
 
     @Nullable
     @Override
@@ -45,13 +49,42 @@ public class Fragment_Statistics extends Fragment {
         view = inflater.inflate(R.layout.fragment_statistics, container, false);
         initialise();
         incomeExpenseYearListener();
+        incomeExpenseMonthListener();
+        incomeExpenseDayListener();
         return view;
     }
 
-    private void incomeExpenseYearListener() {
-        incomeExpenseYear.setOnClickListener(new View.OnClickListener() {
+    private void incomeExpenseMonthListener() {
+        incomeExpenseMonthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                combinedChart.setVisibility(View.GONE);
+                pie.setVisibility(View.VISIBLE);
+                horizontalBarChart.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void incomeExpenseDayListener() {
+        incomeExpenseDayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                combinedChart.setVisibility(View.GONE);
+                pie.setVisibility(View.GONE);
+                horizontalBarChart.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void incomeExpenseYearListener() {
+        incomeExpenseYearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                combinedChart.setVisibility(View.VISIBLE);
+                pie.setVisibility(View.VISIBLE);
+                horizontalBarChart.setVisibility(View.VISIBLE);
+
                 pie.setUsePercentValues(true);
                 pie.setContentDescription("TEST");
                 pie.setHoleColor(Color.YELLOW);
@@ -103,6 +136,10 @@ public class Fragment_Statistics extends Fragment {
 
     private void initialise() {
         pie = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
-        incomeExpenseYear = (Button)view.findViewById(R.id.statistics_income_expense_year);
+        combinedChart = (CombinedChart)view.findViewById(R.id.statistics_income_expense_year_combined);
+        horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
+        incomeExpenseYearBtn = (Button)view.findViewById(R.id.statistics_year_btn);
+        incomeExpenseMonthBtn = (Button)view.findViewById(R.id.statistics_month_btn);
+        incomeExpenseDayBtn = (Button)view.findViewById(R.id.statistics_day_btn);
     }
 }
