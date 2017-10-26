@@ -204,10 +204,10 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow("true", type.getType(), Double.parseDouble(price)));
+                finalMyRef.push().setValue(new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             } else {
-                finalMyRef.push().setValue(new MoneyFlow("true", type.getType(), com, Double.parseDouble(price)));
+                finalMyRef.push().setValue(new MoneyFlow("true", type.getType(), com,  Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();

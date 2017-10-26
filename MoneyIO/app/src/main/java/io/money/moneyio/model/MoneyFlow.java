@@ -8,12 +8,12 @@ public class MoneyFlow {
     private String type;
     private long calendar;
     private String comment;
-    private double sum;
+    private float sum;
 
     public MoneyFlow() {
     }
 
-    public MoneyFlow(String expense, String type, String comment, double sum) {
+    public MoneyFlow(String expense, String type, String comment, float sum) {
         this.expense = expense;
         this.type = type;
         this.calendar = Calendar.getInstance().getTimeInMillis();
@@ -21,7 +21,7 @@ public class MoneyFlow {
         this.sum = sum;
     }
 
-    public MoneyFlow(String expense, String type, double sum) {
+    public MoneyFlow(String expense, String type, float sum) {
         this(expense, type, "", sum);
     }
 
@@ -41,7 +41,7 @@ public class MoneyFlow {
         return comment;
     }
 
-    public double getSum() {
+    public float getSum() {
         return sum;
     }
 }

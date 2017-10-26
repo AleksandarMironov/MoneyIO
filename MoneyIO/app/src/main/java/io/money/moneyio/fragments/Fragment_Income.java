@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -205,10 +206,10 @@ public class Fragment_Income extends Fragment implements View.OnClickListener, T
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), Double.parseDouble(price)));
+                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             } else {
-                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), com, Double.parseDouble(price)));
+                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();

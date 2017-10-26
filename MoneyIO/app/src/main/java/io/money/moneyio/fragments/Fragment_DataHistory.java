@@ -107,6 +107,7 @@ public class Fragment_DataHistory extends Fragment {
                     if(start <= f.getCalendar() && f.getCalendar() <= end){
                         a.add(f);
                     } else if(f.getCalendar() > end){
+                    } else if(f.getCalendar() > end){
                         break;
                     }
                 }
@@ -122,7 +123,7 @@ public class Fragment_DataHistory extends Fragment {
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         1);
 
-                dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
+//                dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
 
                 dialog.show();
             }

@@ -24,12 +24,10 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.DatabaseHelper;
-import io.money.moneyio.model.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.ShowCustomTypesRecyclerViewAdapter;
 import io.money.moneyio.model.Type;
 import io.money.moneyio.model.Utilities;

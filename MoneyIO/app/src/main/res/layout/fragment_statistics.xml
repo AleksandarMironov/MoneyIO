@@ -3,9 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.jjoe64.graphview.GraphView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:id="@+id/graph" />
+        android:id="@+id/statistics_pie"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pie">
+
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <!--<com.jjoe64.graphview.GraphView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dip"-->
+        <!--android:id="@+id/graph" />-->
 
 </LinearLayout>
