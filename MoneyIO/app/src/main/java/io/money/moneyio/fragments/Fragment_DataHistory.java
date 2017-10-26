@@ -1,7 +1,9 @@
 package io.money.moneyio.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,9 +57,7 @@ public class Fragment_DataHistory extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
 
                 long start = calendar.getTimeInMillis();
                 long end = start + 1000*60*60*24;
@@ -70,12 +70,13 @@ public class Fragment_DataHistory extends Fragment {
                     }
                 }
                 startRecycler(a);
+                calendar = Calendar.getInstance();
             }
         };
         dayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Dialog, date, calendar
+                new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -88,9 +89,7 @@ public class Fragment_DataHistory extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                calendar.set(year, monthOfYear, 1, 0,0,0);
 
                 long start = calendar.getTimeInMillis();
 
@@ -112,6 +111,7 @@ public class Fragment_DataHistory extends Fragment {
                     }
                 }
                 startRecycler(a);
+                calendar = Calendar.getInstance();
             }
         };
         monthBtn.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +119,13 @@ public class Fragment_DataHistory extends Fragment {
             public void onClick(View v) {
 
 
-                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Dialog, date, calendar
+                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         1);
 
-//                dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
+                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")) != null) {
+                    dialog.getDatePicker().findViewById(getResources().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
+                }
 
                 dialog.show();
             }
@@ -136,9 +138,7 @@ public class Fragment_DataHistory extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, 1);
-                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                calendar.set(year, 1, 1, 0,0,0);
 
                 long start = calendar.getTimeInMillis();
 
@@ -155,21 +155,27 @@ public class Fragment_DataHistory extends Fragment {
                     }
                 }
                 startRecycler(a);
+                calendar = Calendar.getInstance();
             }
         };
         yearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Dialog, date, calendar
+                ///TODO api check
+                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         1);
 
-                dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")).setVisibility(View.GONE);
-                dialog.getDatePicker().findViewById(getResources().getIdentifier("month","id","android")).setVisibility(View.GONE);
+                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")) != null) {
+                    dialog.getDatePicker().findViewById(getResources().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
+                }
+                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("month","id","android")) != null) {
+                    dialog.getDatePicker().findViewById(getResources().getIdentifier("month","id","android")).setVisibility(View.GONE);
+                }
 
                 dialog.show();
+
             }
         });
     }
