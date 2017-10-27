@@ -1,4 +1,4 @@
-package io.money.moneyio.model;
+package io.money.moneyio.model.utilities;
 
 
 import java.util.Calendar;
@@ -10,6 +10,7 @@ public class MoneyFlow {
     private String comment;
     private float sum;
 
+    //this constructor is required for firebase
     public MoneyFlow() {
     }
 

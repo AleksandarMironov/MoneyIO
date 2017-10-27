@@ -1,4 +1,4 @@
-package io.money.moneyio.model;
+package io.money.moneyio.model.recyclers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.utilities.Alarm;
 
 public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecyclerViewAdapter.MyViewHolder> {
 

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,14 +23,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.Alarm;
-import io.money.moneyio.model.AlarmsRecyclerViewAdapter;
-import io.money.moneyio.model.DatabaseHelper;
-import io.money.moneyio.model.ShowCustomTypesRecyclerViewAdapter;
-import io.money.moneyio.model.Type;
+import io.money.moneyio.model.utilities.Alarm;
+import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
+import io.money.moneyio.model.database.DatabaseHelper;
 import io.money.moneyio.model.receivers.AlarmReceiver;
-import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.Utilities;
 
 import static android.content.Context.ALARM_SERVICE;
 

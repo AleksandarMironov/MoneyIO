@@ -11,12 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,13 +36,10 @@ import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
-import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.Utilities;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
-
-import static android.R.id.list;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
-    DatabaseReference myDatabaseRef;
+    private DatabaseReference myDatabaseRef;
     private static TextView currentFragment;
 
     @Override

@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

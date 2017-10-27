@@ -9,18 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.Utilities;
 
 
 public class Fragment_Statistics extends Fragment {
@@ -115,12 +115,17 @@ public class Fragment_Statistics extends Fragment {
                 colors.add(Color.GREEN);
                 pieDataSet.setColors(colors);
                 pieDataSet.setSliceSpace(5);
-                pieDataSet.setValueFormatter(new DefaultValueFormatter(2));
+
                 pieDataSet.setValueTextSize(15f);
 //        pieDataSet.setSelectionShift(15f);
                 pieDataSet.setValueTextColor(Color.BLACK);
                 PieData pieData = new PieData(pieDataSet);
-
+                pieDataSet.setValueFormatter(new IValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                        return (int) Math.floor(value) + "%";
+                    }
+                });
                 Description a = new Description();
                 a.setText("");
                 pie.setDescription(a);

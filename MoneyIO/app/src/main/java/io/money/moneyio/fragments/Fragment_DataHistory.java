@@ -1,9 +1,7 @@
 package io.money.moneyio.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,15 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.HistoryRecyclerViewAdapter;
-import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
+import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class Fragment_DataHistory extends Fragment {
 

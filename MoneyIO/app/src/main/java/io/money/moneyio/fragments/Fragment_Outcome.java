@@ -25,10 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.DatabaseHelper;
-import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.Type;
-import io.money.moneyio.model.TypeRecyclerViewAdapter;
+import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.recyclers.TypeRecyclerViewAdapter;
 
 public class Fragment_Outcome extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
 

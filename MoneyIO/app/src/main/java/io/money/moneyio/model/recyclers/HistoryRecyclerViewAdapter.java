@@ -1,4 +1,4 @@
-package io.money.moneyio.model;
+package io.money.moneyio.model.recyclers;
 
 
 import android.content.Context;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.utilities.MoneyFlow;
 
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.MyHolder>{
 

@@ -1,4 +1,4 @@
-package io.money.moneyio.model;
+package io.money.moneyio.model.database;
 
 
 import android.content.ContentValues;
@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.utilities.Alarm;
+import io.money.moneyio.model.utilities.Type;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 

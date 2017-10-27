@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class RegisterMailActivity extends AppCompatActivity {
 

@@ -10,8 +10,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import io.money.moneyio.model.Alarm;
-import io.money.moneyio.model.DatabaseHelper;
+import io.money.moneyio.model.utilities.Alarm;
+import io.money.moneyio.model.database.DatabaseHelper;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 

@@ -2,8 +2,6 @@ package io.money.moneyio.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -27,10 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.DatabaseHelper;
-import io.money.moneyio.model.ShowCustomTypesRecyclerViewAdapter;
-import io.money.moneyio.model.Type;
-import io.money.moneyio.model.Utilities;
+import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.recyclers.ShowCustomTypesRecyclerViewAdapter;
+import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecyclerViewAdapter.ItemClickListener{
 
