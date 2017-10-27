@@ -10,11 +10,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Set time:"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/alarm_time_set_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/alarm_date_set_edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/alarm_add_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="add"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/alarm_massage_set_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="1"
+            android:hint="Massage" />
+
+    </android.support.design.widget.TextInputLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alarms"
-        android:gravity="center" />
+        android:text="Remingers"
+        android:gravity="center"
+        android:textStyle="bold"
+        />
 
 
     <android.support.v7.widget.RecyclerView

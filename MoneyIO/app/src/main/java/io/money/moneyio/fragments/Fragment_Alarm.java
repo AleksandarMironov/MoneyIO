@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,9 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private long mLastClickTime;
     private AlarmsRecyclerViewAdapter adapter;
     private ArrayList<Alarm> alarms;
+    private EditText dateEdit, timeEdit, massageEdit;
+    private Button addAlarmBtn;
+    private Calendar calendar;
 
     @Nullable
     @Override
@@ -78,7 +82,15 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_alarms);
         db = DatabaseHelper.getInstance(view.getContext());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        calendar = Calendar.getInstance();
         mLastClickTime = SystemClock.elapsedRealtime();
+        dateEdit = view.findViewById(R.id.alarm_date_set_edit);
+        dateEdit.setText("Day: " + Calendar.DAY_OF_MONTH);
+        timeEdit = view.findViewById(R.id.alarm_time_set_edit);
+        timeEdit.setText("Time:" + Calendar.HOUR_OF_DAY + " : " + Calendar.MINUTE);
+        massageEdit = view.findViewById(R.id.alarm_massage_set_edit);
+        addAlarmBtn = view.findViewById(R.id.alarm_add_btn);
+
     }
 
     private void startRecycler() {
@@ -102,5 +114,14 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         adapter.notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, alarms.size());
         Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onTimeEditClickListener(){
+        timeEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
