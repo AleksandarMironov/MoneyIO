@@ -61,7 +61,6 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void startRecycler() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_profile);
         final ArrayList<Type> types = DatabaseHelper.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid());
         typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
@@ -90,6 +89,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void initialiseElements() {
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_profile);
         db = DatabaseHelper.getInstance(view.getContext());
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

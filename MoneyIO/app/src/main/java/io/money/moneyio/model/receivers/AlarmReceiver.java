@@ -1,9 +1,11 @@
-package io.money.moneyio.model;
+package io.money.moneyio.model.receivers;
 
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import io.money.moneyio.model.Utilities;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

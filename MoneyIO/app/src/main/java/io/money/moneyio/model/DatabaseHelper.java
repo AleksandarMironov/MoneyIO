@@ -19,18 +19,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static int DATABASE_VERSION = 1;
 
     private static final String TABLE_SETINGS = "user_setings";
+    private static final String TABLE_ALARMS = "user_alarms";
 
-    private static final String T_SETINGS_COL_1 = "user";
-    private static final String T_SETINGS_COL_2 = "category";
-    private static final String T_SETINGS_COL_3 = "type";
-    private static final String T_SETINGS_COL_4 = "imageid";
+    private static final String T_SETTINGS_COL_1 = "user";
+    private static final String T_SETTINGS_COL_2 = "category";
+    private static final String T_SETTINGS_COL_3 = "type";
+    private static final String T_SETTINGS_COL_4 = "imageid";
 
-    private static final String USERS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETINGS +
-            " (" + T_SETINGS_COL_1 + " TEXT, " +
-            T_SETINGS_COL_2 + " TEXT, " +
-            T_SETINGS_COL_3 + " TEXT, " +
-            T_SETINGS_COL_4 + " INTEGER," +
-            " PRIMARY KEY (" + T_SETINGS_COL_1 + ", " + T_SETINGS_COL_2 + ", " + T_SETINGS_COL_3  + "))";
+    private static final String T_ALARMS_COL_1 = "user";
+    private static final String T_ALARMS_COL_2 = "date";
+    private static final String T_ALARMS_COL_3 = "hour";
+    private static final String T_ALARMS_COL_4 = "minutes";
+    private static final String T_ALARMS_COL_5 = "massage";
+
+    private static final String SETTINGS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETINGS +
+            " (" + T_SETTINGS_COL_1 + " TEXT, " +
+            T_SETTINGS_COL_2 + " TEXT, " +
+            T_SETTINGS_COL_3 + " TEXT, " +
+            T_SETTINGS_COL_4 + " INTEGER," +
+            " PRIMARY KEY (" +
+            T_SETTINGS_COL_1 + ", " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 +
+            "));";
+
+    private static final String ALARMS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_ALARMS +
+            " (" + T_ALARMS_COL_1 + " TEXT, " +
+            T_ALARMS_COL_2 + " INTEGER, " +
+            T_ALARMS_COL_3 + " INTEGER, " +
+            T_ALARMS_COL_4 + " INTEGER," +
+            T_ALARMS_COL_5 + " TEXT," +
+            " PRIMARY KEY (" +
+            T_ALARMS_COL_1 + ", " + T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 +  ", " + T_ALARMS_COL_4 +  ", " + T_ALARMS_COL_4 +
+            "));";
 
 
     private DatabaseHelper(Context context) {
@@ -39,7 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(USERS_TABLE_CREATE);
+        db.execSQL(SETTINGS_TABLE_CREATE);
+        db.execSQL(ALARMS_TABLE_CREATE);
     }
 
     @Override
@@ -54,13 +74,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return instance;
     }
 
+    public boolean addAlarm(String user, Integer date, Integer hour, Integer minutes, String massage) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(T_ALARMS_COL_1, user);
+        contentValues.put(T_ALARMS_COL_2, date);
+        contentValues.put(T_ALARMS_COL_3, hour);
+        contentValues.put(T_ALARMS_COL_4, minutes);
+        contentValues.put(T_ALARMS_COL_5, massage);
+
+        long b = db.insert(TABLE_ALARMS, null, contentValues);
+        return (b != -1);
+    }
+
+    public void deleteAlarm(String user, Integer date, Integer hour, Integer minutes, String massage) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "DELETE FROM " + TABLE_ALARMS
+                + " WHERE " +
+                T_ALARMS_COL_1 + " = \"" + user + "\" AND " +
+                T_ALARMS_COL_2 + " = \"" + date + "\" AND " +
+                T_ALARMS_COL_3 + " = \"" + hour + "\" AND " +
+                T_ALARMS_COL_4 + " = \"" + minutes + "\" AND " +
+                T_ALARMS_COL_5 + " = \"" + massage + "\";";
+        db.execSQL(myRawQuery);
+    }
+
+    public ArrayList<Alarm> getUserAlarms(String userID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String myRawQuery = "SELECT " +
+                T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 + ", " + T_ALARMS_COL_4 + ", " + T_ALARMS_COL_5
+                + " FROM " + TABLE_ALARMS + " WHERE " + T_ALARMS_COL_1 + " = \"" + userID + "\";";
+        Cursor c = db.rawQuery(myRawQuery, null);
+        c.moveToFirst();
+        ArrayList<Alarm> out = new ArrayList<>();
+        out.add(new Alarm(1,1,1,"no"));    //////////////////////////for test
+        for (int i = 0; i < c.getCount(); i++){
+            c.moveToPosition(i);
+            out.add(new Alarm(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3)));
+        }
+        c.close();
+        return out;
+    }
+
     public boolean addType(String user, String category, String type, Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(T_SETINGS_COL_1, user);
-        contentValues.put(T_SETINGS_COL_2, category);
-        contentValues.put(T_SETINGS_COL_3, type);
-        contentValues.put(T_SETINGS_COL_4, id);
+        contentValues.put(T_SETTINGS_COL_1, user);
+        contentValues.put(T_SETTINGS_COL_2, category);
+        contentValues.put(T_SETTINGS_COL_3, type);
+        contentValues.put(T_SETTINGS_COL_4, id);
 
         long b = db.insert(TABLE_SETINGS, null, contentValues);
         return (b != -1);
@@ -69,15 +131,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteType(String userID, String category, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "DELETE FROM " + TABLE_SETINGS
-                + " WHERE " + T_SETINGS_COL_1 + " = \"" + userID + "\" AND " + T_SETINGS_COL_2 + " = \"" + category + "\" AND " +
-                T_SETINGS_COL_3 + " = \"" + type + "\";";
+                + " WHERE " + T_SETTINGS_COL_1 + " = \"" + userID + "\" AND " + T_SETTINGS_COL_2 + " = \"" + category + "\" AND " +
+                T_SETTINGS_COL_3 + " = \"" + type + "\";";
         db.execSQL(myRawQuery);
     }
 
     public ArrayList<Type> getUserTypes(String userID){
         SQLiteDatabase db = this.getReadableDatabase();
-        String myRawQuery = "SELECT " + T_SETINGS_COL_2  + ", " + T_SETINGS_COL_3  + ", " + T_SETINGS_COL_4
-                + " FROM " + TABLE_SETINGS + " WHERE " + T_SETINGS_COL_1 + " = \"" + userID + "\";";
+        String myRawQuery = "SELECT " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 + ", " + T_SETTINGS_COL_4
+                + " FROM " + TABLE_SETINGS + " WHERE " + T_SETTINGS_COL_1 + " = \"" + userID + "\";";
         Cursor c = db.rawQuery(myRawQuery, null);
         c.moveToFirst();
         ArrayList<Type> out = new ArrayList<>();
