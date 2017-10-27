@@ -69,7 +69,7 @@
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/statistics_income_expense_year_horizontal_bar_chart"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"></com.github.mikephil.charting.charts.HorizontalBarChart>
+                android:layout_height="600dp"></com.github.mikephil.charting.charts.HorizontalBarChart>
 
         </LinearLayout>
 
