@@ -185,8 +185,11 @@ public class Fragment_Statistics extends Fragment {
 
                 xAxis.setDrawGridLines(true);
                 xAxis.setDrawAxisLine(true);
+
                 BarDataSet barDataSet = new BarDataSet(horizontalBarChartArr, "Day Expenses");
                 barDataSet.setColors(Color.RED);
+
+
                 BarData data = new BarData(barDataSet);
                 data.setBarWidth(9f);
                 horizontalBarChart.setDoubleTapToZoomEnabled(false);

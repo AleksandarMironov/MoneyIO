@@ -30,7 +30,7 @@ public class Fragment_DataHistory extends Fragment {
     private View view;
     private RecyclerView recyclerView;
     private Calendar calendar;
-    private Button dayBtn, monthBtn, yearBtn;
+    private Button dayBtn, monthBtn, yearBtn, pickDateBtn;
     private TextView currentDatePicked;
     private MonthYearPicker monthYearPicker;
     private ArrayList<MoneyFlow> filteredArr;
@@ -56,109 +56,143 @@ public class Fragment_DataHistory extends Fragment {
         monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
         currentDatePicked = (TextView)view.findViewById(R.id.history_current_date_picked);
-
+        pickDateBtn = (Button)view.findViewById(R.id.history_pick_date_btn);
     }
 
     private void setDayBtnFilter(){
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
-
-                long start = calendar.getTimeInMillis();
-                long end = start + 1000*60*60*24;
-                filterData(start, end);
-                startRecycler(filteredArr);
-                calendar = Calendar.getInstance();
-            }
-        };
         dayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new DatePickerDialog(view.getContext(), date, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-    }
+            public void onClick(final View view) {
 
-    private void setMonthBtnFilter(){
-        monthBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
-                {
+                pickDateBtn.setText("Pick date");
+                currentDatePicked.setText("Picked date");
+
+                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
 
                         long start = calendar.getTimeInMillis();
-
-                        if(monthYearPicker.getSelectedMonth() == 12){
-                            calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
-                            calendar.set(Calendar.MONTH, 1);
-                        } else {
-                            calendar.set(Calendar.MONTH, monthYearPicker.getSelectedMonth() + 1);
-                        }
-                        long end = calendar.getTimeInMillis();
-
+                        long end = start + 1000*60*60*24;
                         filterData(start, end);
                         startRecycler(filteredArr);
                         calendar = Calendar.getInstance();
-                        monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
-
-                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                pickDateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    public void onClick(View v) {
+                        new DatePickerDialog(view.getContext(), date, calendar
+                                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                                calendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
-                };
-
-                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, true);
-                monthYearPicker.show();
+                });
             }
         });
+
+    }
+
+    private void setMonthBtnFilter(){
+
+        monthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                currentDatePicked.setText("Picked month");
+                pickDateBtn.setText("Pick month");
+
+                pickDateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
+
+                                long start = calendar.getTimeInMillis();
+
+                                if(monthYearPicker.getSelectedMonth() == 12){
+                                    calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+                                    calendar.set(Calendar.MONTH, 1);
+                                } else {
+                                    calendar.set(Calendar.MONTH, monthYearPicker.getSelectedMonth() + 1);
+                                }
+                                long end = calendar.getTimeInMillis();
+
+                                filterData(start, end);
+                                startRecycler(filteredArr);
+                                calendar = Calendar.getInstance();
+                                monthYearPicker = new MonthYearPicker(view.getContext());
+                            }
+                        };
+
+                        DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                monthYearPicker = new MonthYearPicker(view.getContext());
+                            }
+                        };
+
+                        monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, true);
+                        monthYearPicker.show();
+                    }
+                });
+            }
+        });
+
+
     }
 
     private void setYearBtnFilter(){
 
         yearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
-                {
+            public void onClick(final View view) {
+
+                currentDatePicked.setText("Picked year");
+                pickDateBtn.setText("Pick year");
+
+                pickDateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
+                    public void onClick(View v) {
 
-                        long start = calendar.getTimeInMillis();
+                        DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
 
-                        calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+                                long start = calendar.getTimeInMillis();
 
-                        long end = calendar.getTimeInMillis();
-                        filterData(start, end);
-                        startRecycler(filteredArr);
-                        calendar = Calendar.getInstance();
-                        monthYearPicker = new MonthYearPicker(view.getContext());
+                                calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+
+                                long end = calendar.getTimeInMillis();
+                                filterData(start, end);
+                                startRecycler(filteredArr);
+                                calendar = Calendar.getInstance();
+                                monthYearPicker = new MonthYearPicker(view.getContext());
+                            }
+                        };
+
+                        DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                monthYearPicker = new MonthYearPicker(view.getContext());
+                            }
+                        };
+
+                        monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, false, true);
+                        monthYearPicker.show();
                     }
-                };
-
-                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        monthYearPicker = new MonthYearPicker(view.getContext());
-                    }
-                };
-
-                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, false, true);
-                monthYearPicker.show();
-
+                });
             }
         });
+
+
     }
 
     private void filterData(long start, long end){
