@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,9 +29,7 @@ public class FragmentTab_Day extends Fragment {
     private View view;
     private RecyclerView recyclerView;
     private Calendar calendar;
-    private Button pickDateBtn;
-    private TextView currentDatePicked;
-    private MonthYearPicker monthYearPicker;
+    private EditText editDate;
     private ArrayList<MoneyFlow> filteredArr;
 
     @Nullable
@@ -38,30 +37,28 @@ public class FragmentTab_Day extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_day_datahistory, container, false);
         initialiseElements();
-        setDayBtnFilter();
+        setFilter();
         filterData(calendar.getTimeInMillis() - 1000*60*60*24, calendar.getTimeInMillis()); //da se napravi za konkreten den
         startRecycler(filteredArr);
         return view;
     }
 
+    // needed for tab view
     public interface OnFragmentInteractionListener {
         public void onFragmentInteractionHome(Uri uri);
     }
 
-
     private void initialiseElements() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.history_recycler_view);
+        recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
-        monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
-        currentDatePicked = (TextView)view.findViewById(R.id.history_current_date_picked);
-        pickDateBtn = (Button)view.findViewById(R.id.history_pick_date_btn);
-        pickDateBtn.setText("Pick date");
-        currentDatePicked.setText("Picked date");
+        editDate = view.findViewById(R.id.history_date_edit);
+        editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
+                        (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
     }
 
 
-        private void setDayBtnFilter(){
+        private void setFilter(){
 
             final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -69,21 +66,19 @@ public class FragmentTab_Day extends Fragment {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
                                       int dayOfMonth) {
                     calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
-
                     long start = calendar.getTimeInMillis();
                     long end = start + 1000*60*60*24;
                     filterData(start, end);
                     startRecycler(filteredArr);
+                    editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                     calendar = Calendar.getInstance();
                 }
             };
 
-            pickDateBtn.setOnClickListener(new View.OnClickListener() {
+            editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                pickDateBtn.setText("Pick date");
-                currentDatePicked.setText("Picked date");
                         new DatePickerDialog(view.getContext(), date, calendar
                                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                                 calendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -91,7 +86,7 @@ public class FragmentTab_Day extends Fragment {
         });
     }
 
-        private void filterData(long start, long end){
+    private void filterData(long start, long end){
         filteredArr = new ArrayList<>();
         for (MoneyFlow f: Utilities.data) {
             if(start <= f.getCalendar() && f.getCalendar() <= end){
@@ -101,6 +96,7 @@ public class FragmentTab_Day extends Fragment {
             }
         }
     }
+
     // must add AsyncTask!
     private void startRecycler(ArrayList<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);

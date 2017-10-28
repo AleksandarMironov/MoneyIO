@@ -10,8 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,40 +26,38 @@ public class FragmentTab_Year extends Fragment {
     private View view;
     private RecyclerView recyclerView;
     private Calendar calendar;
-    private Button pickDateBtn;
-    private TextView currentDatePicked;
+    private EditText editDate;
     private MonthYearPicker monthYearPicker;
     private ArrayList<MoneyFlow> filteredArr;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.tab_fragment_year_datahistroy, container, false);
+        view = inflater.inflate(R.layout.tab_fragment_day_datahistory, container, false);
         initialiseElements();
         setYearBtnFilter();
-        filterData(calendar.getTimeInMillis() - 1000*60*60*24, calendar.getTimeInMillis()); //da se napravi za konkretnata godina
+        filterDataOnStart();
         startRecycler(filteredArr);
         return view;
     }
 
+    // needed for tab view
     public interface OnFragmentInteractionListener {
         public void onFragmentInteractionHome(Uri uri);
     }
 
     private void initialiseElements() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.history_recycler_view);
+        recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
-        currentDatePicked = (TextView)view.findViewById(R.id.history_current_date_picked);
-        pickDateBtn = (Button)view.findViewById(R.id.history_pick_date_btn);
-        currentDatePicked.setText("Picked year");
-        pickDateBtn.setText("Pick year");
+        editDate = view.findViewById(R.id.history_date_edit);
+        editDate.setText("Picked: " + calendar.get(Calendar.YEAR));
     }
 
     private void setYearBtnFilter(){
 
-        pickDateBtn.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
@@ -78,6 +75,7 @@ public class FragmentTab_Year extends Fragment {
                                 filterData(start, end);
                                 startRecycler(filteredArr);
                                 calendar = Calendar.getInstance();
+                                editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
                                 monthYearPicker = new MonthYearPicker(view.getContext());
                             }
                         };
@@ -95,7 +93,18 @@ public class FragmentTab_Year extends Fragment {
                 });
             }
 
-        private void filterData(long start, long end){
+    private void filterDataOnStart(){
+        long end = calendar.getTimeInMillis();
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long start = calendar.getTimeInMillis();
+        filterData(start, end);
+    }
+
+    private void filterData(long start, long end){
         filteredArr = new ArrayList<>();
         for (MoneyFlow f: Utilities.data) {
             if(start <= f.getCalendar() && f.getCalendar() <= end){
