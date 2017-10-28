@@ -118,7 +118,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
                     }
                 };
 
-                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, true);
+                monthYearPicker.build(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick,false, true, true);
                 monthYearPicker.show();
             }
         });

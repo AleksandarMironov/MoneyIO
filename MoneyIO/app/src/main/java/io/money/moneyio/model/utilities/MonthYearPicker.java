@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import io.money.moneyio.R;
@@ -34,18 +35,24 @@ public class MonthYearPicker {
     private boolean build = false;
     private NumberPicker monthNumberPicker;
     private NumberPicker yearNumberPicker;
+    private NumberPicker dayNumberPicker;
     private int currentYear;
     private int currentMonth;
+    private int currentDay;
+    private LinearLayout dayLinear, monthLinear, yearLinear;
 
    // create new instance
     public MonthYearPicker(Context activity) {
         this.activity = (Activity)activity;
         this.view = this.activity.getLayoutInflater().inflate(R.layout.month_year_picker_view, null);
+        dayLinear = view.findViewById(R.id.dayNumberPickerLinear);
+        monthLinear = view.findViewById(R.id.monthNumberPickerLinear);
+        yearLinear = view.findViewById(R.id.yearNumberPickerLinear);
     }
 
     //builds the month year alert dialog. Must be build before showing!
     public void build(DialogInterface.OnClickListener positiveButtonListener, DialogInterface.OnClickListener negativeButtonListener) {
-        this.build(-1, -1, positiveButtonListener, negativeButtonListener, true, true);
+        this.build(-1, -1, -1, positiveButtonListener, negativeButtonListener, false, true, true);
     }
 
     /**
@@ -62,10 +69,11 @@ public class MonthYearPicker {
      * @param negativeButtonListener
      *            the negative listener
      */
-    public void build(int selectedMonth, int selectedYear, DialogInterface.OnClickListener positiveButtonListener,
-                      DialogInterface.OnClickListener negativeButtonListener, boolean monthVisibility, boolean yearVisibility) {
+    public void build(int selectedDay, int selectedMonth, int selectedYear, DialogInterface.OnClickListener positiveButtonListener,
+                      DialogInterface.OnClickListener negativeButtonListener, boolean dayVisibility, boolean monthVisibility, boolean yearVisibility) {
 
         Calendar instance = Calendar.getInstance();
+        currentDay = instance.get(Calendar.DAY_OF_MONTH);
         currentMonth = instance.get(Calendar.MONTH);
         currentYear = instance.get(Calendar.YEAR);
 
@@ -88,6 +96,10 @@ public class MonthYearPicker {
         builder = new AlertDialog.Builder(activity);
         builder.setView(view);
 
+        dayNumberPicker  = (NumberPicker) view.findViewById(R.id.dayNumberPicker);
+        dayNumberPicker.setMinValue(1);
+        dayNumberPicker.setMaxValue(31);
+
         monthNumberPicker = (NumberPicker) view.findViewById(R.id.monthNumberPicker);
         monthNumberPicker.setDisplayedValues(PICKER_DISPLAY_MONTHS_NAMES);
 
@@ -98,9 +110,11 @@ public class MonthYearPicker {
         yearNumberPicker.setMinValue(MIN_YEAR);
         yearNumberPicker.setMaxValue(MAX_YEAR);
 
+        dayNumberPicker.setValue(selectedDay);
         monthNumberPicker.setValue(selectedMonth);
         yearNumberPicker.setValue(selectedYear);
 
+        dayNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         monthNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         yearNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
@@ -111,6 +125,8 @@ public class MonthYearPicker {
 
         setMonthVisibility(monthVisibility);
         setYearVisibility(yearVisibility);
+        setDayVisibility(dayVisibility);
+
         build = true;
         pickerDialog = builder.create();
 
@@ -146,9 +162,19 @@ public class MonthYearPicker {
         return PICKER_DISPLAY_MONTHS_NAMES[monthNumberPicker.getValue()];
     }
 
+    //Gets the selected day.
+    public int getSelectedDay() {
+        return dayNumberPicker.getValue();
+    }
+
     //Gets the selected year.
     public int getSelectedYear() {
         return yearNumberPicker.getValue();
+    }
+
+    // Gets the current day.
+    public int getCurrentMontDay() {
+        return currentDay;
     }
 
     //Gets the current year.
@@ -161,6 +187,11 @@ public class MonthYearPicker {
         return currentMonth;
     }
 
+    //Sets the day value changed listener.
+    public void setDayValueChangedListener(NumberPicker.OnValueChangeListener valueChangeListener) {
+        dayNumberPicker.setOnValueChangedListener(valueChangeListener);
+    }
+
     //Sets the month value changed listener.
     public void setMonthValueChangedListener(NumberPicker.OnValueChangeListener valueChangeListener) {
         monthNumberPicker.setOnValueChangedListener(valueChangeListener);
@@ -169,6 +200,11 @@ public class MonthYearPicker {
     //Sets the year value changed listener.
     public void setYearValueChangedListener(NumberPicker.OnValueChangeListener valueChangeListener) {
         yearNumberPicker.setOnValueChangedListener(valueChangeListener);
+    }
+
+    // Sets the day wrap selector wheel.
+    public void setDayWrapSelectorWheel(boolean wrapSelectorWheel) {
+        dayNumberPicker.setWrapSelectorWheel(wrapSelectorWheel);
     }
 
     // Sets the month wrap selector wheel.
@@ -183,17 +219,25 @@ public class MonthYearPicker {
 
     private void setYearVisibility(boolean isVisible){
         if(isVisible){
-            yearNumberPicker.setVisibility(View.VISIBLE);
+            yearLinear.setVisibility(View.VISIBLE);
         } else {
-            yearNumberPicker.setVisibility(View.GONE);
+            yearLinear.setVisibility(View.GONE);
         }
     }
 
     private void setMonthVisibility(boolean isVisible){
         if(isVisible){
-            monthNumberPicker.setVisibility(View.VISIBLE);
+            monthLinear.setVisibility(View.VISIBLE);
         } else {
-            monthNumberPicker.setVisibility(View.GONE);
+            monthLinear.setVisibility(View.GONE);
+        }
+    }
+
+    private void setDayVisibility(boolean isVisible){
+        if(isVisible){
+            dayLinear.setVisibility(View.GONE);
+        } else {
+            dayLinear.setVisibility(View.GONE);
         }
     }
 

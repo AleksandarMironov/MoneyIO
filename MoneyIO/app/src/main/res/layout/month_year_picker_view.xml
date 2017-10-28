@@ -7,6 +7,21 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/dayNumberPickerLinear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <NumberPicker
+            android:id="@+id/dayNumberPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/monthNumberPickerLinear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -20,6 +35,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/yearNumberPickerLinear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
