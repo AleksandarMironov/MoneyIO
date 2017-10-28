@@ -235,7 +235,7 @@ public class MonthYearPicker {
 
     private void setDayVisibility(boolean isVisible){
         if(isVisible){
-            dayLinear.setVisibility(View.GONE);
+            dayLinear.setVisibility(View.VISIBLE);
         } else {
             dayLinear.setVisibility(View.GONE);
         }
