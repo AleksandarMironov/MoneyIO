@@ -1,9 +1,10 @@
 package io.money.moneyio.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,7 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
@@ -50,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser user;
     private DatabaseReference myDatabaseRef;
     private  TextView currentFragment;
+    private Fragment_Outcome fragment_outcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseElements(){
+        fragment_outcome = new Fragment_Outcome();
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
@@ -208,7 +214,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.home_main,fragment);
         ft.commit();
@@ -219,12 +225,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
 
-        } else if (getFragmentManager().findFragmentById(R.id.home_main) instanceof Fragment_Outcome){
+        } else if (fragment_outcome != null && fragment_outcome.isVisible()){
             exit();
-
         } else {
-            Fragment_Outcome homeFragment = new Fragment_Outcome();
-            loadFragment(homeFragment);
+            loadFragment(fragment_outcome);
             setCurrentFragment(getString(R.string.expense));
             statisticsButton.setVisibility(View.VISIBLE);
         }
@@ -270,7 +274,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_outcome_btn:
-                drawerMenuButtonsAction(getString(R.string.expense), new Fragment_Outcome());
+                drawerMenuButtonsAction(getString(R.string.expense), fragment_outcome);
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_statistics_btn:
