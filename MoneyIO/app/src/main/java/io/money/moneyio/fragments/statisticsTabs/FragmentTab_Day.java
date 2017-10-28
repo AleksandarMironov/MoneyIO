@@ -10,10 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +19,6 @@ import java.util.Calendar;
 import io.money.moneyio.R;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.utilities.MoneyFlow;
-import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class FragmentTab_Day extends Fragment {
@@ -38,7 +35,7 @@ public class FragmentTab_Day extends Fragment {
         view = inflater.inflate(R.layout.tab_fragment_day_datahistory, container, false);
         initialiseElements();
         setFilter();
-        filterData(calendar.getTimeInMillis() - 1000*60*60*24, calendar.getTimeInMillis()); //da se napravi za konkreten den
+        filterDataOnStart();
         startRecycler(filteredArr);
         return view;
     }
@@ -84,6 +81,15 @@ public class FragmentTab_Day extends Fragment {
                                 calendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
         });
+    }
+
+    private void filterDataOnStart(){
+        long end = calendar.getTimeInMillis();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long start = calendar.getTimeInMillis();
+        filterData(start, end);
     }
 
     private void filterData(long start, long end){

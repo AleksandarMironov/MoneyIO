@@ -32,6 +32,7 @@ import io.money.moneyio.model.utilities.Alarm;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
 import io.money.moneyio.model.database.DatabaseHelper;
 import io.money.moneyio.model.receivers.AlarmReceiver;
+import io.money.moneyio.model.utilities.Utilities;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -48,6 +49,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private EditText dateEdit, timeEdit, massageEdit;
     private Button addAlarmBtn;
     private Calendar calendar;
+    private int hour, minute, date;
 
     @Nullable
     @Override
@@ -57,7 +59,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         startRecycler();
         onTimeEditClickListener();
         onAddAlarmBtnListener();
-
+        setInitialStateDateTimeFields();
 
         ////////////////////////
        ((Button)view.findViewById(R.id.test_alert)).setOnClickListener(new View.OnClickListener() {
@@ -80,17 +82,18 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     }
 
     private void initialiseElements() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_alarms);
+        recyclerView = view.findViewById(R.id.recycler_alarms);
         db = DatabaseHelper.getInstance(view.getContext());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         calendar = Calendar.getInstance();
         mLastClickTime = SystemClock.elapsedRealtime();
         dateEdit = view.findViewById(R.id.alarm_date_set_edit);
-        dateEdit.setText("Day: " + Calendar.DAY_OF_MONTH);
         timeEdit = view.findViewById(R.id.alarm_time_set_edit);
-        timeEdit.setText("Time:" + Calendar.HOUR_OF_DAY + " : " + Calendar.MINUTE);
         massageEdit = view.findViewById(R.id.alarm_massage_set_edit);
         addAlarmBtn = view.findViewById(R.id.alarm_add_btn);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        date = calendar.get(Calendar.DAY_OF_MONTH);
 
     }
 
@@ -121,8 +124,8 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         timeEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+                minute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -142,10 +145,25 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         addAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                calendar = Calendar.getInstance();
+                String massage = massageEdit.getText().toString();
+                boolean isAdded = db.addAlarm(firebaseUser.getUid(), date, hour, minute,
+                                                (Utilities.checkString(massage)? massage : ""));
+                if(isAdded){
+                    Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
+                    startRecycler();
+                    calendar = Calendar.getInstance();
+                    setInitialStateDateTimeFields();
+                } else {
+                    Toast.makeText(view.getContext(), "Sorry, alarm is not added (already exists)", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+
+    private void setInitialStateDateTimeFields(){
+        dateEdit.setText("Day: " + calendar.get(Calendar.DAY_OF_MONTH));
+        timeEdit.setText("Time:" + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+        massageEdit.setText("");
+    }
 }
