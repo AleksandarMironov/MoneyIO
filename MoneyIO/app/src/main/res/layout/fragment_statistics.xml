@@ -61,10 +61,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"></com.github.mikephil.charting.charts.PieChart>
 
-            <com.github.mikephil.charting.charts.CombinedChart
+            <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/statistics_income_expense_year_combined"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"></com.github.mikephil.charting.charts.CombinedChart>
+                android:layout_height="350dp"></com.github.mikephil.charting.charts.BarChart>
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/statistics_income_expense_year_horizontal_bar_chart"
