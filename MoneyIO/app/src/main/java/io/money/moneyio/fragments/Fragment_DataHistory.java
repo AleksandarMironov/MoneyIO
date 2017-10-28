@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
@@ -28,6 +31,7 @@ public class Fragment_DataHistory extends Fragment {
     private RecyclerView recyclerView;
     private Calendar calendar;
     private Button dayBtn, monthBtn, yearBtn;
+    private TextView currentDatePicked;
     private MonthYearPicker monthYearPicker;
     private ArrayList<MoneyFlow> filteredArr;
 
@@ -51,6 +55,8 @@ public class Fragment_DataHistory extends Fragment {
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
+        currentDatePicked = (TextView)view.findViewById(R.id.history_current_date_picked);
+
     }
 
     private void setDayBtnFilter(){

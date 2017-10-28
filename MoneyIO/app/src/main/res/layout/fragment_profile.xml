@@ -8,7 +8,7 @@
         android:id="@+id/profile_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email: "
+        android:text="@string/email_two_dots"
         android:textColor="#000000"
         android:layout_marginTop="10dp"
         android:textSize="20sp"/>
@@ -17,7 +17,7 @@
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Personal name: "
+        android:text="@string/personal_name"
         android:layout_marginTop="10dp"
         android:textColor="#000000"
         android:textSize="20sp"/>
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Salary"
+            android:text="@string/salary"
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -66,7 +66,7 @@
         android:gravity="center"
         android:fontFamily="serif"
         android:textStyle="bold"
-        android:text="Create your own types of income and outcome money"/>
+        android:text="@string/create_your_own_types_of_income_and_outcome_money"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="3"
-            android:hint="Your type"
+            android:hint="@string/your_type"
             android:textColor="#000000"
             android:textSize="20sp"/>
 
@@ -99,13 +99,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="Income"/>
+                    android:text="@string/income"/>
                 <RadioButton
                     android:id="@+id/profile_outcome_radio"
                     android:layout_weight="3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Outcome"/>
+                    android:text="@string/expense"/>
         </RadioGroup>
     </LinearLayout>
 
@@ -113,7 +113,7 @@
         android:id="@+id/profile_save_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="save"/>
+        android:text="@string/save" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,7 +134,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Types"
+        android:text="@string/your_types"
         android:gravity="center"
         android:textSize="20dp"
         android:textColor="#000000"

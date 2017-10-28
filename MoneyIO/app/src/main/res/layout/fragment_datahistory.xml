@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="0dp"
-            android:text="day"/>
+            android:text="@string/day"/>
 
         <Button
             android:id="@+id/history_month_btn"
@@ -29,14 +29,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="0dp"
-            android:text="month"/>
+            android:text="@string/month"/>
 
         <Button
             android:id="@+id/history_year_btn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="year"
+            android:text="@string/year"
             android:padding="0dp"/>
 
         <View
@@ -45,6 +45,13 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/history_current_date_picked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="10sp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_recycler_view"

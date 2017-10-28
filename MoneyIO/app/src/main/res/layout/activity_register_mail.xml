@@ -11,7 +11,7 @@
     tools:context="io.money.moneyio.activities.RegisterMailActivity">
 
     <TextView
-        android:text="Register"
+        android:text="@string/register"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -29,7 +29,7 @@
             android:id="@+id/registermail_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="text"
             android:gravity="center"
             android:layout_marginTop="20dp"/>
@@ -47,7 +47,7 @@
         android:id="@+id/registermail_password"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
@@ -64,7 +64,7 @@
         android:id="@+id/registermail_repeatpassword"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Repeat Password"
+        android:hint="@string/repeat_password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
@@ -81,7 +81,7 @@
         android:id="@+id/registermail_firstname"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="First Name"
+        android:hint="@string/first_name"
         android:layout_marginTop="10dp"
         android:gravity="center"
         />
@@ -97,7 +97,7 @@
         android:id="@+id/registermail_secondname"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Second Name"
+        android:hint="@string/second_name"
         android:gravity="center"
         android:layout_marginTop="10dp"/>
 
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="register"
+        android:text="@string/register"
         android:fontFamily="serif"
         android:textStyle="bold"
         android:textSize="20sp"/>

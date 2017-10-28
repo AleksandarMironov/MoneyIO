@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Set time:"
+            android:text="@string/set_time"
             android:layout_gravity="center"
             android:gravity="center"/>
 
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="add"/>
+            android:text="@string/add"/>
 
     </LinearLayout>
 
@@ -56,14 +56,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="1"
-            android:hint="Massage" />
+            android:hint="@string/massage" />
 
     </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Remingers"
+        android:text="@string/reminders"
         android:gravity="center"
         android:textStyle="bold"
         />

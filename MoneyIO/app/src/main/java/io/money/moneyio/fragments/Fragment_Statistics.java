@@ -245,12 +245,14 @@ public class Fragment_Statistics extends Fragment {
                 barSpace = 0f;
                 groupSpace = 0.4f;
 
+                //Set the chart setting
                 chart.setDescription(null);
                 chart.setPinchZoom(false);
                 chart.setScaleEnabled(false);
                 chart.setDrawBarShadow(false);
                 chart.setDrawGridBackground(false);
 
+                //create the dummy data for display the graph
                 int groupCount = 6;
 
                 ArrayList xVals = new ArrayList();
@@ -277,7 +279,7 @@ public class Fragment_Statistics extends Fragment {
                 yVals1.add(new BarEntry(6, (float) 11));
                 yVals2.add(new BarEntry(6, (float) 12));
 
-
+                //draw the graph
                 BarDataSet set1, set2;
                 set1 = new BarDataSet(yVals1, "A");
                 set1.setColor(Color.RED);
@@ -293,6 +295,7 @@ public class Fragment_Statistics extends Fragment {
                 chart.getData().setHighlightEnabled(false);
                 chart.invalidate();
 
+                //Draw the indicator
                 Legend l = chart.getLegend();
                 l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
                 l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
@@ -303,6 +306,7 @@ public class Fragment_Statistics extends Fragment {
                 l.setYEntrySpace(0f);
                 l.setTextSize(8f);
 
+                //Draw the X-Axis and Y-Axis
                 //X-axis
                 XAxis xAxis = chart.getXAxis();
                 xAxis.setGranularity(1f);
@@ -312,7 +316,7 @@ public class Fragment_Statistics extends Fragment {
                 xAxis.setAxisMaximum(6);
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
-//Y-axis
+                //Y-axis
                 chart.getAxisRight().setEnabled(false);
                 YAxis leftAxis = chart.getAxisLeft();
                 leftAxis.setValueFormatter(new LargeValueFormatter());

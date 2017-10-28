@@ -80,35 +80,35 @@ public class RegisterMailActivity extends AppCompatActivity {
                 final String userSecondName = secondName.getText().toString().trim();
 
                 if(!Utilities.checkString(userMail)){
-                    email.setError("Invalid symbols");
+                    email.setError(getString(R.string.invalid_symbols));
                     return;
                 }
                 if(!Utilities.isMail(userMail)){
-                    email.setError("Invalid email");
+                    email.setError(getString(R.string.invalid_email));
                     return;
                 }
                 if(!Utilities.checkString(userPassword)){
-                    password.setError("Invalid symbols");
+                    password.setError(getString(R.string.invalid_symbols));
                     return;
                 }
                 if(userPassword.length() < 6){
-                    password.setError("Password must be 6 symbols minimum");
+                    password.setError(getString(R.string.password_must_be_six_sym));
                     return;
                 }
                 if(!Utilities.checkString(userPassword2)){
-                    password2.setError("Invalid symbols");
+                    password2.setError(getString(R.string.invalid_symbols));
                     return;
                 }
                 if(!userPassword.equals(userPassword2)){
-                    password2.setError("Passwords does not match");
+                    password2.setError(getString(R.string.password_does_not_match));
                     return;
                 }
                 if(!Utilities.checkString(userFirstName)){
-                    firstName.setError("Invalid symbols");
+                    firstName.setError(getString(R.string.invalid_symbols));
                     return;
                 }
                 if(!Utilities.checkString(userSecondName)){
-                    secondName.setError("Invalid symbols");
+                    secondName.setError(getString(R.string.invalid_symbols));
                     return;
                 }
 
@@ -117,7 +117,7 @@ public class RegisterMailActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterMailActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterMailActivity.this, R.string.successfully_registered, Toast.LENGTH_SHORT).show();
                                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(userFirstName + " " + userSecondName).build();
                                     if (firebaseAuth.getCurrentUser() != null) {
@@ -127,7 +127,7 @@ public class RegisterMailActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(RegisterMailActivity.this, "Could not register successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterMailActivity.this, R.string.could_not_register_successfully, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -138,9 +138,9 @@ public class RegisterMailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder a_builder = new AlertDialog.Builder(RegisterMailActivity.this);
-        a_builder.setMessage("Do you want to cancel registration?")
+        a_builder.setMessage(R.string.cancel_registration)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(RegisterMailActivity.this, MainActivity.class);
@@ -148,14 +148,14 @@ public class RegisterMailActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
         AlertDialog alert = a_builder.create();
-        alert.setTitle("Cancel registration");
+        alert.setTitle(getString(R.string.cancel_registration_btn_text));
         alert.show();
     }
 }

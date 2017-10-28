@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(MainActivity.this, "Sorry no internet to register", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.no_internet_to_reg, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -126,17 +126,17 @@ public class MainActivity extends AppCompatActivity {
                 String userPasw = psw.getText().toString().trim();
 
                 if(!Utilities.isMail(userMail)){
-                    email.setError("Invalid email");
+                    email.setError(getString(R.string.invalid_email));
                     return;
                 }
 
                 if(!Utilities.checkString(userMail)){
-                    email.setError("Invalid symbols");
+                    email.setError(getString(R.string.invalid_symbols));
                     return;
                 }
 
                 if(!Utilities.checkString(userPasw)){
-                    psw.setError("Invalid symbols");
+                    psw.setError(getString(R.string.invalid_symbols));
                     return;
                 }
 
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Invalid user or password", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, R.string.invalid_user_or_password, Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("MoneyIO", "signInWithCredential:success");
                         } else {
                             Log.e("MoneyIO", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.auth_failed_try_later, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -260,9 +260,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
-        a_builder.setMessage("Do you want to Exit?")
+        a_builder.setMessage(getString(R.string.do_you_want_to_exit))
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

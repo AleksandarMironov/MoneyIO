@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout drawerLayout;
     private FirebaseUser user;
     private DatabaseReference myDatabaseRef;
-    private static TextView currentFragment;
+    private  TextView currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +73,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         sequence.setConfig(config);
 
         sequence.addSequenceItem(sandwichButton,
-                "By clicking this button, you open the application menu.", "GOT IT");
+                getString(R.string.tutorial_text1), getString(R.string.tutorial_got_it_btn_text));
 
         sequence.addSequenceItem(statisticsButton,
-                "By clicking this button, you can check some statistics about you incomes and expenses.", "GOT IT");
+                getString(R.string.tutorial_text2), getString(R.string.tutorial_got_it_btn_text));
 
         sequence.start();
     }
 
-    private static void setCurrentFragment(String s) {
-        HomeActivity.currentFragment.setText(s);
+    private  void setCurrentFragment(String s) {
+        currentFragment.setText(s);
     }
 
     private void initialiseElements(){
@@ -152,9 +152,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder a_builder = new AlertDialog.Builder(HomeActivity.this);
-                a_builder.setMessage("Do you want to Log Out")
+                a_builder.setMessage(R.string.do_you_want_to_log_out)
                         .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 firebaseAuth.signOut();
@@ -163,14 +163,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                 finish();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
                         });
                 AlertDialog alert = a_builder.create();
-                alert.setTitle("Log Out");
+                alert.setTitle(getString(R.string.log_out));
                 alert.show();
             }
         });
@@ -225,16 +225,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Fragment_Outcome homeFragment = new Fragment_Outcome();
             loadFragment(homeFragment);
-            setCurrentFragment("Outcome");
+            setCurrentFragment(getString(R.string.expense));
             statisticsButton.setVisibility(View.VISIBLE);
         }
     }
 
     public void exit(){
         AlertDialog.Builder a_builder = new AlertDialog.Builder(HomeActivity.this);
-        a_builder.setMessage("Do you want to Exit?")
+        a_builder.setMessage(R.string.do_you_want_to_exit)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -244,14 +244,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
         AlertDialog alert = a_builder.create();
-        alert.setTitle("Quit");
+        alert.setTitle(getString(R.string.quit));
         alert.show();
     }
 
@@ -266,31 +266,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_income_btn:
-                drawerMenuButtonsAction("Income", new Fragment_Income());
+                drawerMenuButtonsAction(getString(R.string.income), new Fragment_Income());
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_outcome_btn:
-                drawerMenuButtonsAction("Outcome", new Fragment_Outcome());
+                drawerMenuButtonsAction(getString(R.string.expense), new Fragment_Outcome());
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_statistics_btn:
-                drawerMenuButtonsAction("Statistics", new Fragment_Statistics());
+                drawerMenuButtonsAction(getString(R.string.statistics), new Fragment_Statistics());
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_myProfile_btn:
-                drawerMenuButtonsAction("My Profile", new Fragment_Profile());
+                drawerMenuButtonsAction(getString(R.string.my_profile), new Fragment_Profile());
                 statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_add_friend_btn:
                 break;
             case R.id.home_alarms_btn:
-                drawerMenuButtonsAction("Alarms", new Fragment_Alarm());
+                drawerMenuButtonsAction(getString(R.string.alarms), new Fragment_Alarm());
                 break;
             case R.id.home_quit_btn:
                 exit();
                 break;
             case R.id.home_toolbar_statistics_icon_btn:
-                drawerMenuButtonsAction("My Stats", new Fragment_DataHistory());
+                drawerMenuButtonsAction(getString(R.string.my_stats), new Fragment_DataHistory());
                 break;
         }
     }
