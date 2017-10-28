@@ -65,7 +65,7 @@ public class MonthYearPicker {
     public void build(int selectedMonth, int selectedYear, DialogInterface.OnClickListener positiveButtonListener,
                       DialogInterface.OnClickListener negativeButtonListener, boolean monthVisibility, boolean yearVisibility) {
 
-        final Calendar instance = Calendar.getInstance();
+        Calendar instance = Calendar.getInstance();
         currentMonth = instance.get(Calendar.MONTH);
         currentYear = instance.get(Calendar.YEAR);
 
@@ -107,6 +107,7 @@ public class MonthYearPicker {
         builder.setTitle("Please select");
         builder.setPositiveButton("OK", positiveButtonListener);
         builder.setNegativeButton("Cancel", negativeButtonListener);
+        builder.setCancelable(false);
 
         setMonthVisibility(monthVisibility);
         setYearVisibility(yearVisibility);

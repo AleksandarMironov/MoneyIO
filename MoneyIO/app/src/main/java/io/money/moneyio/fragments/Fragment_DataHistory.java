@@ -1,6 +1,5 @@
 package io.money.moneyio.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,13 +22,10 @@ import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 
-import static android.R.style.Theme_Material_Light_Dialog_Alert;
-
 public class Fragment_DataHistory extends Fragment {
 
     private View view;
     private RecyclerView recyclerView;
-    private DatePicker datePicker;
     private Calendar calendar;
     private Button dayBtn, monthBtn, yearBtn;
     private MonthYearPicker monthYearPicker;
@@ -68,15 +63,8 @@ public class Fragment_DataHistory extends Fragment {
 
                 long start = calendar.getTimeInMillis();
                 long end = start + 1000*60*60*24;
-                ArrayList<MoneyFlow> a = new ArrayList<>();
-                for (MoneyFlow f: Utilities.data) {
-                    if(start <= f.getCalendar() && f.getCalendar() <= end){
-                        a.add(f);
-                    } else if(f.getCalendar() > end){
-                        break;
-                    }
-                }
-                startRecycler(a);
+                filterData(start, end);
+                startRecycler(filteredArr);
                 calendar = Calendar.getInstance();
             }
         };
@@ -102,16 +90,29 @@ public class Fragment_DataHistory extends Fragment {
 
                         long start = calendar.getTimeInMillis();
 
-                        calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
-
+                        if(monthYearPicker.getSelectedMonth() == 12){
+                            calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+                            calendar.set(Calendar.MONTH, 1);
+                        } else {
+                            calendar.set(Calendar.MONTH, monthYearPicker.getSelectedMonth() + 1);
+                        }
                         long end = calendar.getTimeInMillis();
+
                         filterData(start, end);
                         startRecycler(filteredArr);
                         calendar = Calendar.getInstance();
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
-                monthYearPicker.build(Calendar.DAY_OF_MONTH, Calendar.YEAR, positiveClick ,null, true, true);
+
+                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, true);
                 monthYearPicker.show();
             }
         });
@@ -139,7 +140,15 @@ public class Fragment_DataHistory extends Fragment {
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
-                monthYearPicker.build(Calendar.MONTH, Calendar.YEAR, positiveClick ,null, false, true);
+
+                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, false, true);
                 monthYearPicker.show();
 
             }

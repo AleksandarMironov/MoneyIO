@@ -1,6 +1,8 @@
 package io.money.moneyio.fragments;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -32,6 +35,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,6 +44,7 @@ import java.util.TreeMap;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 
 
@@ -50,6 +55,9 @@ public class Fragment_Statistics extends Fragment {
     private CombinedChart combinedChart;
     private HorizontalBarChart horizontalBarChart;
     private Button incomeExpenseYearBtn, incomeExpenseMonthBtn, incomeExpenseDayBtn;
+    private ArrayList<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
+    private Calendar calendar;
+    private MonthYearPicker monthYearPicker;
 
     public int j = 0;
 
@@ -67,18 +75,69 @@ public class Fragment_Statistics extends Fragment {
     private void incomeExpenseMonthListener() {
         incomeExpenseMonthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 combinedChart.setVisibility(View.GONE);
                 pieChart.setVisibility(View.VISIBLE);
                 horizontalBarChart.setVisibility(View.VISIBLE);
+
+                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
+
+                        long start = calendar.getTimeInMillis();
+
+                        if(monthYearPicker.getSelectedMonth() == 12){
+                            calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+                            calendar.set(Calendar.MONTH, 1);
+                        } else {
+                            calendar.set(Calendar.MONTH, monthYearPicker.getSelectedMonth() + 1);
+                        }
+                        long end = calendar.getTimeInMillis();
+
+                        filterData(start, end);
+                        calendar = Calendar.getInstance();
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, true);
+                monthYearPicker.show();
             }
         });
     }
 
     private void incomeExpenseDayListener() {
+        ///build calendar dialog
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
+
+                long start = calendar.getTimeInMillis();
+                long end = start + 1000*60*60*24;
+                filterData(start, end);
+                calendar = Calendar.getInstance();
+            }
+        };
         incomeExpenseDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                ///show calendar dialog
+                new DatePickerDialog(view.getContext(), date, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                ////
                 combinedChart.setVisibility(View.GONE);
                 pieChart.setVisibility(View.GONE);
                 horizontalBarChart.setVisibility(View.VISIBLE);
@@ -141,11 +200,41 @@ public class Fragment_Statistics extends Fragment {
     private void incomeExpenseYearListener() {
         incomeExpenseYearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
                 combinedChart.setVisibility(View.VISIBLE);
                 pieChart.setVisibility(View.VISIBLE);
                 horizontalBarChart.setVisibility(View.VISIBLE);
+
+                ////show dialog and filter arr
+                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
+
+                        long start = calendar.getTimeInMillis();
+
+                        calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
+
+                        long end = calendar.getTimeInMillis();
+                        filterData(start, end);
+                        calendar = Calendar.getInstance();
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                monthYearPicker.build(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, false, true);
+                monthYearPicker.show();
+
+                /////
+
 
                 pieChart.setUsePercentValues(true);
                 pieChart.setContentDescription("TEST");
@@ -160,7 +249,7 @@ public class Fragment_Statistics extends Fragment {
                 ArrayList<MoneyFlow> utilitiesArray = Utilities.data;
                 ArrayList<PieEntry> pieDataSave = new ArrayList<>();
 
-                for (int i = 0; i < Utilities.data.size(); i++) {
+                for (int i = 0; i < utilitiesArray.size(); i++) {
                     if (structuredData.containsKey(utilitiesArray.get(i).getExpense())) {
                         structuredData.put(utilitiesArray.get(i).getExpense(), structuredData.get(utilitiesArray.get(i).getExpense())+utilitiesArray.get(i).getSum());
                     } else {
@@ -203,11 +292,26 @@ public class Fragment_Statistics extends Fragment {
     }
 
     private void initialise() {
+        moneyFlowData = Utilities.data;
         pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
         combinedChart = (CombinedChart)view.findViewById(R.id.statistics_income_expense_year_combined);
         horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
         incomeExpenseYearBtn = (Button)view.findViewById(R.id.statistics_year_btn);
         incomeExpenseMonthBtn = (Button)view.findViewById(R.id.statistics_month_btn);
         incomeExpenseDayBtn = (Button)view.findViewById(R.id.statistics_day_btn);
+        calendar = Calendar.getInstance();
+        monthYearPicker = new MonthYearPicker(view.getContext());
+    }
+
+    //filtering arr for curent user option
+    private void filterData(long start, long end){
+        moneyFlowData = new ArrayList<>();
+        for (MoneyFlow f: Utilities.data) {
+            if(start <= f.getCalendar() && f.getCalendar() <= end){
+                moneyFlowData.add(f);
+            } else if(f.getCalendar() > end){
+                break;
+            }
+        }
     }
 }
