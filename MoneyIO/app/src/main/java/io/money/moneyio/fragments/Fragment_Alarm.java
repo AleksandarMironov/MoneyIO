@@ -3,6 +3,7 @@ package io.money.moneyio.fragments;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,7 +121,19 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         timeEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        calendar.set(Calendar.MINUTE, selectedMinute);
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        timeEdit.setText("Time: " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
         });
     }
@@ -129,6 +143,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
+                calendar = Calendar.getInstance();
             }
         });
     }
