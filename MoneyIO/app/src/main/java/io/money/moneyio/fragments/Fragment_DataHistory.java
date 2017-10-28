@@ -1,7 +1,9 @@
 package io.money.moneyio.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +21,10 @@ import java.util.Calendar;
 import io.money.moneyio.R;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
+
+import static android.R.style.Theme_Material_Light_Dialog_Alert;
 
 public class Fragment_DataHistory extends Fragment {
 
@@ -27,6 +33,8 @@ public class Fragment_DataHistory extends Fragment {
     private DatePicker datePicker;
     private Calendar calendar;
     private Button dayBtn, monthBtn, yearBtn;
+    private MonthYearPicker monthYearPicker;
+    private ArrayList<MoneyFlow> filteredArr;
 
     @Nullable
     @Override
@@ -46,6 +54,8 @@ public class Fragment_DataHistory extends Fragment {
         monthBtn = view.findViewById(R.id.history_month_btn);
         yearBtn = view.findViewById(R.id.history_year_btn);
         calendar = Calendar.getInstance();
+        monthYearPicker = new MonthYearPicker(view.getContext());
+        filteredArr = new ArrayList<>();
     }
 
     private void setDayBtnFilter(){
@@ -73,7 +83,7 @@ public class Fragment_DataHistory extends Fragment {
         dayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
+                new DatePickerDialog(view.getContext(), date, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -81,102 +91,71 @@ public class Fragment_DataHistory extends Fragment {
     }
 
     private void setMonthBtnFilter(){
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                calendar.set(year, monthOfYear, 1, 0,0,0);
-
-                long start = calendar.getTimeInMillis();
-
-                if(monthOfYear == 12){
-                    calendar.set(Calendar.YEAR, year + 1);
-                    calendar.set(Calendar.MONTH, 1);
-                } else {
-                    calendar.set(Calendar.MONTH, monthOfYear + 1);
-                }
-                long end = calendar.getTimeInMillis();
-
-                ArrayList<MoneyFlow> a = new ArrayList<>();
-                for (MoneyFlow f: Utilities.data) {
-                    if(start <= f.getCalendar() && f.getCalendar() <= end){
-                        a.add(f);
-                    } else if(f.getCalendar() > end){
-                    } else if(f.getCalendar() > end){
-                        break;
-                    }
-                }
-                startRecycler(a);
-                calendar = Calendar.getInstance();
-            }
-        };
         monthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
 
+                        long start = calendar.getTimeInMillis();
 
-                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        1);
+                        calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
 
-                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")) != null) {
-                    dialog.getDatePicker().findViewById(getResources().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
-                }
-
-                dialog.show();
+                        long end = calendar.getTimeInMillis();
+                        filterData(start, end);
+                        startRecycler(filteredArr);
+                        calendar = Calendar.getInstance();
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+                monthYearPicker.build(Calendar.DAY_OF_MONTH, Calendar.YEAR, positiveClick ,null, true, true);
+                monthYearPicker.show();
             }
         });
     }
 
     private void setYearBtnFilter(){
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                calendar.set(year, 1, 1, 0,0,0);
-
-                long start = calendar.getTimeInMillis();
-
-                calendar.set(Calendar.YEAR, year + 1);
-
-                long end = calendar.getTimeInMillis();
-
-                ArrayList<MoneyFlow> a = new ArrayList<>();
-                for (MoneyFlow f: Utilities.data) {
-                    if(start <= f.getCalendar() && f.getCalendar() <= end){
-                        a.add(f);
-                    } else if(f.getCalendar() > end){
-                        break;
-                    }
-                }
-                startRecycler(a);
-                calendar = Calendar.getInstance();
-            }
-        };
         yearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
 
-                ///TODO api check
-                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, date, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        1);
+                        long start = calendar.getTimeInMillis();
 
-                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("day","id","android")) != null) {
-                    dialog.getDatePicker().findViewById(getResources().getIdentifier("day", "id", "android")).setVisibility(View.GONE);
-                }
-                if(dialog.getDatePicker().findViewById(getResources().getIdentifier("month","id","android")) != null) {
-                    dialog.getDatePicker().findViewById(getResources().getIdentifier("month","id","android")).setVisibility(View.GONE);
-                }
+                        calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
 
-                dialog.show();
+                        long end = calendar.getTimeInMillis();
+                        filterData(start, end);
+                        startRecycler(filteredArr);
+                        calendar = Calendar.getInstance();
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+                monthYearPicker.build(Calendar.MONTH, Calendar.YEAR, positiveClick ,null, false, true);
+                monthYearPicker.show();
 
             }
         });
     }
 
+    private void filterData(long start, long end){
+        filteredArr = new ArrayList<>();
+        for (MoneyFlow f: Utilities.data) {
+            if(start <= f.getCalendar() && f.getCalendar() <= end){
+                filteredArr.add(f);
+            } else if(f.getCalendar() > end){
+                break;
+            }
+        }
+    }
     // must add AsyncTask!
     private void startRecycler(ArrayList<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);

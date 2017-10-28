@@ -1,6 +1,7 @@
 package io.money.moneyio.fragments;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -50,7 +53,8 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         view = inflater.inflate(R.layout.fragment_alarm, container, false);
         initialiseElements();
         startRecycler();
-
+        onTimeEditClickListener();
+        onAddAlarmBtnListener();
 
 
         ////////////////////////
@@ -119,4 +123,14 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
             }
         });
     }
+
+    public void onAddAlarmBtnListener(){
+        addAlarmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 }
