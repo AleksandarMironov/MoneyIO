@@ -51,7 +51,7 @@ public abstract class GraphicUtilities {
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
 
-        //create the dummy data for display the graph
+        //create the data for display the graph
         int groupCount = 12;
 
         ArrayList<String> xVals = new ArrayList();
