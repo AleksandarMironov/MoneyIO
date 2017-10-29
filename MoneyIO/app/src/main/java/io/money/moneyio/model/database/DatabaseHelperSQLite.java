@@ -14,9 +14,9 @@ import io.money.moneyio.model.utilities.Alarm;
 import io.money.moneyio.model.utilities.PlannedFlow;
 import io.money.moneyio.model.utilities.Type;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelperSQLite extends SQLiteOpenHelper {
 
-    private static DatabaseHelper instance;
+    private static DatabaseHelperSQLite instance;
 
     private static final String DATABASE_NAME = "MoneyIO.db";
     private static int DATABASE_VERSION = 1;
@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                         "));";
 
 
-    private DatabaseHelper(Context context) {
+    private DatabaseHelperSQLite(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -85,14 +85,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    public static synchronized DatabaseHelperSQLite getInstance(Context context) {
         if (instance == null) {
-            instance = new DatabaseHelper(context.getApplicationContext());
+            instance = new DatabaseHelperSQLite(context.getApplicationContext());
         }
         return instance;
     }
 
-    public boolean addPlanned(String userID, int date, String type, double amount) {
+    public boolean addPlanned(String userID, int date, String type, float amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(T_PLANNED_COL_1, userID);
@@ -102,6 +102,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long b = db.insert(TABLE_PLANED, null, contentValues);
         return (b != -1);
+    }
+
+    public void deletePlanned(String userID, int date, String type, float amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "DELETE FROM " + TABLE_PLANED
+                + " WHERE " +
+                T_PLANNED_COL_1 + " = \"" + userID + "\" AND " +
+                T_PLANNED_COL_2 + " = \"" + date + "\" AND " +
+                T_PLANNED_COL_3 + " = \"" + type + "\" AND " +
+                T_PLANNED_COL_4 + " = \"" + amount + "\";";
+        db.execSQL(myRawQuery);
+    }
+
+    public PlannedFlow getUserPlanned(String userID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "SELECT * FROM " + TABLE_PLANED + " WHERE " + T_PLANNED_COL_1 + " = \"" + userID + "\";";
+        Cursor c = db.rawQuery(myRawQuery, null);
+        if(c.getCount() > 0){
+            c.moveToFirst();
+            PlannedFlow out = new PlannedFlow(c.getString(0), c.getInt(1), c.getString(2), c.getInt(3));
+            c.close();
+            return out;
+        } else {
+            c.close();
+            return null;
+        }
     }
 
     public ArrayList<PlannedFlow> getAllPlaned() {
@@ -180,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Type> getUserTypes(String userID){
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 + ", " + T_SETTINGS_COL_4
                 + " FROM " + TABLE_SETINGS + " WHERE " + T_SETTINGS_COL_1 + " = \"" + userID + "\";";
         Cursor c = db.rawQuery(myRawQuery, null);

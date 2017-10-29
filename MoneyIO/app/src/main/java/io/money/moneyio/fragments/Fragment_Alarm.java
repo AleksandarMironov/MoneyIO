@@ -3,7 +3,6 @@ package io.money.moneyio.fragments;
 import android.app.AlarmManager;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -24,14 +22,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.Alarm;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
-import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.receivers.AlarmReceiver;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
@@ -43,7 +40,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
 
     private View view;
     private RecyclerView recyclerView;
-    private DatabaseHelper db;
+    private DatabaseHelperSQLite db;
     private FirebaseUser firebaseUser;
     private long mLastClickTime;
     private AlarmsRecyclerViewAdapter adapter;
@@ -86,7 +83,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
 
     private void initialiseElements() {
         recyclerView = view.findViewById(R.id.recycler_alarms);
-        db = DatabaseHelper.getInstance(view.getContext());
+        db = DatabaseHelperSQLite.getInstance(view.getContext());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mLastClickTime = SystemClock.elapsedRealtime();
         dateEdit = view.findViewById(R.id.alarm_date_set_edit);

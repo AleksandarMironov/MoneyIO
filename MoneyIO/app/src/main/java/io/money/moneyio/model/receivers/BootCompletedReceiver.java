@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import io.money.moneyio.model.utilities.Alarm;
-import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.database.DatabaseHelperSQLite;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -19,7 +19,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);
 
         if (firebaseAuth.getCurrentUser() != null) {
             String userID = firebaseAuth.getCurrentUser().getUid();

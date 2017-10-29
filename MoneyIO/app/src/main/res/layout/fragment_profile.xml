@@ -5,15 +5,6 @@
     android:id="@+id/fragment_profile">
 
     <TextView
-        android:id="@+id/profile_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/email_two_dots"
-        android:textColor="#000000"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"/>
-
-    <TextView
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,17 +13,36 @@
         android:textColor="#000000"
         android:textSize="20sp"/>
 
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email_two_dots"
+        android:textColor="#000000"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/salary"
             android:textColor="#000000"
+            android:gravity="center"
             android:textSize="20sp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/profile_salary"
@@ -41,19 +51,29 @@
             android:layout_weight="1"
             android:textColor="#000000"
             android:textSize="20sp"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:gravity="center"
+            android:hint="amount"/>
 
         <EditText
             android:id="@+id/profile_choose_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:focusable="false"
-            android:textSize="20sp" />
+            android:focusable="false" />
 
+        <ImageView
+            android:id="@+id/profile_add_salary_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ok_button" />
+
+        <ImageView
+            android:id="@+id/profile_delete_salary_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/delete_button" />
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -75,8 +95,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <EditText
@@ -110,13 +130,14 @@
                     android:layout_height="match_parent"
                     android:text="@string/expense"/>
         </RadioGroup>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/profile_save_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save" />
+        <ImageView
+            android:id="@+id/profile_save_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ok_button" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

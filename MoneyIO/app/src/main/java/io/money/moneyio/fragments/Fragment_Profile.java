@@ -1,6 +1,7 @@
 package io.money.moneyio.fragments;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -11,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,27 +24,33 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.recyclers.ShowCustomTypesRecyclerViewAdapter;
+import io.money.moneyio.model.utilities.MonthYearPicker;
+import io.money.moneyio.model.utilities.PlannedFlow;
 import io.money.moneyio.model.utilities.Type;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecyclerViewAdapter.ItemClickListener{
 
     private View view;
-    private DatabaseHelper db;
+    private DatabaseHelperSQLite db;
     private FirebaseUser firebaseUser;
     private TextView email, names;
     private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
-    private Button saveType;
     private View dummyView;
     private RecyclerView recyclerView;
     private ArrayList<Type> typeFilter;
+    private PlannedFlow plannedFlow;
     private ShowCustomTypesRecyclerViewAdapter adapter;
     private long mLastClickTime;
+    private MonthYearPicker monthYearPicker;
+    private int payDay;
+    private ImageView okImg, deleteImg, saveType;
 
     @Nullable
     @Override
@@ -53,12 +60,15 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         startRecycler();
         addType();
         keyboardHideListener();
+        onSaveSalaryListener();
+        onDeleteSalaryListener();
         mLastClickTime = SystemClock.elapsedRealtime();
+        onDayOfSalaryClickListener();
         return view;
     }
 
     private void startRecycler() {
-        final ArrayList<Type> types = DatabaseHelper.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid());
+        final ArrayList<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid());
         typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).getPictureId() == R.mipmap.ic_launcher) {
@@ -86,23 +96,101 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void initialiseElements() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_profile);
-        db = DatabaseHelper.getInstance(view.getContext());
+        recyclerView = view.findViewById(R.id.recycler_profile);
+        db = DatabaseHelperSQLite.getInstance(view.getContext());
+        monthYearPicker = new MonthYearPicker(view.getContext());
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        email = (TextView)view.findViewById(R.id.profile_email);
-        names = (TextView)view.findViewById(R.id.profile_name);
-        salary = (EditText)view.findViewById(R.id.profile_salary);
-        type = (EditText)view.findViewById(R.id.profile_type);
-        radioGroup = (RadioGroup)view.findViewById(R.id.profile_radiogr_kind);
-        dayOfSalary = (EditText) view.findViewById(R.id.profile_choose_date);
-        saveType = (Button)view.findViewById(R.id.profile_save_btn);
+        email = view.findViewById(R.id.profile_email);
+        names = view.findViewById(R.id.profile_name);
+        salary = view.findViewById(R.id.profile_salary);
+        type = view.findViewById(R.id.profile_type);
+        radioGroup = view.findViewById(R.id.profile_radiogr_kind);
+        dayOfSalary = view.findViewById(R.id.profile_choose_date);
+        saveType = view.findViewById(R.id.profile_save_btn);
         dummyView = view.findViewById(R.id.dummy_profile);
-        setValues();
+        okImg = view.findViewById(R.id.profile_add_salary_btn);
+        deleteImg = view.findViewById(R.id.profile_delete_salary_btn);
+        payDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        setTextValues();
     }
 
-    private void setValues() {
-        email.setText(email.getText() + firebaseUser.getEmail().toString());
-        names.setText(names.getText() + firebaseUser.getDisplayName());
+    private void setTextValues() {
+        email.setText(firebaseUser.getEmail());
+        names.setText(firebaseUser.getDisplayName());
+        plannedFlow = db.getUserPlanned(firebaseUser.getUid());
+        if(plannedFlow == null){
+            salary.setText("");
+            dayOfSalary.setText("pay day: SELECT" );
+        } else {
+            salary.setText("" + plannedFlow.getAmount());
+            dayOfSalary.setText("pay day: " + plannedFlow.getDate());
+        }
+    }
+
+    public void onSaveSalaryListener(){
+        okImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Utilities.isNumber(salary.getText().toString())){
+                    if(plannedFlow != null){
+                        //TODO make edit method :D
+                        db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
+                    }
+                    boolean isAdded = db.addPlanned(firebaseUser.getUid(), payDay, "Salary",Float.parseFloat(salary.getText().toString()));
+                    if(isAdded){
+                        Toast.makeText(view.getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        setTextValues();
+                    } else {
+                        Toast.makeText(view.getContext(), "NOT saved, please try again", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(view.getContext(), "Add salary", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void onDeleteSalaryListener(){
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(plannedFlow != null){
+                    db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
+                    Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                    plannedFlow = null;
+                }
+                salary.setText("");
+                dayOfSalary.setText("pay day: SELECT" );
+            }
+        });
+    }
+
+    public void onDayOfSalaryClickListener(){
+        dayOfSalary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogInterface.OnClickListener positiveClick = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        payDay = monthYearPicker.getSelectedDay();
+                        dayOfSalary.setText("pay day: " + payDay);
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                DialogInterface.OnClickListener negativeClick = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monthYearPicker = new MonthYearPicker(view.getContext());
+                    }
+                };
+
+                Calendar calendar = Calendar.getInstance();
+                monthYearPicker.build(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), positiveClick, negativeClick, true, false, false);
+                monthYearPicker.show();
+            }
+        });
     }
 
     private void addType() {
@@ -128,7 +216,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         });
     }
 
-    public void keyboardHideListener(){
+    private void keyboardHideListener(){
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

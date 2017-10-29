@@ -28,6 +28,13 @@ public class Utilities {
         return !TextUtils.isEmpty(str) && android.util.Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 
+    public static boolean isNumber(String str){
+        if (!TextUtils.isEmpty(str) ||  str.matches("[0-9.]+")){
+            return true;
+        }
+        return false;
+    }
+
     public static void notifyMe(Context context, String message){
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context.getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 

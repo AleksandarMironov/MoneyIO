@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import io.money.moneyio.model.database.DatabaseHelper;
+import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.PlannedFlow;
 import io.money.moneyio.model.utilities.Utilities;
@@ -26,7 +26,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.keepSynced(true);
 
-        DatabaseHelper db = DatabaseHelper.getInstance(context);
+        DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);
         ArrayList<PlannedFlow> allPlanned =  db.getAllPlaned();
         int date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
