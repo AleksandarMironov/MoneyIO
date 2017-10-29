@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.Alarm;
+import io.money.moneyio.model.utilities.PlannedFlow;
 import io.money.moneyio.model.utilities.Type;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -22,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_SETINGS = "user_setings";
     private static final String TABLE_ALARMS = "user_alarms";
+    private static final String TABLE_PLANED = "planned_events";
 
     private static final String T_SETTINGS_COL_1 = "user";
     private static final String T_SETTINGS_COL_2 = "category";
@@ -34,24 +36,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T_ALARMS_COL_4 = "minutes";
     private static final String T_ALARMS_COL_5 = "massage";
 
+    private static final String T_PLANNED_COL_1 = "user";
+    private static final String T_PLANNED_COL_2 = "date";
+    private static final String T_PLANNED_COL_3 = "type";
+    private static final String T_PLANNED_COL_4 = "amount";
+
+    private static final String PLANNED_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_PLANED +
+                                        " (" + T_PLANNED_COL_1 + " TEXT, " +
+                                        T_PLANNED_COL_2 + " INTEGER, " +
+                                        T_PLANNED_COL_3 + " TEXT, " +
+                                        T_PLANNED_COL_4 + " INTEGER," +
+                                        " PRIMARY KEY (" + T_PLANNED_COL_1 + "));";
+
     private static final String SETTINGS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETINGS +
-            " (" + T_SETTINGS_COL_1 + " TEXT, " +
-            T_SETTINGS_COL_2 + " TEXT, " +
-            T_SETTINGS_COL_3 + " TEXT, " +
-            T_SETTINGS_COL_4 + " INTEGER," +
-            " PRIMARY KEY (" +
-            T_SETTINGS_COL_1 + ", " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 +
-            "));";
+                                        " (" + T_SETTINGS_COL_1 + " TEXT, " +
+                                        T_SETTINGS_COL_2 + " TEXT, " +
+                                        T_SETTINGS_COL_3 + " TEXT, " +
+                                        T_SETTINGS_COL_4 + " INTEGER," +
+                                        " PRIMARY KEY (" +
+                                        T_SETTINGS_COL_1 + ", " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 +
+                                        "));";
 
     private static final String ALARMS_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_ALARMS +
-            " (" + T_ALARMS_COL_1 + " TEXT, " +
-            T_ALARMS_COL_2 + " INTEGER, " +
-            T_ALARMS_COL_3 + " INTEGER, " +
-            T_ALARMS_COL_4 + " INTEGER," +
-            T_ALARMS_COL_5 + " TEXT," +
-            " PRIMARY KEY (" +
-            T_ALARMS_COL_1 + ", " + T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 +  ", " + T_ALARMS_COL_4 +  ", " + T_ALARMS_COL_4 +
-            "));";
+                                        " (" + T_ALARMS_COL_1 + " TEXT, " +
+                                        T_ALARMS_COL_2 + " INTEGER, " +
+                                        T_ALARMS_COL_3 + " INTEGER, " +
+                                        T_ALARMS_COL_4 + " INTEGER," +
+                                        T_ALARMS_COL_5 + " TEXT," +
+                                        " PRIMARY KEY (" +
+                                        T_ALARMS_COL_1 + ", " + T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 +  ", "
+                                        + T_ALARMS_COL_4 +  ", " + T_ALARMS_COL_4 +
+                                        "));";
 
 
     private DatabaseHelper(Context context) {
@@ -62,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SETTINGS_TABLE_CREATE);
         db.execSQL(ALARMS_TABLE_CREATE);
+        db.execSQL(PLANNED_TABLE_CREATE);
     }
 
     @Override
@@ -74,6 +90,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             instance = new DatabaseHelper(context.getApplicationContext());
         }
         return instance;
+    }
+
+    public boolean addPlanned(String userID, int date, String type, double amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(T_PLANNED_COL_1, userID);
+        contentValues.put(T_PLANNED_COL_2, date);
+        contentValues.put(T_PLANNED_COL_3, type);
+        contentValues.put(T_PLANNED_COL_4, amount);
+
+        long b = db.insert(TABLE_PLANED, null, contentValues);
+        return (b != -1);
+    }
+
+    public ArrayList<PlannedFlow> getAllPlaned() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "SELECT * FROM " + TABLE_PLANED + ";";
+        Cursor c = db.rawQuery(myRawQuery, null);
+        c.moveToFirst();
+        ArrayList<PlannedFlow> out = new ArrayList<>();
+        for (int i = 0; i < c.getCount(); i++){
+            c.moveToPosition(i);
+            out.add(new PlannedFlow(c.getString(0), c.getInt(1), c.getString(2), c.getInt(3)));
+        }
+        c.close();
+        return out;
     }
 
     public boolean addAlarm(String user, Integer date, Integer hour, Integer minutes, String massage) {
@@ -102,14 +144,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Alarm> getUserAlarms(String userID) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT " +
                 T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 + ", " + T_ALARMS_COL_4 + ", " + T_ALARMS_COL_5
                 + " FROM " + TABLE_ALARMS + " WHERE " + T_ALARMS_COL_1 + " = \"" + userID + "\";";
         Cursor c = db.rawQuery(myRawQuery, null);
         c.moveToFirst();
         ArrayList<Alarm> out = new ArrayList<>();
-        out.add(new Alarm(1,1,1,"no"));    //////////////////////////for test
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             out.add(new Alarm(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3)));
@@ -145,6 +186,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(myRawQuery, null);
         c.moveToFirst();
         ArrayList<Type> out = new ArrayList<>();
+
+        for (int i = 0; i < c.getCount(); i++){
+            c.moveToPosition(i);
+            out.add(new Type(c.getString(0), c.getString(1), c.getInt(2)));
+        }
+
         // true = outcome, false = income
         out.add(new Type("true", "Alcohol", R.drawable.alcohol));
         out.add(new Type("true", "Bar", R.drawable.bar));
@@ -200,10 +247,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         out.add(new Type("true", "Tabacco", R.drawable.weed));
         out.add(new Type("false", "Codding", R.drawable.work));
 
-        for (int i = 0; i < c.getCount(); i++){
-            c.moveToPosition(i);
-            out.add(new Type(c.getString(0), c.getString(1), c.getInt(2)));
-        }
         c.close();
         return out;
     }

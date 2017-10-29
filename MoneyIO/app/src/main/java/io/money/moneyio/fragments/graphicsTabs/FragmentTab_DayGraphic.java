@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.utilities.GraphicUtilities;
 import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
@@ -82,7 +83,7 @@ public class FragmentTab_DayGraphic extends Fragment {
                 calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
                 long start = calendar.getTimeInMillis();
                 long end = start + 1000*60*60*24;
-                filterData(start, end);
+                filteredArr = Utilities.filterData(start, end);
                 editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                 incomeExpenseDay();
                 calendar = Calendar.getInstance();
@@ -106,90 +107,15 @@ public class FragmentTab_DayGraphic extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filterData(start, end);
-    }
-
-    private void filterData(long start, long end){
-        filteredArr = new ArrayList<>();
-        for (MoneyFlow f: Utilities.data) {
-            if(start <= f.getCalendar() && f.getCalendar() <= end){
-                filteredArr.add(f);
-            } else if(f.getCalendar() > end){
-                break;
-            }
-        }
+        filteredArr = Utilities.filterData(start, end);
     }
 
     private void incomeExpenseDay() {
-        ///build calendar dialog
-                chart.setVisibility(View.GONE);
-                pieChart.setVisibility(View.GONE);
-                horizontalBarChart.setVisibility(View.VISIBLE);
 
-                TreeMap<String, Float> structuredData = new TreeMap<>(new Comparator<String>() {
-                    @Override
-                    public int compare(String s, String t1) {
-                        return s.compareTo(t1);
-                    }
-                });
-                ArrayList<BarEntry> horizontalBarChartArr = new ArrayList<>();
-                final ArrayList<String> names = new ArrayList<String>();
+        chart.setVisibility(View.GONE);
+        pieChart.setVisibility(View.GONE);
+        horizontalBarChart.setVisibility(View.VISIBLE);
 
-                for (int i = 0; i < filteredArr.size(); i++) {
-                    if (filteredArr.get(i).getExpense().equalsIgnoreCase("true")) {
-                        Log.e("ivan", filteredArr.get(i).getType());
-                        if (!structuredData.containsKey(filteredArr.get(i).getType())) {
-                            structuredData.put(filteredArr.get(i).getType(),filteredArr.get(i).getSum());
-                            Log.e("ivan", filteredArr.get(i).getType() + "--->" + filteredArr.get(i).getSum());
-                           } else {
-                            structuredData.put(filteredArr.get(i).getType(), (structuredData.get(filteredArr.get(i).getType())+filteredArr.get(i).getSum()));
-                        }
-                    }
-                }
-
-                if (structuredData.isEmpty()) {
-                    horizontalBarChart.setVisibility(View.INVISIBLE);
-                    return;
-                }
-
-                if (names.isEmpty()) {
-                 names.addAll(structuredData.keySet());
-                }
-
-                int i = 0;
-                for (Iterator<Map.Entry<String, Float>> iterator = structuredData.entrySet().iterator(); iterator.hasNext();) {
-                    Map.Entry<String, Float> entry = iterator.next();
-                    Log.e("ivan", "test -->" + entry.getKey() + " - " + entry.getValue());
-                    //i*10 => starting position of the bar
-                    horizontalBarChartArr.add(new BarEntry((i*10), entry.getValue()));
-                    i++;
-                }
-
-
-
-                XAxis xAxis = horizontalBarChart.getXAxis();
-                xAxis.setValueFormatter(new IAxisValueFormatter() {
-                    @Override
-                    public String getFormattedValue(float value, AxisBase axis) {
-                        return names.get((int)value % names.size());
-                    }
-                });
-
-                xAxis.setDrawGridLines(true);
-                xAxis.setDrawAxisLine(true);
-
-                BarDataSet barDataSet = new BarDataSet(horizontalBarChartArr, "Day Expenses");
-                barDataSet.setColors(Color.RED);
-
-                BarData data = new BarData(barDataSet);
-                data.setBarWidth(9f);
-                horizontalBarChart.setDoubleTapToZoomEnabled(false);
-                Description a = new Description();
-                a.setText("");
-                xAxis.setDrawGridLines(false); //remove lines X
-                horizontalBarChart.setDescription(a);
-                horizontalBarChart.invalidate();
-                horizontalBarChart.animateY(1200);
-                horizontalBarChart.setData(data);
+        GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr);
     }
 }

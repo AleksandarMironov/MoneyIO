@@ -40,11 +40,6 @@ public class FragmentTab_Day extends Fragment {
         return view;
     }
 
-    // needed for tab view
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteractionHome(Uri uri);
-    }
-
     private void initialiseElements() {
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
@@ -53,7 +48,6 @@ public class FragmentTab_Day extends Fragment {
         editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
                         (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
     }
-
 
         private void setFilter(){
 
@@ -65,7 +59,7 @@ public class FragmentTab_Day extends Fragment {
                     calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
                     long start = calendar.getTimeInMillis();
                     long end = start + 1000*60*60*24;
-                    filterData(start, end);
+                    filteredArr = Utilities.filterData(start, end);
                     startRecycler(filteredArr);
                     editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                     calendar = Calendar.getInstance();
@@ -89,18 +83,7 @@ public class FragmentTab_Day extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filterData(start, end);
-    }
-
-    private void filterData(long start, long end){
-        filteredArr = new ArrayList<>();
-        for (MoneyFlow f: Utilities.data) {
-            if(start <= f.getCalendar() && f.getCalendar() <= end){
-                filteredArr.add(f);
-            } else if(f.getCalendar() > end){
-                break;
-            }
-        }
+        filteredArr = Utilities.filterData(start, end);
     }
 
     // must add AsyncTask!

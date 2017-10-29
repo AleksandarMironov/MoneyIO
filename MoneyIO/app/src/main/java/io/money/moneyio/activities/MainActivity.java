@@ -40,7 +40,6 @@ import io.money.moneyio.model.utilities.Utilities;
 
 public class MainActivity extends AppCompatActivity {
 
-    static boolean isFirebasePersistence = false;
     private static final int REQUEST_PERMISSION = 1;
     private static String[] PERMISSIONS= {
             Manifest.permission.INTERNET,
@@ -74,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     //keep data sync offline
     private void setPersistence(){
-        if(!isFirebasePersistence){
+        if(!Utilities.isFirebasePersistence){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            isFirebasePersistence = true;
+            Utilities.isFirebasePersistence = true;
         }
     }
 

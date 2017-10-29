@@ -34,12 +34,11 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     private View view;
     private DatabaseHelper db;
-    private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private TextView email, names;
-    private EditText salary, type;
+    private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
-    private Button dayOfSalary, saveType;
+    private Button saveType;
     private View dummyView;
     private RecyclerView recyclerView;
     private ArrayList<Type> typeFilter;
@@ -89,14 +88,13 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private void initialiseElements() {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_profile);
         db = DatabaseHelper.getInstance(view.getContext());
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         email = (TextView)view.findViewById(R.id.profile_email);
         names = (TextView)view.findViewById(R.id.profile_name);
         salary = (EditText)view.findViewById(R.id.profile_salary);
         type = (EditText)view.findViewById(R.id.profile_type);
         radioGroup = (RadioGroup)view.findViewById(R.id.profile_radiogr_kind);
-        dayOfSalary = (Button)view.findViewById(R.id.profile_choose_date);
+        dayOfSalary = (EditText) view.findViewById(R.id.profile_choose_date);
         saveType = (Button)view.findViewById(R.id.profile_save_btn);
         dummyView = view.findViewById(R.id.dummy_profile);
         setValues();
@@ -104,7 +102,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     private void setValues() {
         email.setText(email.getText() + firebaseUser.getEmail().toString());
-        names.setText(names.getText() + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        names.setText(names.getText() + firebaseUser.getDisplayName());
     }
 
     private void addType() {

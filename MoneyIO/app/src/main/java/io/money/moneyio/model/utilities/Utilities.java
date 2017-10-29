@@ -15,6 +15,7 @@ import io.money.moneyio.activities.MainActivity;
 
 public class Utilities {
     public static ArrayList<MoneyFlow> data;
+    public static boolean isFirebasePersistence = false;
 
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){
@@ -43,5 +44,17 @@ public class Utilities {
 
         MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_NOTIFICATION_URI);
         mediaPlayer.start();
+    }
+
+    public static ArrayList<MoneyFlow> filterData(long start, long end){
+        ArrayList<MoneyFlow> filteredArr = new ArrayList<>();
+        for (MoneyFlow f: Utilities.data) {
+            if(start <= f.getCalendar() && f.getCalendar() <= end){
+                filteredArr.add(f);
+            } else if(f.getCalendar() > end){
+                break;
+            }
+        }
+        return filteredArr;
     }
 }

@@ -41,11 +41,6 @@ public class FragmentTab_Month extends Fragment {
         return view;
     }
 
-    // needed for tab view
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteractionHome(Uri uri);
-    }
-
     private void initialiseElements() {
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
@@ -78,7 +73,7 @@ public class FragmentTab_Month extends Fragment {
 
                         long end = calendar.getTimeInMillis();
 
-                        filterData(start, end);
+                        filteredArr = Utilities.filterData(start, end);
                         startRecycler(filteredArr);
                         editDate.setText("Picked: " + monthYearPicker.getSelectedYear() + " / " + (monthYearPicker.getSelectedMonth()+1));
                         calendar = Calendar.getInstance();
@@ -106,19 +101,9 @@ public class FragmentTab_Month extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filterData(start, end);
+        filteredArr = Utilities.filterData(start, end);
     }
 
-    private void filterData(long start, long end){
-        filteredArr = new ArrayList<>();
-        for (MoneyFlow f: Utilities.data) {
-            if(start <= f.getCalendar() && f.getCalendar() <= end){
-                filteredArr.add(f);
-            } else if(f.getCalendar() > end){
-                break;
-            }
-        }
-    }
     // must add AsyncTask!
     private void startRecycler(ArrayList<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
