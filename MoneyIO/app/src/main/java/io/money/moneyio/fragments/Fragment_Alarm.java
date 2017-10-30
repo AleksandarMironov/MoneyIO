@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -60,6 +61,14 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         return view;
     }
 
+    private void deleteAlarm(int position) {
+        List<Alarm> temp = new ArrayList<>(alarms);
+        if (position >= 0) {
+            temp.remove(position);
+        }
+        alarms = temp;
+    }
+
     private void initialiseElements() {
         recyclerView = view.findViewById(R.id.recycler_alarms);
         db = DatabaseHelperSQLite.getInstance(view.getContext());
@@ -88,11 +97,13 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         mLastClickTime = SystemClock.elapsedRealtime();
         db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
                 alarms.get(position).getMinutes(), alarms.get(position).getMassage());
-        alarms.remove(position);
+        deleteAlarm(position);
+//        alarms = db.getUserAlarms(user.getUid());
         recyclerView.removeViewAt(position);
         adapter.notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, alarms.size());
         Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+        startRecycler();
     }
 
     public void onTimeEditClickListener(){
