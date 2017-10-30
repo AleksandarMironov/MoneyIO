@@ -1,5 +1,6 @@
 package io.money.moneyio.model.utilities;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,8 +11,12 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import io.money.moneyio.activities.MainActivity;
+import io.money.moneyio.model.receivers.AlarmReceiver;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class Utilities {
     public static ArrayList<MoneyFlow> data;
@@ -63,5 +68,26 @@ public class Utilities {
             }
         }
         return filteredArr;
+    }
+
+    public static void setAlarms(Context context, ArrayList<Alarm> alarms){
+        for (Alarm alarm : alarms) {
+            setAlarm(context, alarm);
+        }
+    }
+
+    public static void setAlarm(Context context, Alarm alarm){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2017, 9, alarm.getDate(), alarm.getHour(), alarm.getMinutes());
+
+        Intent myIntent = new Intent(context, AlarmReceiver.class);
+
+        // Get the alarm manager service
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        myIntent.putExtra("message", alarm.getMassage());
+        PendingIntent pending_intent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending_intent);
     }
 }

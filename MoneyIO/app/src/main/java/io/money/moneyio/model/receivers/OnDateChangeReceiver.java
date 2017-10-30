@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.PlannedFlow;
@@ -23,8 +24,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             Utilities.isFirebasePersistence = true;
         }
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.keepSynced(true);
+        DatabaseHelperFirebase fdb = DatabaseHelperFirebase.getInstance();
 
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);
         ArrayList<PlannedFlow> allPlanned =  db.getAllPlaned();
@@ -32,7 +32,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
 
         for (PlannedFlow plannedFlow : allPlanned) {
             if(plannedFlow.getDate() == date){
-                myRef.child(plannedFlow.getUserID())
+                fdb.base.child(plannedFlow.getUserID())
                         .push()
                         .setValue(new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }

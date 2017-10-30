@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.model.utilities.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
@@ -25,10 +26,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             String userID = firebaseAuth.getCurrentUser().getUid();
             ArrayList<Alarm> alarms = db.getUserAlarms(userID);
 
-            for (Alarm alarm : alarms) {
-                //TODO do something
-                Toast.makeText(context, alarm.getMassage(), Toast.LENGTH_SHORT).show();
-            }
+            Utilities.setAlarms(context, alarms);
 
         }
     }

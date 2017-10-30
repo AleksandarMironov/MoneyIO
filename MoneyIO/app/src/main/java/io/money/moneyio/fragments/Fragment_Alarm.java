@@ -55,19 +55,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         onAddAlarmBtnListener();
         setInitialStateDateTimeFields();
         onDateEditClickListener();
-        ////////////////////////
-            /*
-                final Intent myIntent = new Intent(view.getContext(), AlarmReceiver.class);
 
-                // Get the alarm manager service
-                AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(ALARM_SERVICE);
-                myIntent.putExtra("message", "test text send");
-                PendingIntent pending_intent = PendingIntent.getBroadcast(view.getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 60000, pending_intent);
-                //Utilities.notifyMe(view.getContext(), "Working :)");
-*/
-        ///////////////////////////
         return view;
     }
 
@@ -118,6 +106,8 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         calendar.set(Calendar.MINUTE, selectedMinute);
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        minute = calendar.get(Calendar.MINUTE);
                         timeEdit.setText("Time: " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -166,8 +156,8 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                 if(isAdded){
                     Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
                     startRecycler();
+                    Utilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, (Utilities.checkString(massage)? massage : "")));
                     setInitialStateDateTimeFields();
-
                 } else {
                     Toast.makeText(view.getContext(), "Sorry, alarm is not added (already exists)", Toast.LENGTH_SHORT).show();
                 }
