@@ -12,18 +12,17 @@ import android.view.ViewGroup;
 import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.PageAdapterGraphic;
 
-
 public class Fragment_Statistics extends Fragment {
 
     private View view;
-
-    public int j = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_statistics, container, false);
+
         startTabView();
+
         return view;
     }
 

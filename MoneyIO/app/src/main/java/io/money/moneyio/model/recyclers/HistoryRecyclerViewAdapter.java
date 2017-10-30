@@ -2,6 +2,7 @@ package io.money.moneyio.model.recyclers;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,10 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.date.setText(new SimpleDateFormat("d-MMM-yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
         if (moneyFlow.getExpense().equals("true")) {
             holder.image.setImageResource(R.drawable.outcome_icon);//outcome
+            holder.price.setTextColor(Color.argb(255,255,85,85));
         } else {
             holder.image.setImageResource(R.drawable.income_icon);//income
+            holder.price.setTextColor(Color.argb(255,0,255,64));
         }
 
     }

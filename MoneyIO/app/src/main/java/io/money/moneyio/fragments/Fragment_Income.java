@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.Type;
@@ -33,11 +34,9 @@ import io.money.moneyio.model.recyclers.TypeRecyclerViewAdapter;
 public class Fragment_Income extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
 
     private View view;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private DatabaseReference finalMyRef;
-    private FirebaseUser firebaseUser;
-    private Button save, one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
+    private DatabaseHelperFirebase fdb;
+    private FirebaseUser user;
+    private Button one, two, three, four, five, six, seven, eight, nine, zero, dot, delete;
     private TextView moneyView;
     private EditText comment;
     private RecyclerView recyclerView;
@@ -50,17 +49,13 @@ public class Fragment_Income extends Fragment implements View.OnClickListener, T
         view = inflater.inflate(R.layout.fragment_income, container, false);
         initialiseElements();
         startRecycler();
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.keepSynced(true);
-        myRef = myRef.child(firebaseAuth.getCurrentUser().getUid());
-        finalMyRef = myRef;
         keyboardHideListener();
         return view;
     }
 
     private void startRecycler() {
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(view.getContext());
-        final ArrayList<Type> types = db.getUserTypes(firebaseUser.getUid());
+        final ArrayList<Type> types = db.getUserTypes(user.getUid());
         ArrayList<Type> typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).getExpense().equalsIgnoreCase("false")) {
@@ -75,8 +70,8 @@ public class Fragment_Income extends Fragment implements View.OnClickListener, T
     }
 
     private void initialiseElements() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        fdb = DatabaseHelperFirebase.getInstance();
         one = (Button) view.findViewById(R.id.income_keyboard_1);
         one.setOnClickListener(this);
         two = (Button) view.findViewById(R.id.income_keyboard_2);
@@ -205,10 +200,10 @@ public class Fragment_Income extends Fragment implements View.OnClickListener, T
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
+                fdb.base.child(user.getUid()).push().setValue(new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             } else {
-                finalMyRef.push().setValue(new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
+                fdb.base.child(user.getUid()).push().setValue(new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();

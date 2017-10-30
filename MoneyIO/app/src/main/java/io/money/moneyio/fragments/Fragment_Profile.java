@@ -38,7 +38,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     private View view;
     private DatabaseHelperSQLite db;
-    private FirebaseUser firebaseUser;
+    private FirebaseUser user;
     private TextView email, names;
     private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
@@ -68,7 +68,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void startRecycler() {
-        final ArrayList<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(firebaseUser.getUid());
+        final ArrayList<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(user.getUid());
         typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).getPictureId() == R.mipmap.ic_launcher) {
@@ -87,7 +87,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-        db.deleteType(firebaseUser.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
+        db.deleteType(user.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
         typeFilter.remove(position);
         recyclerView.removeViewAt(position);
         adapter.notifyItemRemoved(position);
@@ -99,7 +99,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         recyclerView = view.findViewById(R.id.recycler_profile);
         db = DatabaseHelperSQLite.getInstance(view.getContext());
         monthYearPicker = new MonthYearPicker(view.getContext());
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         email = view.findViewById(R.id.profile_email);
         names = view.findViewById(R.id.profile_name);
         salary = view.findViewById(R.id.profile_salary);
@@ -115,9 +115,9 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void setTextValues() {
-        email.setText(firebaseUser.getEmail());
-        names.setText(firebaseUser.getDisplayName());
-        plannedFlow = db.getUserPlanned(firebaseUser.getUid());
+        email.setText(user.getEmail());
+        names.setText(user.getDisplayName());
+        plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");
             dayOfSalary.setText("pay day: SELECT" );
@@ -136,7 +136,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         //TODO make edit method :D
                         db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
                     }
-                    boolean isAdded = db.addPlanned(firebaseUser.getUid(), payDay, "Salary",Float.parseFloat(salary.getText().toString()));
+                    boolean isAdded = db.addPlanned(user.getUid(), payDay, "Salary",Float.parseFloat(salary.getText().toString()));
                     if(isAdded){
                         Toast.makeText(view.getContext(), "Saved", Toast.LENGTH_SHORT).show();
                         setTextValues();
@@ -205,7 +205,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     return;
                 }
 
-                boolean ch = db.addType(firebaseUser.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.mipmap.ic_launcher);
+                boolean ch = db.addType(user.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.mipmap.ic_launcher);
                 if(ch) {
                     Toast.makeText(view.getContext(), "Type added", Toast.LENGTH_SHORT).show();
                     startRecycler();

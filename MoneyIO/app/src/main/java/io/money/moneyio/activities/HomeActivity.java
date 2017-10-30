@@ -40,6 +40,7 @@ import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.utilities.MoneyFlow;
 import io.money.moneyio.model.utilities.Utilities;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
@@ -47,13 +48,12 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private FirebaseAuth firebaseAuth;
     private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnQuit, btnLogOut;
     private ImageView sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
-    private FirebaseUser user;
-    private DatabaseReference myDatabaseRef;
-    private  TextView currentFragment;
+    private DatabaseHelperFirebase fdb;
+    private FirebaseAuth firebaseAuth;
+    private TextView currentFragment;
     private Fragment_Outcome fragment_outcome;
 
     @Override
@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         drawerDropMenuCreator();
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
-        readDatabase();
+        fdb.readDatabase();
         showCaseView();
     }
 
@@ -91,12 +91,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseElements(){
+        fdb = DatabaseHelperFirebase.getInstance();
         fragment_outcome = new Fragment_Outcome();
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
         firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
         btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
         btnOutcome.setOnClickListener(this);
         btnIncome = (Button)findViewById(R.id.home_income_btn);
@@ -110,41 +110,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnQuit = (Button) findViewById(R.id.home_quit_btn);
         btnQuit.setOnClickListener(this);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
-        myDatabaseRef = FirebaseDatabase.getInstance().getReference().child(firebaseAuth.getCurrentUser().getUid());
         statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
-    }
-
-    private void readDatabase(){
-        Utilities.data = new ArrayList<>();
-        final DatabaseReference mref = myDatabaseRef;
-        mref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
-                Utilities.data.add(t);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void removeActionBar() {
@@ -192,7 +159,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
 
     public void drawerDropMenuCreator() {
 

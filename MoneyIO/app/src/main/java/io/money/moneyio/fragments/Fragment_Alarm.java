@@ -41,7 +41,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private View view;
     private RecyclerView recyclerView;
     private DatabaseHelperSQLite db;
-    private FirebaseUser firebaseUser;
+    private FirebaseUser user;
     private long mLastClickTime;
     private AlarmsRecyclerViewAdapter adapter;
     private ArrayList<Alarm> alarms;
@@ -84,7 +84,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private void initialiseElements() {
         recyclerView = view.findViewById(R.id.recycler_alarms);
         db = DatabaseHelperSQLite.getInstance(view.getContext());
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         mLastClickTime = SystemClock.elapsedRealtime();
         dateEdit = view.findViewById(R.id.alarm_date_set_edit);
         timeEdit = view.findViewById(R.id.alarm_time_set_edit);
@@ -94,7 +94,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     }
 
     private void startRecycler() {
-        alarms = db.getUserAlarms(firebaseUser.getUid());
+        alarms = db.getUserAlarms(user.getUid());
         adapter = new AlarmsRecyclerViewAdapter(view.getContext(), alarms);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter.setClickListener(this);
@@ -107,7 +107,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-        db.deleteAlarm(firebaseUser.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
+        db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
                 alarms.get(position).getMinutes(), alarms.get(position).getMassage());
         alarms.remove(position);
         recyclerView.removeViewAt(position);
@@ -171,7 +171,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 String massage = massageEdit.getText().toString();
-                boolean isAdded = db.addAlarm(firebaseUser.getUid(), date, hour, minute,
+                boolean isAdded = db.addAlarm(user.getUid(), date, hour, minute,
                                                 (Utilities.checkString(massage)? massage : ""));
                 if(isAdded){
                     Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
