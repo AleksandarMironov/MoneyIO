@@ -30,7 +30,7 @@ import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Type;
 import io.money.moneyio.model.recyclers.TypeRecyclerViewAdapter;
 
-public class Fragment_Outcome extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
+public class Fragment_Income_Expense extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
 
     private View view;
     private DatabaseHelperFirebase fdb;
@@ -41,11 +41,13 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
     private RecyclerView recyclerView;
     private TypeRecyclerViewAdapter adapter;
     private View dummyView;
+    private boolean isExpense;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_outcome, container, false);        initialiseElements();
+        view = inflater.inflate(R.layout.fragment_income_expense, container, false);
+        initialiseElements();
         startRecycler();
         keyboardHideListener();
         return view;
@@ -54,20 +56,33 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
     private void startRecycler() {
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(view.getContext());
         final List<Type> types = db.getUserTypes(user.getUid());
-        ArrayList<Type> typeFilter = new ArrayList<>();
-        for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).getExpense().equalsIgnoreCase("true")) {
-                typeFilter.add(types.get(i));
-            }
-        }
+        ArrayList<Type> typeFilterExpense = new ArrayList<>();
+        ArrayList<Type> typeFilterIncome = new ArrayList<>();
+
         recyclerView = (RecyclerView)view.findViewById(R.id.outcome_recycler_view);
-        adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilter);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2 , LinearLayoutManager.HORIZONTAL, false));
+
+        if (!isExpense) {
+            for (int i = 0; i < types.size(); i++) {
+                if (types.get(i).getExpense().equalsIgnoreCase("false")) {
+                    typeFilterIncome.add(types.get(i));
+                }
+            }
+            adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilterIncome);
+        } else {
+            for (int i = 0; i < types.size(); i++) {
+                if (types.get(i).getExpense().equalsIgnoreCase("true")) {
+                    typeFilterExpense.add(types.get(i));
+                }
+            }
+            adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilterExpense);
+        }
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2 , LinearLayoutManager.HORIZONTAL, false));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 
     private void initialiseElements() {
+        isExpense = getArguments().getBoolean("isExpense");
         user = FirebaseAuth.getInstance().getCurrentUser();
         fdb = DatabaseHelperFirebase.getInstance();
         one = (Button) view.findViewById(R.id.outcome_keyboard_1);
@@ -195,14 +210,22 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         Type type = adapter.getItem(position);
         String price = moneyView.getText().toString().trim();
         String com = comment.getText().toString().trim();
+
         if (!price.equalsIgnoreCase("Insert price")) {
-            if (com == null) {
-                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
-                moneyView.setText("Insert price");
+            if (!isExpense) {
+                if (com == null) {
+                fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
             } else {
-                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
-                moneyView.setText("Insert price");
+                fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
             }
+            } else {
+                if (com == null) {
+                    fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
+                } else {
+                    fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
+                }
+            }
+            moneyView.setText("Insert price");
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();

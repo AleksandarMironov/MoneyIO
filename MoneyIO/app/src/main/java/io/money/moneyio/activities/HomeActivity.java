@@ -26,8 +26,7 @@ import java.util.List;
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_DataHistory;
-import io.money.moneyio.fragments.Fragment_Income;
-import io.money.moneyio.fragments.Fragment_Outcome;
+import io.money.moneyio.fragments.Fragment_Income_Expense;
 import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
 import io.money.moneyio.model.MoneyFlow;
@@ -43,16 +42,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseHelperFirebase fdb;
     private FirebaseAuth firebaseAuth;
     private TextView currentFragment;
-    private Fragment_Outcome fragment_outcome;
+    private Fragment_Income_Expense fragment_incomeExpense;
     private List<MoneyFlow> firebaseData;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        removeActionBar();
-        loadFragment(new Fragment_Outcome());
         initialiseElements();
+        removeActionBar();
+        loadFragment(fragment_incomeExpense);
         drawerDropMenuCreator();
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
@@ -82,7 +82,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void initialiseElements(){
         fdb = DatabaseHelperFirebase.getInstance();
         firebaseData = fdb.getData();
-        fragment_outcome = new Fragment_Outcome();
+        fragment_incomeExpense = new Fragment_Income_Expense();
+        bundle = new Bundle();
+        bundle.putBoolean("isExpense", true);
+        fragment_incomeExpense.setArguments(bundle);
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
         currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
@@ -181,10 +184,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
 
-        } else if (fragment_outcome != null && fragment_outcome.isVisible()){
+        } else if (fragment_incomeExpense != null && fragment_incomeExpense.isVisible()){
             exit();
         } else {
-            loadFragment(fragment_outcome);
+            loadFragment(fragment_incomeExpense);
             setCurrentFragment(getString(R.string.expense));
             statisticsButton.setVisibility(View.VISIBLE);
         }
@@ -224,13 +227,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+//        bundle = new Bundle();
         switch (v.getId()) {
             case R.id.home_income_btn:
-                drawerMenuButtonsAction(getString(R.string.income), new Fragment_Income());
+                bundle.putBoolean("isExpense", false);
+                Fragment_Income_Expense fragment_incomeExpense1 = new Fragment_Income_Expense();
+                fragment_incomeExpense1.setArguments(bundle);
+                drawerMenuButtonsAction(getString(R.string.income), fragment_incomeExpense1);
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_outcome_btn:
-                drawerMenuButtonsAction(getString(R.string.expense), fragment_outcome);
+                bundle.putBoolean("isExpense", true);
+                fragment_incomeExpense.setArguments(bundle);
+                drawerMenuButtonsAction(getString(R.string.expense), fragment_incomeExpense);
                 statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_statistics_btn:

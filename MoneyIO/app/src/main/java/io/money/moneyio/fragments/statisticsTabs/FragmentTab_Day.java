@@ -20,7 +20,6 @@ import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.utilities.Utilities;
 
 public class FragmentTab_Day extends Fragment {
 
@@ -34,7 +33,7 @@ public class FragmentTab_Day extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.tab_fragment_day_datahistory, container, false);
+        view = inflater.inflate(R.layout.tab_fragment_datahistory, container, false);
         initialiseElements();
         setFilter();
         filterDataOnStart();
