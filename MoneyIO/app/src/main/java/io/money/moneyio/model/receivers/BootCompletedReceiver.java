@@ -8,9 +8,11 @@ import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
+import io.money.moneyio.model.utilities.AlarmUtilities;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
@@ -23,10 +25,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         if (firebaseAuth.getCurrentUser() != null) {
             String userID = firebaseAuth.getCurrentUser().getUid();
-            ArrayList<Alarm> alarms = (ArrayList<Alarm>) db.getUserAlarms(userID);
+            List<Alarm> alarms = db.getUserAlarms(userID);
 
-            Utilities.setAlarms(context, alarms);
-
+            AlarmUtilities.setAlarms(context, alarms);
         }
     }
 }

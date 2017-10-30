@@ -29,6 +29,7 @@ import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
+import io.money.moneyio.model.utilities.AlarmUtilities;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 
@@ -99,7 +100,6 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
                 alarms.get(position).getMinutes(), alarms.get(position).getMassage());
         deleteAlarm(position);
-//        alarms = db.getUserAlarms(user.getUid());
         recyclerView.removeViewAt(position);
         adapter.notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, alarms.size());
@@ -169,7 +169,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                 if(isAdded){
                     Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
                     startRecycler();
-                    Utilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, (Utilities.checkString(massage)? massage : "")));
+                    AlarmUtilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, (Utilities.checkString(massage)? massage : "")));
                     setInitialStateDateTimeFields();
                 } else {
                     Toast.makeText(view.getContext(), "Sorry, alarm is not added (already exists)", Toast.LENGTH_SHORT).show();

@@ -15,7 +15,11 @@ public class PageAdapterGraphic extends FragmentPagerAdapter {
 
     public PageAdapterGraphic(FragmentManager fm, int tabs) {
         super(fm);
-        this.numberOfTabs = tabs;
+        if(tabs >= 0) {
+            this.numberOfTabs = tabs;
+        } else {
+            this.numberOfTabs = 0;
+        }
     }
 
     @Override

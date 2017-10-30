@@ -188,6 +188,22 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         return Collections.unmodifiableList(out);
     }
 
+    public List<Alarm> getAllAlarms() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String myRawQuery = "SELECT " +
+                T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 + ", " + T_ALARMS_COL_4 + ", " + T_ALARMS_COL_5
+                + " FROM " + TABLE_ALARMS + ";";
+        Cursor c = db.rawQuery(myRawQuery, null);
+        c.moveToFirst();
+        ArrayList<Alarm> out = new ArrayList<>();
+        for (int i = 0; i < c.getCount(); i++){
+            c.moveToPosition(i);
+            out.add(new Alarm(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3)));
+        }
+        c.close();
+        return Collections.unmodifiableList(out);
+    }
+
     public boolean addType(String user, String category, String type, Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

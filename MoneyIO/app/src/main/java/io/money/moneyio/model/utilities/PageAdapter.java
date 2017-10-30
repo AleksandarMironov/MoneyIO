@@ -15,7 +15,11 @@ public class PageAdapter extends FragmentPagerAdapter{
 
     public PageAdapter(FragmentManager childFragmentManager, int tabCount) {
         super(childFragmentManager);
-        this.numberOfTabs = tabCount;
+        if(tabCount >= 0) {
+            this.numberOfTabs = tabCount;
+        } else {
+            this.numberOfTabs = 0;
+        }
     }
 
     @Override
