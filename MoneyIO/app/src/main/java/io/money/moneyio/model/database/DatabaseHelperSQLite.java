@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Alarm;
@@ -130,7 +133,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<PlannedFlow> getAllPlaned() {
+    public List<PlannedFlow> getAllPlaned() {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT * FROM " + TABLE_PLANED + ";";
         Cursor c = db.rawQuery(myRawQuery, null);
@@ -141,7 +144,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
             out.add(new PlannedFlow(c.getString(0), c.getInt(1), c.getString(2), c.getInt(3)));
         }
         c.close();
-        return out;
+        return Collections.unmodifiableList(out);
     }
 
     public boolean addAlarm(String user, Integer date, Integer hour, Integer minutes, String massage) {
@@ -169,7 +172,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         db.execSQL(myRawQuery);
     }
 
-    public ArrayList<Alarm> getUserAlarms(String userID) {
+    public List<Alarm> getUserAlarms(String userID) {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT " +
                 T_ALARMS_COL_2 + ", " + T_ALARMS_COL_3 + ", " + T_ALARMS_COL_4 + ", " + T_ALARMS_COL_5
@@ -182,7 +185,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
             out.add(new Alarm(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3)));
         }
         c.close();
-        return out;
+        return Collections.unmodifiableList(out);
     }
 
     public boolean addType(String user, String category, String type, Integer id) {
@@ -205,7 +208,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         db.execSQL(myRawQuery);
     }
 
-    public ArrayList<Type> getUserTypes(String userID){
+    public List<Type> getUserTypes(String userID){
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 + ", " + T_SETTINGS_COL_4
                 + " FROM " + TABLE_SETINGS + " WHERE " + T_SETTINGS_COL_1 + " = \"" + userID + "\";";
@@ -274,6 +277,6 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         out.add(new Type("false", "Codding", R.drawable.work));
 
         c.close();
-        return out;
+        return Collections.unmodifiableList(out);
     }
 }

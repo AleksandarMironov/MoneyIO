@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Alarm;
@@ -18,9 +19,9 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     private Context context;
     private LayoutInflater inflater;
     private ItemClickListener mClickListener;
-    private ArrayList<Alarm> alarms;
+    private List<Alarm> alarms;
 
-    public AlarmsRecyclerViewAdapter(Context context, ArrayList<Alarm> alarms){
+    public AlarmsRecyclerViewAdapter(Context context, List<Alarm> alarms){
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.alarms = alarms;

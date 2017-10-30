@@ -23,7 +23,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         if (firebaseAuth.getCurrentUser() != null) {
             String userID = firebaseAuth.getCurrentUser().getUid();
-            ArrayList<Alarm> alarms = db.getUserAlarms(userID);
+            ArrayList<Alarm> alarms = (ArrayList<Alarm>) db.getUserAlarms(userID);
 
             Utilities.setAlarms(context, alarms);
 

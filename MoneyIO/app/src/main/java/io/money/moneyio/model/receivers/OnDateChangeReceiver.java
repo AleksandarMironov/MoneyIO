@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
@@ -26,7 +27,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
         DatabaseHelperFirebase fdb = DatabaseHelperFirebase.getInstance();
 
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);
-        ArrayList<PlannedFlow> allPlanned =  db.getAllPlaned();
+        List<PlannedFlow> allPlanned =  db.getAllPlaned();
         int date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
         for (PlannedFlow plannedFlow : allPlanned) {

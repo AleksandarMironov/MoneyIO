@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
@@ -68,7 +69,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void startRecycler() {
-        final ArrayList<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(user.getUid());
+        final List<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(user.getUid());
         typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).getPictureId() == R.mipmap.ic_launcher) {

@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
@@ -52,7 +53,7 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
 
     private void startRecycler() {
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(view.getContext());
-        final ArrayList<Type> types = db.getUserTypes(user.getUid());
+        final List<Type> types = db.getUserTypes(user.getUid());
         ArrayList<Type> typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).getExpense().equalsIgnoreCase("true")) {

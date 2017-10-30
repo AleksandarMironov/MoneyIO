@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.MoneyFlow;
@@ -20,10 +21,10 @@ import io.money.moneyio.model.MoneyFlow;
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.MyHolder>{
 
     private Context context;
-    private ArrayList<MoneyFlow> data;
+    private List<MoneyFlow> data;
     private LayoutInflater inflater;
 
-    public HistoryRecyclerViewAdapter(Context context, ArrayList<MoneyFlow> data) {
+    public HistoryRecyclerViewAdapter(Context context, List<MoneyFlow> data) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.data = data;

@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Alarm;
@@ -38,7 +39,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private FirebaseUser user;
     private long mLastClickTime;
     private AlarmsRecyclerViewAdapter adapter;
-    private ArrayList<Alarm> alarms;
+    private List<Alarm> alarms;
     private EditText dateEdit, timeEdit, massageEdit;
     private Button addAlarmBtn;
     private Calendar calendar;
