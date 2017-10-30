@@ -1,11 +1,8 @@
 package io.money.moneyio.fragments;
 
-import android.app.AlarmManager;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -29,11 +26,8 @@ import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.Alarm;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
-import io.money.moneyio.model.receivers.AlarmReceiver;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
-
-import static android.content.Context.ALARM_SERVICE;
 
 
 public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapter.ItemClickListener {
@@ -62,10 +56,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         setInitialStateDateTimeFields();
         onDateEditClickListener();
         ////////////////////////
-       ((Button)view.findViewById(R.id.test_alert)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+            /*
                 final Intent myIntent = new Intent(view.getContext(), AlarmReceiver.class);
 
                 // Get the alarm manager service
@@ -75,8 +66,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 60000, pending_intent);
                 //Utilities.notifyMe(view.getContext(), "Working :)");
-            }
-        });
+*/
         ///////////////////////////
         return view;
     }
