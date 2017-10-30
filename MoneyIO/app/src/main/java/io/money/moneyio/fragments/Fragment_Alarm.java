@@ -166,6 +166,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                 String massage = massageEdit.getText().toString();
                 boolean isAdded = db.addAlarm(user.getUid(), date, hour, minute,
                                                 (Utilities.checkString(massage)? massage : ""));
+                Toast.makeText(view.getContext(), "" + date, Toast.LENGTH_SHORT).show();
                 if(isAdded){
                     Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
                     startRecycler();
