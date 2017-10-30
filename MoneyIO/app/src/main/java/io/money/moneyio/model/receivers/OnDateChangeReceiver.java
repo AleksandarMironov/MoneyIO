@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import java.util.Calendar;
 
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
-import io.money.moneyio.model.utilities.MoneyFlow;
-import io.money.moneyio.model.utilities.PlannedFlow;
+import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.PlannedFlow;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class OnDateChangeReceiver extends BroadcastReceiver {
@@ -32,9 +31,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
 
         for (PlannedFlow plannedFlow : allPlanned) {
             if(plannedFlow.getDate() == date){
-                fdb.base.child(plannedFlow.getUserID())
-                        .push()
-                        .setValue(new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }
         }
     }

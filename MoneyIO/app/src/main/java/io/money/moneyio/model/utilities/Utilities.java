@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.money.moneyio.activities.MainActivity;
+import io.money.moneyio.model.Alarm;
+import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.receivers.AlarmReceiver;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -80,6 +82,7 @@ public class Utilities {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2017, 9, alarm.getDate(), alarm.getHour(), alarm.getMinutes());
+
 
         Intent myIntent = new Intent(context, AlarmReceiver.class);
 

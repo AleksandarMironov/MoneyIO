@@ -9,14 +9,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class DatabaseHelperFirebase {
 
     private static DatabaseHelperFirebase instance;
     private FirebaseAuth firebaseAuth;
-    public DatabaseReference base;
+    private DatabaseReference base;
 
     public DatabaseHelperFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -29,6 +29,10 @@ public class DatabaseHelperFirebase {
             instance = new DatabaseHelperFirebase();
         }
         return instance;
+    }
+
+    public void addData(String userId, MoneyFlow moneyFlow){
+        this.base.child(userId).push().setValue(moneyFlow);
     }
 
     public void readDatabase(){

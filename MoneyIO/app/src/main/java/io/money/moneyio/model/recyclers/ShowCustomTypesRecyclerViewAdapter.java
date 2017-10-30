@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.Type;
 
 public class ShowCustomTypesRecyclerViewAdapter extends RecyclerView.Adapter<ShowCustomTypesRecyclerViewAdapter.MyViewHolder>{
 

@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.utilities.Alarm;
-import io.money.moneyio.model.utilities.PlannedFlow;
-import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.Alarm;
+import io.money.moneyio.model.PlannedFlow;
+import io.money.moneyio.model.Type;
 
 public class DatabaseHelperSQLite extends SQLiteOpenHelper {
 

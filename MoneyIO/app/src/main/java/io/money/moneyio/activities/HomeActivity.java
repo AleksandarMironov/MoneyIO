@@ -2,7 +2,6 @@ package io.money.moneyio.activities;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
@@ -21,17 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
@@ -41,8 +29,6 @@ import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
-import io.money.moneyio.model.utilities.MoneyFlow;
-import io.money.moneyio.model.utilities.Utilities;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 

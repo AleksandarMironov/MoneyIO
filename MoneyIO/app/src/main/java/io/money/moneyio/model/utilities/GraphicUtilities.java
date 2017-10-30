@@ -34,6 +34,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.money.moneyio.model.MoneyFlow;
+
 public abstract class GraphicUtilities {
 
 

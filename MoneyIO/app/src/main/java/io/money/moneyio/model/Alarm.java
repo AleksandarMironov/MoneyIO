@@ -1,4 +1,4 @@
-package io.money.moneyio.model.utilities;
+package io.money.moneyio.model;
 
 public class Alarm {
     private Integer date;

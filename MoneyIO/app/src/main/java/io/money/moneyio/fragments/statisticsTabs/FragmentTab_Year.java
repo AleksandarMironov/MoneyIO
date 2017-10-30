@@ -1,7 +1,6 @@
 package io.money.moneyio.fragments.statisticsTabs;
 
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import java.util.Calendar;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
-import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 

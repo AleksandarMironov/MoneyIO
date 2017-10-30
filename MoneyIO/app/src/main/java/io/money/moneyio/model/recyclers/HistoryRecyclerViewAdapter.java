@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import io.money.moneyio.R;
-import io.money.moneyio.model.utilities.MoneyFlow;
+import io.money.moneyio.model.MoneyFlow;
 
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.MyHolder>{
 
@@ -54,7 +54,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        MoneyFlow moneyFlow = data.get(position);
+        MoneyFlow moneyFlow = data.get(data.size() - position - 1);
 
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());

@@ -30,8 +30,8 @@ import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.recyclers.ShowCustomTypesRecyclerViewAdapter;
 import io.money.moneyio.model.utilities.MonthYearPicker;
-import io.money.moneyio.model.utilities.PlannedFlow;
-import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.PlannedFlow;
+import io.money.moneyio.model.Type;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecyclerViewAdapter.ItemClickListener{

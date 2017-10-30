@@ -19,16 +19,14 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
-import io.money.moneyio.model.utilities.MoneyFlow;
-import io.money.moneyio.model.utilities.Type;
+import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.Type;
 import io.money.moneyio.model.recyclers.TypeRecyclerViewAdapter;
 
 public class Fragment_Outcome extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
@@ -198,10 +196,10 @@ public class Fragment_Outcome extends Fragment implements View.OnClickListener, 
         String com = comment.getText().toString().trim();
         if (!price.equalsIgnoreCase("Insert price")) {
             if (com == null) {
-                fdb.base.child(user.getUid()).push().setValue(new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
+                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             } else {
-                fdb.base.child(user.getUid()).push().setValue(new MoneyFlow("true", type.getType(), com,  Float.parseFloat(price)));
+                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
                 moneyView.setText("Insert price");
             }
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();

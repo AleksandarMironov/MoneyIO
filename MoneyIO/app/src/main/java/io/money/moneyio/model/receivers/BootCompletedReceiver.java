@@ -4,13 +4,12 @@ package io.money.moneyio.model.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import io.money.moneyio.model.utilities.Alarm;
+import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.Utilities;
 
