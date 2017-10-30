@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,7 +40,7 @@ import io.money.moneyio.model.MoneyFlow;
 public abstract class GraphicUtilities {
 
 
-    public static void combinedBarChart(BarChart chart, ArrayList<MoneyFlow> filteredArr){
+    public static void combinedBarChart(BarChart chart, List<MoneyFlow> filteredArr){
         //=======COMBINED BAR CHART=======
         float barWidth = 0.3f;
         float barSpace = 0f;
@@ -140,7 +141,7 @@ public abstract class GraphicUtilities {
         leftAxis.setAxisMinimum(0f);
     }
 
-    public static void pieChart(PieChart pieChart, ArrayList<MoneyFlow> utilitiesArray){
+    public static void pieChart(PieChart pieChart, List<MoneyFlow> utilitiesArray){
         pieChart.setUsePercentValues(true);
         pieChart.setContentDescription("TEST");
         pieChart.setHoleColor(Color.YELLOW);
@@ -191,7 +192,7 @@ public abstract class GraphicUtilities {
         pieChart.setData(pieData);
     }
 
-    public static void horizontalBarChart(HorizontalBarChart horizontalBarChart, ArrayList<MoneyFlow> filteredArr){
+    public static void horizontalBarChart(HorizontalBarChart horizontalBarChart, List<MoneyFlow> filteredArr){
         TreeMap<String, Float> structuredData = new TreeMap<>(new Comparator<String>() {
             @Override
             public int compare(String s, String t1) {

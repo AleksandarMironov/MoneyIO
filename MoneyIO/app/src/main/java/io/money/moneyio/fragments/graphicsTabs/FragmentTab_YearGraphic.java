@@ -15,8 +15,10 @@ import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.utilities.GraphicUtilities;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
@@ -26,11 +28,12 @@ public class FragmentTab_YearGraphic extends Fragment {
 
     private View view;
     private EditText editDate;
-    private ArrayList<MoneyFlow> filteredArr;
+    private DatabaseHelperFirebase fdb;
+    private List<MoneyFlow> filteredArr;
     private PieChart pieChart;
     private BarChart chart;
     private HorizontalBarChart horizontalBarChart;
-    private ArrayList<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
+    private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
     private MonthYearPicker monthYearPicker;
 
@@ -47,7 +50,8 @@ public class FragmentTab_YearGraphic extends Fragment {
     }
 
     private void initialiseElements() {
-        moneyFlowData = Utilities.data;
+        fdb = DatabaseHelperFirebase.getInstance();
+        moneyFlowData = fdb.getData();
         pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
         chart = (BarChart) view.findViewById(R.id.statistics_income_expense_year_combined);
         horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
@@ -75,7 +79,7 @@ public class FragmentTab_YearGraphic extends Fragment {
                         calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
 
                         long end = calendar.getTimeInMillis();
-                        filteredArr = Utilities.filterData(start, end);
+                        filteredArr = fdb.filterData(start, end);
                         calendar = Calendar.getInstance();
                         editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
                         monthYearPicker = new MonthYearPicker(view.getContext());
@@ -104,7 +108,7 @@ public class FragmentTab_YearGraphic extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filteredArr = Utilities.filterData(start, end);
+        filteredArr = fdb.filterData(start, end);
     }
 
     private void incomeExpenseYear() {

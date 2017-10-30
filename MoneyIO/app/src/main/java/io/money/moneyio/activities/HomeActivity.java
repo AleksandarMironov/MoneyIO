@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_DataHistory;
@@ -28,6 +30,7 @@ import io.money.moneyio.fragments.Fragment_Income;
 import io.money.moneyio.fragments.Fragment_Outcome;
 import io.money.moneyio.fragments.Fragment_Profile;
 import io.money.moneyio.fragments.Fragment_Statistics;
+import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
@@ -41,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth firebaseAuth;
     private TextView currentFragment;
     private Fragment_Outcome fragment_outcome;
+    private List<MoneyFlow> firebaseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         drawerDropMenuCreator();
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
-        fdb.readDatabase();
         showCaseView();
     }
 
@@ -78,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialiseElements(){
         fdb = DatabaseHelperFirebase.getInstance();
+        firebaseData = fdb.getData();
         fragment_outcome = new Fragment_Outcome();
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);

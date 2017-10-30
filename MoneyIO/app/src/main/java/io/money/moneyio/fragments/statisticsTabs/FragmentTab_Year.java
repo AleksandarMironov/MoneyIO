@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
@@ -23,6 +24,7 @@ import io.money.moneyio.model.utilities.Utilities;
 public class FragmentTab_Year extends Fragment {
 
     private View view;
+    private DatabaseHelperFirebase fdb;
     private RecyclerView recyclerView;
     private Calendar calendar;
     private EditText editDate;
@@ -41,6 +43,7 @@ public class FragmentTab_Year extends Fragment {
     }
 
     private void initialiseElements() {
+        fdb = DatabaseHelperFirebase.getInstance();
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());
@@ -66,7 +69,7 @@ public class FragmentTab_Year extends Fragment {
                                 calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
 
                                 long end = calendar.getTimeInMillis();
-                                filteredArr = Utilities.filterData(start, end);
+                                filteredArr = fdb.filterData(start, end);
                                 startRecycler(filteredArr);
                                 calendar = Calendar.getInstance();
                                 editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
@@ -95,7 +98,7 @@ public class FragmentTab_Year extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filteredArr = Utilities.filterData(start, end);
+        filteredArr = fdb.filterData(start, end);
     }
 
 

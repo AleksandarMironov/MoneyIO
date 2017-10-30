@@ -12,6 +12,8 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 import io.money.moneyio.activities.MainActivity;
 import io.money.moneyio.model.Alarm;
@@ -21,12 +23,12 @@ import io.money.moneyio.model.receivers.AlarmReceiver;
 import static android.content.Context.ALARM_SERVICE;
 
 public class Utilities {
-    public static ArrayList<MoneyFlow> data = new ArrayList<>();
+//    private static List<MoneyFlow> data = new ArrayList<>();
     private static boolean isFirebasePersistence = false;
 
-    public static void resetFirebaseDatabase(){
-        data = new ArrayList<>();
-    }
+//    public static void resetFirebaseDatabase(){
+//        data = new ArrayList<>();
+//    }
 
     public static boolean isFirebasePersistence() {
         return isFirebasePersistence;
@@ -35,6 +37,10 @@ public class Utilities {
     public static void setIsFirebasePersistence(boolean isFirebasePersistence) {
         Utilities.isFirebasePersistence = isFirebasePersistence;
     }
+
+//    public static List<MoneyFlow> getData() {
+//        return Collections.unmodifiableList(data);
+//    }
 
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){
@@ -73,17 +79,17 @@ public class Utilities {
         mediaPlayer.start();
     }
 
-    public static ArrayList<MoneyFlow> filterData(long start, long end){
-        ArrayList<MoneyFlow> filteredArr = new ArrayList<>();
-        for (MoneyFlow f: Utilities.data) {
-            if(start <= f.getCalendar() && f.getCalendar() <= end){
-                filteredArr.add(f);
-            } else if(f.getCalendar() > end){
-                break;
-            }
-        }
-        return filteredArr;
-    }
+//    public static ArrayList<MoneyFlow> filterData(long start, long end){
+//        ArrayList<MoneyFlow> filteredArr = new ArrayList<>();
+//        for (MoneyFlow f: Utilities.data) {
+//            if(start <= f.getCalendar() && f.getCalendar() <= end){
+//                filteredArr.add(f);
+//            } else if(f.getCalendar() > end){
+//                break;
+//            }
+//        }
+//        return filteredArr;
+//    }
 
     public static void setAlarms(Context context, ArrayList<Alarm> alarms){
         for (Alarm alarm : alarms) {

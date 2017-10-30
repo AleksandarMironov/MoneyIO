@@ -13,8 +13,10 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.money.moneyio.R;
+import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.MonthYearPicker;
@@ -23,11 +25,12 @@ import io.money.moneyio.model.utilities.Utilities;
 public class FragmentTab_Month extends Fragment {
 
     private View view;
+    private DatabaseHelperFirebase fdb;
     private RecyclerView recyclerView;
     private Calendar calendar;
     private EditText editDate;
     private MonthYearPicker monthYearPicker;
-    private ArrayList<MoneyFlow> filteredArr;
+    private List<MoneyFlow> filteredArr;
 
     @Nullable
     @Override
@@ -41,6 +44,7 @@ public class FragmentTab_Month extends Fragment {
     }
 
     private void initialiseElements() {
+        fdb = DatabaseHelperFirebase.getInstance();
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());
@@ -72,7 +76,7 @@ public class FragmentTab_Month extends Fragment {
 
                         long end = calendar.getTimeInMillis();
 
-                        filteredArr = Utilities.filterData(start, end);
+                        filteredArr = fdb.filterData(start, end);
                         startRecycler(filteredArr);
                         editDate.setText("Picked: " + monthYearPicker.getSelectedYear() + " / " + (monthYearPicker.getSelectedMonth()+1));
                         calendar = Calendar.getInstance();
@@ -100,11 +104,11 @@ public class FragmentTab_Month extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filteredArr = Utilities.filterData(start, end);
+        filteredArr = fdb.filterData(start, end);
     }
 
     // must add AsyncTask!
-    private void startRecycler(ArrayList<MoneyFlow> data) {
+    private void startRecycler(List<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
