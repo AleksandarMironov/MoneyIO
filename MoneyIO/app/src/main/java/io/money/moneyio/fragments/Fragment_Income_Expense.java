@@ -30,7 +30,7 @@ import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.Type;
 import io.money.moneyio.model.recyclers.TypeRecyclerViewAdapter;
 
-public class Fragment_Income_Expense extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener{
+public class Fragment_Income_Expense extends Fragment implements View.OnClickListener, TypeRecyclerViewAdapter.ItemClickListener {
 
     private View view;
     private DatabaseHelperFirebase fdb;
@@ -56,27 +56,25 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     private void startRecycler() {
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(view.getContext());
         final List<Type> types = db.getUserTypes(user.getUid());
-        ArrayList<Type> typeFilterExpense = new ArrayList<>();
-        ArrayList<Type> typeFilterIncome = new ArrayList<>();
-
-        recyclerView = (RecyclerView)view.findViewById(R.id.outcome_recycler_view);
+        ArrayList<Type> typeFilter = new ArrayList<>();
 
         if (!isExpense) {
             for (int i = 0; i < types.size(); i++) {
                 if (types.get(i).getExpense().equalsIgnoreCase("false")) {
-                    typeFilterIncome.add(types.get(i));
+                    typeFilter.add(types.get(i));
                 }
             }
-            adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilterIncome);
         } else {
             for (int i = 0; i < types.size(); i++) {
                 if (types.get(i).getExpense().equalsIgnoreCase("true")) {
-                    typeFilterExpense.add(types.get(i));
+                    typeFilter.add(types.get(i));
                 }
             }
-            adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilterExpense);
         }
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2 , LinearLayoutManager.HORIZONTAL, false));
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.outcome_recycler_view);
+        adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilter);
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
@@ -169,10 +167,19 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     private void addNumber(int i) {
+
+        String text = moneyView.getText().toString().trim();
+
         if (moneyView.getText().toString().trim().equalsIgnoreCase("Insert price")) {
             moneyView.setText("");
         }
-        moneyView.setText(moneyView.getText().toString() + i);
+        if (moneyView.getText().toString().trim().length() < 10) {
+            if (!(text.length() == 1 && text.equals("0") && i == 0)) {
+                if (!moneyView.getText().toString().trim().matches("[0-9]+\\.[0-9]{2}")) {
+                    moneyView.setText(moneyView.getText().toString() + i);
+                }
+            }
+        }
     }
 
     private void addDot(char dot) {
@@ -187,7 +194,9 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
             }
         }
         if (countDots == 0) {
-            moneyView.setText(moneyView.getText().toString() + dot);
+            if (moneyView.getText().toString().trim().length() < 9) {
+                moneyView.setText(moneyView.getText().toString() + dot);
+            }
         }
     }
 
@@ -211,7 +220,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         String price = moneyView.getText().toString().trim();
         String com = comment.getText().toString().trim();
 
-        if (!price.equalsIgnoreCase("Insert price")) {
+        if (!price.equalsIgnoreCase("Insert price") && Float.parseFloat(price) != 0) {
             if (!isExpense) {
                 if (com == null) {
                 fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
