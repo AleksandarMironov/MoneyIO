@@ -31,9 +31,43 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
         //check for planned income
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);
         List<PlannedFlow> allPlanned =  db.getAllPlaned();
-        int date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+        Calendar calendar = Calendar.getInstance();
+        int date = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = calendar.get(Calendar.MONTH);
 
         for (PlannedFlow plannedFlow : allPlanned) {
+            switch (currentMonth){
+                case 1:
+                    if(calendar.get(Calendar.YEAR)%4 == 0)
+                    {
+                        if(date == 29){
+                            if(plannedFlow.getDate() > 29){
+                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                            }
+                        }
+                    } else {
+                        if(date == 28){
+                            if(plannedFlow.getDate() > 28){
+                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                            }
+                        }
+                    }
+
+                    break;
+                case 3:
+                case 5:
+                case 8:
+                case 10:
+                    if(date == 30){
+                        if(plannedFlow.getDate() == 31){
+                            fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
             if(plannedFlow.getDate() == date){
                 fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }
