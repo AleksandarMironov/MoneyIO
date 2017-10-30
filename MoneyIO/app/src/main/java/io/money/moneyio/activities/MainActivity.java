@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     //keep data sync offline
     private void setPersistence(){
-        if(!Utilities.isFirebasePersistence){
+        if(!Utilities.isFirebasePersistence()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            Utilities.isFirebasePersistence = true;
+            Utilities.setIsFirebasePersistence(true);
         }
     }
 

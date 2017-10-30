@@ -21,8 +21,20 @@ import io.money.moneyio.model.receivers.AlarmReceiver;
 import static android.content.Context.ALARM_SERVICE;
 
 public class Utilities {
-    public static ArrayList<MoneyFlow> data;
-    public static boolean isFirebasePersistence = false;
+    public static ArrayList<MoneyFlow> data = new ArrayList<>();
+    private static boolean isFirebasePersistence = false;
+
+    public static void resetFirebaseDatabase(){
+        data = new ArrayList<>();
+    }
+
+    public static boolean isFirebasePersistence() {
+        return isFirebasePersistence;
+    }
+
+    public static void setIsFirebasePersistence(boolean isFirebasePersistence) {
+        Utilities.isFirebasePersistence = isFirebasePersistence;
+    }
 
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){
@@ -42,6 +54,7 @@ public class Utilities {
         return false;
     }
 
+    private static int notificationID = 0; //generate ID for notifications
     public static void notifyMe(Context context, String message){
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context.getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -54,7 +67,7 @@ public class Utilities {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(notificationID++, builder.build()); ///static i
 
         MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_NOTIFICATION_URI);
         mediaPlayer.start();
@@ -77,20 +90,18 @@ public class Utilities {
             setAlarm(context, alarm);
         }
     }
-
+    private static int reminderID = 0; //id generator for reminders
     public static void setAlarm(Context context, Alarm alarm){
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2017, 9, alarm.getDate(), alarm.getHour(), alarm.getMinutes());
 
 
+        AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent myIntent = new Intent(context, AlarmReceiver.class);
-
-        // Get the alarm manager service
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         myIntent.putExtra("message", alarm.getMassage());
-        PendingIntent pending_intent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(context, reminderID++, myIntent, 0);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending_intent);
     }
 }

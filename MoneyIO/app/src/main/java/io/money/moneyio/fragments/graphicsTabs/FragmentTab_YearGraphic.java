@@ -80,7 +80,6 @@ public class FragmentTab_YearGraphic extends Fragment {
                         editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
                         monthYearPicker = new MonthYearPicker(view.getContext());
                         incomeExpenseYear();
-//                        incomeExpenseDay();
                     }
                 };
 

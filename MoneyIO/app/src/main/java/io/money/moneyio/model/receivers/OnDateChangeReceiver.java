@@ -20,9 +20,9 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(!Utilities.isFirebasePersistence){
+        if(!Utilities.isFirebasePersistence()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            Utilities.isFirebasePersistence = true;
+            Utilities.setIsFirebasePersistence(true);
         }
         DatabaseHelperFirebase fdb = DatabaseHelperFirebase.getInstance();
 
