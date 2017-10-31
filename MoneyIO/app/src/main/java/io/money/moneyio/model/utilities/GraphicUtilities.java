@@ -187,16 +187,15 @@ public abstract class GraphicUtilities {
             values.add(entry.getValue());
         }
 
-        int valuesLen = values.size();
-        horizontalBarChart.getLayoutParams().height = valuesLen * 50;
-
         for (int z = 0; z < values.size(); z++) {
             horizontalBarChartArr.add(new BarEntry(values.get(z), z));
+            horizontalBarChart.getLayoutParams().height += 50;
         }
 
         BarDataSet bardataset = new BarDataSet(horizontalBarChartArr, "Expenses");
         bardataset.setColor(Color.RED);
         BarData data = new BarData(names, bardataset);
+        data.setValueTextSize(10);
         horizontalBarChart.setDoubleTapToZoomEnabled(false);
         horizontalBarChart.setDescription("");
         horizontalBarChart.invalidate();
