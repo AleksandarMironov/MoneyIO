@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -84,17 +85,39 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, int pos) {
+        final int position = pos;
         if (SystemClock.elapsedRealtime() - mLastClickTime < 700){
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-        db.deleteType(user.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
-        typeFilter.remove(position);
-        recyclerView.removeViewAt(position);
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, typeFilter.size());
-        Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(view.getContext());
+        a_builder.setMessage("Are you shore?")
+                .setCancelable(false)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteType(user.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
+                        typeFilter.remove(position);
+                        recyclerView.removeViewAt(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, typeFilter.size());
+                        Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("DELETE");
+        alert.show();
+
+
+
+
     }
 
     private void initialiseElements() {

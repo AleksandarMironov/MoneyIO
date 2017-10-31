@@ -1,6 +1,13 @@
 package io.money.moneyio.model.utilities;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+
+import io.money.moneyio.R;
+import io.money.moneyio.activities.HomeActivity;
 
 public class Utilities {
     private static boolean isFirebasePersistence = false;

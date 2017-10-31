@@ -2,11 +2,13 @@ package io.money.moneyio.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -29,6 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import io.money.moneyio.R;
+import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
@@ -98,20 +101,41 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, int pos) {
+        final  int position = pos;
         if (SystemClock.elapsedRealtime() - mLastClickTime < 700){
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-        db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
-                alarms.get(position).getMinutes(), alarms.get(position).getMassage());
-        deleteAlarm(position);
-        recyclerView.removeViewAt(position);
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, alarms.size());
-        Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
-        startRecycler();
-    }
+
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(view.getContext());
+        a_builder.setMessage("Are you shore?")
+                .setCancelable(false)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
+                                alarms.get(position).getMinutes(), alarms.get(position).getMassage());
+
+                        deleteAlarm(position);
+                        recyclerView.removeViewAt(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, alarms.size());
+                        Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                        startRecycler();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("DELETE");
+        alert.show();
+        }
+
 
     public void onTimeEditClickListener(){
         timeEdit.setOnClickListener(new View.OnClickListener() {
