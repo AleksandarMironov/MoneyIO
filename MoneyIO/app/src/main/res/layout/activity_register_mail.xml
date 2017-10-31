@@ -8,7 +8,10 @@
     android:layout_margin="40dp"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context="io.money.moneyio.activities.RegisterMailActivity">
+    tools:context="io.money.moneyio.activities.RegisterMailActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <requestFocus/>
 
     <TextView
         android:text="@string/register"
@@ -30,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/email"
-            android:inputType="textShortMessage"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
             android:maxLength="60"
             android:gravity="center"
@@ -89,7 +92,6 @@
         android:layout_height="match_parent"
         android:hint="@string/first_name"
         android:layout_marginTop="10dp"
-        android:inputType="textShortMessage"
         android:maxLines="1"
         android:maxLength="30"
         android:gravity="center"
@@ -108,7 +110,6 @@
         android:layout_height="match_parent"
         android:hint="@string/second_name"
         android:gravity="center"
-        android:inputType="textShortMessage"
         android:maxLines="1"
         android:maxLength="30"
         android:layout_marginTop="10dp"/>
@@ -126,13 +127,5 @@
         android:textStyle="bold"
         android:textSize="20sp"/>
 
-    <View
-        android:id="@+id/dummy_reg"
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
-        <requestFocus/>
-    </View>
 
 </LinearLayout>

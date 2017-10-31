@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class RegisterMailActivity extends AppCompatActivity {
     private EditText email, password, password2, firstName, secondName;
     private Button register;
     private FirebaseAuth firebaseAuth;
-    private View dummyView;
+    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         firstName = (EditText)findViewById(R.id.registermail_firstname);
         secondName = (EditText)findViewById(R.id.registermail_secondname);
         register = (Button)findViewById(R.id.registermail_register_btn);
-        dummyView = findViewById(R.id.dummy_reg);
+        layout = (LinearLayout) findViewById(R.id.register_activity);
     }
 
     private void removeActionBar() {
@@ -57,17 +58,6 @@ public class RegisterMailActivity extends AppCompatActivity {
         }
     }
 
-    public void keyboardHideListener(){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.register_activity);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dummyView.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            }
-        });
-    }
 
     public void registerBtnListener() {
         register.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +123,31 @@ public class RegisterMailActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+    private void keyboardHideListener(){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+            }
+        });
+        secondName.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BACK)) {
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void hideKeyboard(){
+        layout.requestFocus();
+        View view = this.getCurrentFocus();
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
