@@ -70,54 +70,121 @@
 
         <LinearLayout
             android:id="@+id/home_drawer_menu"
-            android:layout_width="200dp"
+            android:layout_width="180dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="#586B8B"
+            android:background="#1C1C1C"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/home_income_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="income" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_outcome_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="@string/expense" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_statistics_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="statistics" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_myProfile_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="my profile" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_add_friend_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="add friend" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_alarms_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="alarms" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
 
             <Button
                 android:id="@+id/home_logout_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
                 android:text="log out" />
-
         </LinearLayout>
 
     </android.support.v4.widget.DrawerLayout>

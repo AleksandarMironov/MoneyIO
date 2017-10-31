@@ -109,7 +109,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         mLastClickTime = SystemClock.elapsedRealtime();
 
         AlertDialog.Builder a_builder = new AlertDialog.Builder(view.getContext());
-        a_builder.setMessage("Are you shore?")
+        a_builder.setMessage("Are you sure?")
                 .setCancelable(false)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
