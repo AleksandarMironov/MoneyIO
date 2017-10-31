@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 import io.money.moneyio.R;
+import io.money.moneyio.fragments.Fragment_AddFriend;
 import io.money.moneyio.fragments.Fragment_Alarm;
 import io.money.moneyio.fragments.Fragment_DataHistory;
 import io.money.moneyio.fragments.Fragment_Income_Expense;
@@ -36,7 +37,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnLogOut;
+    private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnAddFriend, btnLogOut;
     private ImageView sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private DatabaseHelperFirebase fdb;
@@ -103,6 +104,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
+        btnAddFriend = (Button)findViewById(R.id.home_add_friend_btn);
+        btnAddFriend.setOnClickListener(this);
     }
 
     private void removeActionBar() {
@@ -248,6 +251,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_add_friend_btn:
+                drawerMenuButtonsAction("Add Friend", new Fragment_AddFriend());
+                statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_alarms_btn:
                 drawerMenuButtonsAction(getString(R.string.alarms), new Fragment_Alarm());

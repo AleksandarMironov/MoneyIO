@@ -1,5 +1,7 @@
 package io.money.moneyio.model.database;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.money.moneyio.model.AddFriend;
 import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.utilities.Utilities;
 
@@ -18,6 +21,7 @@ public class DatabaseHelperFirebase {
 
 
     private static List<MoneyFlow> data = new ArrayList<>();
+
     public static void resetFirebaseDatabase(){
         data = new ArrayList<>();
     }
@@ -51,6 +55,44 @@ public class DatabaseHelperFirebase {
             instance = new DatabaseHelperFirebase();
         }
         return instance;
+    }
+
+    public void addFriend(String friendMail) {
+        String mail = getEmail();
+        StringBuilder userMail = new StringBuilder();
+        StringBuilder friendMailSb = new StringBuilder();
+
+        for (int i = 0; i < mail.length(); i++) {
+            if (mail.charAt(i) == '.') {
+                userMail.append("_");
+            } else {
+                userMail.append(mail.charAt(i));
+            }
+        }
+
+        for (int i = 0; i < friendMail.length(); i++) {
+            if (friendMail.charAt(i) == '.') {
+                friendMailSb.append("_");
+            } else {
+                friendMailSb.append(friendMail.charAt(i));
+            }
+        }
+
+        Log.e("ivan", userMail.toString());
+        Log.e("ivan", friendMail.toString());
+
+        AddFriend friend = new AddFriend(getUid(), userMail.toString());
+        this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
+    }
+
+    public String getUid() {
+        String id = firebaseAuth.getCurrentUser().getUid();
+        return id;
+    }
+
+    public String getEmail() {
+        String email = firebaseAuth.getCurrentUser().getEmail();
+        return email;
     }
 
     public void addData(String userId, MoneyFlow moneyFlow){
