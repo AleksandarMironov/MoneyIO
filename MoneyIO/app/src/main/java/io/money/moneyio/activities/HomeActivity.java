@@ -36,7 +36,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnQuit, btnLogOut;
+    private Button btnOutcome, btnIncome, btnProfile, btnStatistics, btnAlarms, btnLogOut;
     private ImageView sandwichButton, statisticsButton;
     private DrawerLayout drawerLayout;
     private DatabaseHelperFirebase fdb;
@@ -100,8 +100,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnProfile.setOnClickListener(this);
         btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
         btnAlarms.setOnClickListener(this);
-        btnQuit = (Button) findViewById(R.id.home_quit_btn);
-        btnQuit.setOnClickListener(this);
         btnLogOut = (Button) findViewById(R.id.home_logout_btn);
         statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
@@ -227,7 +225,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-//        bundle = new Bundle();
         switch (v.getId()) {
             case R.id.home_income_btn:
                 bundle.putBoolean("isExpense", false);
@@ -254,9 +251,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.home_alarms_btn:
                 drawerMenuButtonsAction(getString(R.string.alarms), new Fragment_Alarm());
-                break;
-            case R.id.home_quit_btn:
-                exit();
                 break;
             case R.id.home_toolbar_statistics_icon_btn:
                 drawerMenuButtonsAction(getString(R.string.my_stats), new Fragment_DataHistory());

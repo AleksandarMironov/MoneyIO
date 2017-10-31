@@ -29,7 +29,7 @@
                 android:id="@+id/home_toolbar_app_name"
                 android:layout_width="250dp"
                 android:layout_height="45dp"
-                android:text="Outcome"
+                android:text="@string/expense"
                 android:textSize="35sp"
                 android:textColor="#FFFFFF"
                 android:gravity="center"
@@ -86,8 +86,7 @@
                 android:id="@+id/home_outcome_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="outcome" />
-
+                android:text="@string/expense" />
 
             <Button
                 android:id="@+id/home_statistics_btn"
@@ -95,13 +94,11 @@
                 android:layout_height="wrap_content"
                 android:text="statistics" />
 
-
             <Button
                 android:id="@+id/home_myProfile_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="my profile" />
-
 
             <Button
                 android:id="@+id/home_add_friend_btn"
@@ -120,12 +117,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="log out" />
-
-            <Button
-                android:id="@+id/home_quit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="quit" />
 
         </LinearLayout>
 

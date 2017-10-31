@@ -26,6 +26,9 @@
         <EditText
             android:id="@+id/loginmail_email"
             android:layout_width="match_parent"
+            android:inputType="textShortMessage"
+            android:maxLines="1"
+            android:maxLength="60"
             android:layout_height="match_parent"
             android:hint="@string/username"/>
     </android.support.design.widget.TextInputLayout>
@@ -34,6 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:inputType="textShortMessage"
+        android:maxLines="1"
+        android:maxLength="70"
         app:passwordToggleEnabled="true">
 
         <android.support.design.widget.TextInputEditText

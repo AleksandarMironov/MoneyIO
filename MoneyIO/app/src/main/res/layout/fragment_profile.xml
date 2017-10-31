@@ -105,6 +105,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="3"
+            android:inputType="textShortMessage"
+            android:maxLines="1"
+            android:maxLength="10"
             android:hint="@string/your_type"
             android:textColor="#000000"
             android:textSize="20sp"/>

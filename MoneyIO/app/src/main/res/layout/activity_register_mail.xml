@@ -30,7 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/email"
-            android:inputType="text"
+            android:inputType="textShortMessage"
+            android:maxLines="1"
+            android:maxLength="60"
             android:gravity="center"
             android:layout_marginTop="20dp"/>
 
@@ -48,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="@string/password"
+        android:maxLines="1"
+        android:maxLength="70"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
@@ -66,6 +70,8 @@
         android:layout_height="match_parent"
         android:hint="@string/repeat_password"
         android:inputType="textPassword"
+        android:maxLines="1"
+        android:maxLength="70"
         android:layout_marginTop="10dp"
         android:gravity="center"/>
 
@@ -83,6 +89,9 @@
         android:layout_height="match_parent"
         android:hint="@string/first_name"
         android:layout_marginTop="10dp"
+        android:inputType="textShortMessage"
+        android:maxLines="1"
+        android:maxLength="30"
         android:gravity="center"
         />
     </android.support.design.widget.TextInputLayout>
@@ -99,6 +108,9 @@
         android:layout_height="match_parent"
         android:hint="@string/second_name"
         android:gravity="center"
+        android:inputType="textShortMessage"
+        android:maxLines="1"
+        android:maxLength="30"
         android:layout_marginTop="10dp"/>
 
     </android.support.design.widget.TextInputLayout>
