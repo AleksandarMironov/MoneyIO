@@ -2,17 +2,13 @@ package io.money.moneyio.model.utilities;
 
 
 import android.graphics.Color;
-import android.util.EventLogTags;
 import android.util.Log;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -23,7 +19,6 @@ import com.github.mikephil.charting.formatter.DefaultXAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,10 +85,10 @@ public abstract class GraphicUtilities {
 
         //draw the graph
         BarDataSet set1, set2;
-        set1 = new BarDataSet(yVals1, "Expense");
-        set1.setColor(Color.RED);
-        set2 = new BarDataSet(yVals2, "Income");
-        set2.setColor(Color.GREEN);
+        set1 = new BarDataSet(yVals1, "Income");
+        set1.setColor(Color.GREEN);
+        set2 = new BarDataSet(yVals2, "Expense");
+        set2.setColor(Color.RED);
 
         ArrayList<IBarDataSet> sets = new ArrayList<>();
         sets.add(set1);
@@ -109,7 +104,6 @@ public abstract class GraphicUtilities {
 
     public static void pieChart(PieChart pieChart, List<MoneyFlow> utilitiesArray){
         pieChart.setUsePercentValues(true);
-        pieChart.setContentDescription("TEST");
         pieChart.setHoleColor(Color.YELLOW);
         pieChart.setHoleRadius(5);
         pieChart.setDrawHoleEnabled(true);
@@ -134,17 +128,17 @@ public abstract class GraphicUtilities {
             Map.Entry<String, Float> entry = iterator.next();
             pieDataSave.add(new Entry(entry.getValue(), i));
             if (entry.getKey().equalsIgnoreCase("true")) {
-                names.add("Income");
-            } else {
                 names.add("Expense");
+            } else {
+                names.add("Income");
             }
             i++;
         }
 
         PieDataSet pieDataSet = new PieDataSet(pieDataSave, "- Income/Expense");
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.RED);
         colors.add(Color.GREEN);
+        colors.add(Color.RED);
         pieDataSet.setColors(colors);
         pieDataSet.setSliceSpace(5);
 
