@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private TextView email, names;
     private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
-    private View dummyView;
     private RecyclerView recyclerView;
     private ArrayList<Type> typeFilter;
     private PlannedFlow plannedFlow;
@@ -52,6 +52,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private MonthYearPicker monthYearPicker;
     private int payDay;
     private ImageView okImg, deleteImg, saveType;
+    private LinearLayout layout;
 
     @Nullable
     @Override
@@ -108,10 +109,10 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         radioGroup = view.findViewById(R.id.profile_radiogr_kind);
         dayOfSalary = view.findViewById(R.id.profile_choose_date);
         saveType = view.findViewById(R.id.profile_save_btn);
-        dummyView = view.findViewById(R.id.dummy_profile);
         okImg = view.findViewById(R.id.profile_add_salary_btn);
         deleteImg = view.findViewById(R.id.profile_delete_salary_btn);
         payDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
         setTextValues();
     }
 
@@ -194,6 +195,12 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         });
     }
 
+    private void hideKeyboard(){
+        layout.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     private void addType() {
         saveType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,14 +225,22 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void keyboardHideListener(){
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dummyView.requestFocus();
-                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                hideKeyboard();
+            }
+        });
+        type.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BACK)) {
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
             }
         });
     }
+
 }

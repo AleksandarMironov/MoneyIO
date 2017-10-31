@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     private EditText comment;
     private RecyclerView recyclerView;
     private TypeRecyclerViewAdapter adapter;
-    private View dummyView;
+    private LinearLayout layout;
     private boolean isExpense;
 
     @Nullable
@@ -109,7 +111,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         delete.setOnClickListener(this);
         moneyView = (TextView) view.findViewById(R.id.outcome_keyboard_result);
         comment = (EditText) view.findViewById(R.id.outcome_comment);
-        dummyView = view.findViewById(R.id.dummy_outcome);
+        layout = (LinearLayout) view.findViewById(R.id.fragment_outcome);
     }
 
     @Override
@@ -242,15 +244,28 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     public void keyboardHideListener(){
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.fragment_outcome);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dummyView.requestFocus();
-                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                hideKeyboard();
             }
         });
+        comment.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BACK)) {
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void hideKeyboard(){
+        layout.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 

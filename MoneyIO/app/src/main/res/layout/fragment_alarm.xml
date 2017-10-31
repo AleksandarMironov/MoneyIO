@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/alarms_layout"
     tools:context="io.money.moneyio.fragments.Fragment_Alarm">
+
+    <requestFocus/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +55,6 @@
             android:id="@+id/alarm_massage_set_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textShortMessage"
             android:maxLines="1"
             android:maxLength="30"
             android:hint="@string/massage" />

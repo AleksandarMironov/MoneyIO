@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_outcome">
+    android:id="@+id/fragment_outcome"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <requestFocus/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,7 +137,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:inputType="textShortMessage"
         android:maxLines="1"
         android:maxLength="30"
         android:layout_marginBottom="5dp"
@@ -142,7 +144,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:hint="@string/insert_comment"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -156,12 +158,4 @@
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
 
-    <View
-        android:id="@+id/dummy_outcome"
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
-        <requestFocus/>
-    </View>
 </LinearLayout>

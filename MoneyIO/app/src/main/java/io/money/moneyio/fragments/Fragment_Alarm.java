@@ -1,5 +1,6 @@
 package io.money.moneyio.fragments;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
@@ -8,11 +9,14 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -48,6 +52,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private Calendar calendar;
     private int hour, minute, date;
     private MonthYearPicker monthYearPicker;
+    private LinearLayout layout;
 
     @Nullable
     @Override
@@ -59,7 +64,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         onAddAlarmBtnListener();
         setInitialStateDateTimeFields();
         onDateEditClickListener();
-
+        keyboardHideListener();
         return view;
     }
 
@@ -81,6 +86,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         massageEdit = view.findViewById(R.id.alarm_massage_set_edit);
         addAlarmBtn = view.findViewById(R.id.alarm_add_btn);
         monthYearPicker = new MonthYearPicker(view.getContext());
+        layout = (LinearLayout) view.findViewById(R.id.alarms_layout);
     }
 
     private void startRecycler() {
@@ -187,5 +193,30 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
         date = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private void keyboardHideListener(){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+            }
+        });
+        massageEdit.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BACK)) {
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void hideKeyboard(){
+        layout.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

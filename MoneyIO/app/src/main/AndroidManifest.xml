@@ -14,16 +14,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RegisterMailActivity" />
+
+        <activity android:name=".activities.RegisterMailActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="sensorPortrait"/>
+
         <activity android:name=".activities.HomeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="sensorPortrait"/>
 
         <receiver android:name=".model.receivers.AlarmReceiver"
             android:enabled="true" />
