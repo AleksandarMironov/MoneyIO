@@ -20,14 +20,13 @@ import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.receivers.AlarmReceiver;
 
 public class AlarmUtilities {
-
-    private static int notificationID = 0; //generate ID for notifications
+    
     private static int reminderID = 0; //id generator for reminders // TODO add index to database
 
     //fires notification
     public static void notifyMe (Context context, String message){
 
-        String CHANNEL_ID = "my_channel_02";
+        String CHANNEL_ID = "my_channel_01";
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.drawable.alarm_icon)
@@ -50,7 +49,7 @@ public class AlarmUtilities {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.notify(notificationID++, mBuilder.build());
+        mNotificationManager.notify(Utilities.gnerateID(), mBuilder.build());
     }
 
     //sets list of alarms

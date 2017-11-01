@@ -18,6 +18,12 @@ import io.money.moneyio.activities.HomeActivity;
 public class Utilities {
     private static boolean isFirebasePersistence = false;
     private static boolean hasFriend = false;
+    private static int idGeneratorNotifications = 0;
+
+    public static int gnerateID(){
+        idGeneratorNotifications++;
+        return idGeneratorNotifications;
+    }
 
     public static boolean isHasFriend() {
         return hasFriend;
@@ -53,7 +59,6 @@ public class Utilities {
         return false;
     }
 
-    private static int idGeneratorNotifications = 0;
     public static void notifyFriend(Context context, String type, String sum){
 
         String CHANNEL_ID = "my_channel_01";
@@ -88,6 +93,6 @@ public class Utilities {
         // mNotificationId is a unique integer your app uses to identify the
         // notification. For example, to cancel the notification, you can pass its ID
         // number to NotificationManager.cancel().
-        mNotificationManager.notify(idGeneratorNotifications++, mBuilder.build());
+        mNotificationManager.notify(gnerateID(), mBuilder.build());
     }
 }
