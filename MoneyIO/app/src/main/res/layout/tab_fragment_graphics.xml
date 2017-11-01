@@ -13,6 +13,8 @@
             android:focusable="false"
             android:layout_gravity="center"
             android:gravity="center"
+            android:drawableLeft="@drawable/calendar_icon"
+            android:drawableStart="@drawable/calendar_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

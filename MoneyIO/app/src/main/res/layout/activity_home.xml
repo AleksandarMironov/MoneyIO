@@ -70,7 +70,7 @@
 
         <LinearLayout
             android:id="@+id/home_drawer_menu"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#1C1C1C"
@@ -82,7 +82,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:drawableLeft="@drawable/income_ic"
+                android:drawableStart="@drawable/income_ic"
                 android:fontFamily="sans-serif"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
                 android:text="income" />
 
@@ -96,8 +101,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/expense_icon"
+                android:drawableStart="@drawable/expense_icon"
                 android:textColor="#FFFFFF"
                 android:fontFamily="sans-serif"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
                 android:text="@string/expense" />
 
@@ -112,13 +122,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:drawableLeft="@drawable/statistics_ic"
+                android:drawableStart="@drawable/statistics_ic"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
                 android:text="statistics"
-                android:drawableLeft="@drawable/statistics1"
-                android:drawableStart="@drawable/statistics1"
-                android:drawablePadding="10dp"
-                android:padding="6dp"/>
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -131,7 +142,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:drawableLeft="@drawable/myprof_icon"
+                android:drawableStart="@drawable/myprof_icon"
                 android:fontFamily="sans-serif"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
                 android:text="my profile" />
 
@@ -146,7 +162,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:drawableStart="@drawable/add_friend_icon"
+                android:drawableLeft="@drawable/add_friend_icon"
                 android:fontFamily="sans-serif"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
                 android:text="add friend" />
 
@@ -161,6 +182,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/alarm_icon"
+                android:drawableStart="@drawable/alarm_icon"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
                 android:text="alarms" />
@@ -186,6 +212,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/logout_icon"
+                android:drawableStart="@drawable/logout_icon"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
                 android:text="log out" />
