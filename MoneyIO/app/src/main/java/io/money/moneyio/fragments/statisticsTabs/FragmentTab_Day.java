@@ -42,7 +42,7 @@ public class FragmentTab_Day extends Fragment {
     }
 
     private void initialiseElements() {
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();

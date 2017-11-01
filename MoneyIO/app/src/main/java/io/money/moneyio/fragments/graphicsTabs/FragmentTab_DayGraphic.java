@@ -50,7 +50,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     }
 
     private void initialiseElements() {
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
         pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
         chart = (BarChart) view.findViewById(R.id.statistics_income_expense_year_combined);

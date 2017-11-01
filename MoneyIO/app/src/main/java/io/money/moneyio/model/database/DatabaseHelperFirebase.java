@@ -1,5 +1,8 @@
 package io.money.moneyio.model.database;
 
+import android.content.Context;
+import android.os.SystemClock;
+import android.util.FloatProperty;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,14 +16,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.model.AddFriend;
 import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.utilities.AlarmUtilities;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class DatabaseHelperFirebase {
 
 
     private static List<MoneyFlow> data = new ArrayList<>();
+    private Context context;
+    private String myFriend;
+    private long elapsedTime;
 
     public static void resetFirebaseDatabase(){
         data = new ArrayList<>();
@@ -43,18 +51,29 @@ public class DatabaseHelperFirebase {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference base;
 
-    public DatabaseHelperFirebase() {
+    public DatabaseHelperFirebase(Context con) {
         firebaseAuth = FirebaseAuth.getInstance();
         base = FirebaseDatabase.getInstance().getReference();
         base.keepSynced(true);
+        context = con;
+        updateContext(con);
+        updateMyFriend();
         readDatabase();
     }
 
-    public static synchronized DatabaseHelperFirebase getInstance() {
+    private void updateContext(Context con){
+        this.context = con;
+    }
+
+    public static synchronized DatabaseHelperFirebase getInstance(Context con) {
         if (instance == null) {
-            instance = new DatabaseHelperFirebase();
+            instance = new DatabaseHelperFirebase(con);
         }
         return instance;
+    }
+
+    private void updateMyFriend(){
+        this.myFriend = "W5FTdpvvH9cP0Qyoz7fOI6B4pfr1";
     }
 
     public void addFriend(String friendMail) {
@@ -64,7 +83,7 @@ public class DatabaseHelperFirebase {
 
         for (int i = 0; i < mail.length(); i++) {
             if (mail.charAt(i) == '.') {
-                userMail.append("_");
+                userMail.append("__");
             } else {
                 userMail.append(mail.charAt(i));
             }
@@ -72,14 +91,11 @@ public class DatabaseHelperFirebase {
 
         for (int i = 0; i < friendMail.length(); i++) {
             if (friendMail.charAt(i) == '.') {
-                friendMailSb.append("_");
+                friendMailSb.append("__");
             } else {
                 friendMailSb.append(friendMail.charAt(i));
             }
         }
-
-        Log.e("ivan", userMail.toString());
-        Log.e("ivan", friendMail.toString());
 
         AddFriend friend = new AddFriend(getUid(), userMail.toString());
         this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
@@ -101,12 +117,44 @@ public class DatabaseHelperFirebase {
 
     private void readDatabase(){
         data = new ArrayList<>();
-        DatabaseReference fdbuser = base.child(firebaseAuth.getCurrentUser().getUid());
-        fdbuser.addChildEventListener(new ChildEventListener() {
+        DatabaseReference fdbuser = base;
+        elapsedTime = SystemClock.elapsedRealtime();
+        fdbuser.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
                 data.add(t);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        fdbuser.child(myFriend).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
+                data.add(t);
+                if(SystemClock.elapsedRealtime() - elapsedTime > 3000){
+                    AlarmUtilities.notifyMe(context, Float.toString(t.getSum()));
+                }
             }
 
             @Override

@@ -33,7 +33,7 @@ public class Fragment_AddFriend extends Fragment {
     }
 
     private void initialise() {
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         email = view.findViewById(R.id.addfriend_email);
         add = view.findViewById(R.id.addfriend_add_btn);
     }
@@ -46,7 +46,7 @@ public class Fragment_AddFriend extends Fragment {
                StringBuilder sb = new StringBuilder();
                for (int i = 0; i < mail.length(); i++) {
                    if (mail.charAt(i) == '.') {
-                       sb.append("_");
+                       sb.append("__");
                    } else {
                        sb.append(mail.charAt(i));
                    }

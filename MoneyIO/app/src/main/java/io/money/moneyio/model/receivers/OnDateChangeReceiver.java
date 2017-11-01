@@ -26,7 +26,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             Utilities.setIsFirebasePersistence(true);
         }
-        DatabaseHelperFirebase fdb = DatabaseHelperFirebase.getInstance();
+        DatabaseHelperFirebase fdb = DatabaseHelperFirebase.getInstance(context);
 
         //check for planned income
         DatabaseHelperSQLite db = DatabaseHelperSQLite.getInstance(context);

@@ -43,7 +43,7 @@ public class FragmentTab_Month extends Fragment {
     }
 
     private void initialiseElements() {
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         recyclerView = view.findViewById(R.id.history_recycler_view);
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());

@@ -84,7 +84,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     private void initialiseElements() {
         isExpense = getArguments().getBoolean("isExpense");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         one = (Button) view.findViewById(R.id.outcome_keyboard_1);
         one.setOnClickListener(this);
         two = (Button) view.findViewById(R.id.outcome_keyboard_2);

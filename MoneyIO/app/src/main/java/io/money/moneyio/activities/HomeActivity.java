@@ -1,6 +1,7 @@
 package io.money.moneyio.activities;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -81,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialiseElements(){
-        fdb = DatabaseHelperFirebase.getInstance();
+        fdb = DatabaseHelperFirebase.getInstance(this);
         firebaseData = fdb.getData();
         fragment_incomeExpense = new Fragment_Income_Expense();
         bundle = new Bundle();
