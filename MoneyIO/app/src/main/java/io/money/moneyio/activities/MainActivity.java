@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private EditText email;
     private TextInputEditText psw;
-    private Button registerMail;
+    private TextView registerMail;
     private SignInButton loginGoogle;
     private LinearLayout layout;
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         email = (EditText)findViewById(R.id.loginmail_email);
         psw = (TextInputEditText)findViewById(R.id.loginmail_password);
-        registerMail = (Button) findViewById(R.id.main_registermail_btn);
+        registerMail = (TextView) findViewById(R.id.main_registermail_btn);
         loginGoogle = (SignInButton) findViewById(R.id.main_googlelogin_btn);
         layout = (LinearLayout) findViewById(R.id.layout_main);
     }

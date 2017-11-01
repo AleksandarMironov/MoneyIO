@@ -6,71 +6,164 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:id="@+id/layout_main"
+    android:background="@drawable/login_background"
     tools:context="io.money.moneyio.activities.MainActivity"
     android:focusable="true"
     android:focusableInTouchMode="true">
     <requestFocus/>
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/login"
-        android:gravity="center"
-        android:textSize="40sp" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-        <EditText
-            android:id="@+id/loginmail_email"
-            android:layout_width="match_parent"
-            android:maxLines="1"
-            android:maxLength="60"
-            android:layout_height="match_parent"
-            android:hint="@string/username"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:passwordToggleEnabled="true">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/loginmail_password"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:maxLength="70"/>
-    </android.support.design.widget.TextInputLayout>
+            android:text="MONEY IO"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="50sp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/main_loginmail_btn"
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/loginmail_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:maxLines="1"
+                android:maxLength="60"
+                android:background="#607D8B"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/email_icon"
+                android:hint="@string/username"
+                android:textColor="#FFFFFF"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/loginmail_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:background="#607D8B"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:drawableStart="@drawable/password_icon"
+                android:drawableLeft="@drawable/password_icon"
+                android:maxLines="1"
+                android:maxLength="70"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/main_registermail_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:text="Don't have an account? Sign Up"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/login_with_e_mail"/>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/main_loginmail_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:background="@drawable/log_reg_btn_design"
+                android:text="Sign in"/>
+
+        </LinearLayout>
 
 
-    <Button
-        android:id="@+id/main_registermail_btn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/register_with_e_mail"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            android:orientation="horizontal">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/main_googlelogin_btn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="5"
+                android:background="#90000000"></LinearLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="OR"
+                android:textColor="#000000"
+
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="17dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="5"
+                android:background="#90000000"></LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/main_googlelogin_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>
