@@ -3,6 +3,7 @@ package io.money.moneyio.model.utilities;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -12,6 +13,8 @@ import android.support.v4.app.NotificationCompat;
 import java.util.Calendar;
 import java.util.List;
 
+import io.money.moneyio.R;
+import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.activities.MainActivity;
 import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.receivers.AlarmReceiver;
@@ -22,22 +25,32 @@ public class AlarmUtilities {
     private static int reminderID = 0; //id generator for reminders // TODO add index to database
 
     //fires notification
-    public static void notifyMe(Context context, String message){
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context.getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+    public static void notifyMe (Context context, String message){
 
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context)
-                        .setSmallIcon(android.R.drawable.ic_menu_help)
-                        .setContentTitle("Remember!")
-                        .setContentText(message)
-                        .setContentIntent(pendingIntent);
+        String CHANNEL_ID = "my_channel_02";
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.alarm_icon)
+                        .setContentTitle("Remember")
+                        .setContentText(message);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent resultIntent = new Intent(context, HomeActivity.class);
 
-        notificationManager.notify(notificationID++, builder.build()); ///static i
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_NOTIFICATION_URI);
-        mediaPlayer.start();
+        stackBuilder.addParentStack(HomeActivity.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotificationManager.notify(notificationID++, mBuilder.build());
     }
 
     //sets list of alarms

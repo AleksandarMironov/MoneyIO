@@ -239,7 +239,7 @@ public class DatabaseHelperFirebase {
                 MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
                 data.add(t);
                 if(SystemClock.elapsedRealtime() - elapsedTime > 3000){
-                    AlarmUtilities.notifyMe(context, Float.toString(t.getSum()));
+                    Utilities.notifyFriend(context, t.getType(), Float.toString(t.getSum()));
                 }
             }
 
