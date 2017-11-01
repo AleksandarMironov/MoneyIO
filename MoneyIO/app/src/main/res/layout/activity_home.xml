@@ -114,7 +114,11 @@
                 android:textColor="#FFFFFF"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
-                android:text="statistics" />
+                android:text="statistics"
+                android:drawableLeft="@drawable/statistics1"
+                android:drawableStart="@drawable/statistics1"
+                android:drawablePadding="10dp"
+                android:padding="6dp"/>
 
             <View
                 android:layout_width="match_parent"
