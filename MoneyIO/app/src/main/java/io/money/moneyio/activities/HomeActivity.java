@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialiseElements(){
         fdb = DatabaseHelperFirebase.getInstance(this);
+        fdb.updateMyFriend();
         firebaseData = fdb.getData();
         fragment_incomeExpense = new Fragment_Income_Expense();
         bundle = new Bundle();
@@ -202,6 +203,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        fdb.resetData();
                         finish();
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);

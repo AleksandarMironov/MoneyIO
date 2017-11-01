@@ -187,12 +187,12 @@ public class DatabaseHelperFirebase {
         checkForFriend();
     }
 
-    public String getUid() {
+    private String getUid() {
         String id = firebaseAuth.getCurrentUser().getUid();
         return id;
     }
 
-    public String getEmail() {
+    private String getEmail() {
         String email = firebaseAuth.getCurrentUser().getEmail();
         return email;
     }
@@ -265,6 +265,9 @@ public class DatabaseHelperFirebase {
         });
     }
 
+    public void resetData(){
+        data = new ArrayList<MoneyFlow>();
+    }
     public List<MoneyFlow> getData() {
         return Collections.unmodifiableList(data);
     }
