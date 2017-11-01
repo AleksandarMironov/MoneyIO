@@ -64,7 +64,7 @@ public abstract class GraphicUtilities {
         float [] expense = {0,0,0,0,0,0,0,0,0,0,0,0};
         Calendar cal = Calendar.getInstance();
         for(MoneyFlow m : filteredArr){
-            if(m.getExpense().equalsIgnoreCase("true")){
+            if(m.getExpense().equalsIgnoreCase("false")){
                 cal.setTimeInMillis(m.getCalendar());
                 income[cal.get(Calendar.MONTH)] += m.getSum();
             } else {
@@ -128,17 +128,17 @@ public abstract class GraphicUtilities {
             Map.Entry<String, Float> entry = iterator.next();
             pieDataSave.add(new Entry(entry.getValue(), i));
             if (entry.getKey().equalsIgnoreCase("true")) {
-                names.add("Income");
-            } else {
                 names.add("Expense");
+            } else {
+                names.add("Income");
             }
             i++;
         }
 
         PieDataSet pieDataSet = new PieDataSet(pieDataSave, "- Income/Expense");
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.RED);
         colors.add(Color.GREEN);
+        colors.add(Color.RED);
         pieDataSet.setColors(colors);
         pieDataSet.setSliceSpace(5);
 
