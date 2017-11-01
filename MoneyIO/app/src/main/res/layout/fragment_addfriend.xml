@@ -12,12 +12,25 @@
         android:id="@+id/addfriend_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"/>
+        android:inputType="textEmailAddress"
+        android:hint="Friend e-mail"/>
 
     <ImageView
         android:id="@+id/addfriend_add_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ok_button"/>
+
+    <ImageView
+        android:id="@+id/addfriend_remove"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/delete_button" />
+
+    <ImageView
+        android:id="@+id/addfriend_refresh"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/refresh" />
 
 </LinearLayout>

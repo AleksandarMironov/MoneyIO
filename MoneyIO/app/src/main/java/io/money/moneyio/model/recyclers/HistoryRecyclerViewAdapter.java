@@ -55,7 +55,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        MoneyFlow moneyFlow = data.get(data.size() - position - 1);
+        MoneyFlow moneyFlow = data.get(position);
 
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());

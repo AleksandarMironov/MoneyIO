@@ -1,7 +1,9 @@
 package io.money.moneyio.model.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.FloatProperty;
 import android.util.Log;
 
@@ -11,9 +13,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.money.moneyio.activities.HomeActivity;
@@ -29,6 +33,9 @@ public class DatabaseHelperFirebase {
     private Context context;
     private String myFriend;
     private long elapsedTime;
+    private static DatabaseHelperFirebase instance;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference base;
 
     public static void resetFirebaseDatabase(){
         data = new ArrayList<>();
@@ -39,26 +46,27 @@ public class DatabaseHelperFirebase {
         for (MoneyFlow f: data) {
             if(start <= f.getCalendar() && f.getCalendar() <= end){
                 filteredArr.add(f);
-            } else if(f.getCalendar() > end){
-                break;
             }
         }
+
+        Collections.sort(filteredArr, new Comparator<MoneyFlow>() {
+            @Override
+            public int compare(MoneyFlow o1, MoneyFlow o2) {
+                return (o1.getCalendar() > o2.getCalendar())? -1 : 1;
+            }
+        });
         return filteredArr;
     }
-
-
-    private static DatabaseHelperFirebase instance;
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference base;
 
     public DatabaseHelperFirebase(Context con) {
         firebaseAuth = FirebaseAuth.getInstance();
         base = FirebaseDatabase.getInstance().getReference();
-        base.keepSynced(true);
+        //base.keepSynced(true);
         context = con;
+        readDatabase(" ");
+        getMyFriend();
         updateContext(con);
         updateMyFriend();
-        readDatabase();
     }
 
     private void updateContext(Context con){
@@ -69,11 +77,72 @@ public class DatabaseHelperFirebase {
         if (instance == null) {
             instance = new DatabaseHelperFirebase(con);
         }
+        instance.updateContext(con);
         return instance;
     }
 
-    private void updateMyFriend(){
-        this.myFriend = "W5FTdpvvH9cP0Qyoz7fOI6B4pfr1";
+    public void updateMyFriend(){
+
+        getMyFriend();
+
+
+        checkForFriend();
+
+    }
+
+    private void getMyFriend(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        myFriend = preferences.getString(getUid(), " ");
+    }
+
+    private void checkForFriend(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        final String[] friendID = {""};
+        String addedFriend = preferences.getString(getEmail(), " ");
+
+        String userMail =  firebaseAuth.getCurrentUser().getEmail();
+        StringBuilder userMailSb = new StringBuilder();
+        for (int i = 0; i < userMail.length(); i++) {
+            if (userMail.charAt(i) == '.') {
+                userMailSb.append("__");
+            } else {
+                userMailSb.append(userMail.charAt(i));
+            }
+        }
+        userMail = userMailSb.toString();
+        StringBuilder addedFriendSb = new StringBuilder();
+        for (int i = 0; i < addedFriend.length(); i++) {
+            if (addedFriend.charAt(i) == '.') {
+                addedFriendSb.append("__");
+            } else {
+                addedFriendSb.append(addedFriend.charAt(i));
+            }
+        }
+        addedFriend = addedFriendSb.toString();
+
+        final String addedFr = addedFriend;
+        base.child("friends").child(userMail).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AddFriend t = dataSnapshot.getValue(AddFriend.class);
+                if(t != null && t.getMyEmail() != null && t.getMyEmail().equals(addedFr)){
+                    friendID[0] = t.getMyUid();
+                    Utilities.setHasFriend(true);
+                    readDatabase(friendID[0]);
+                } else {
+                    readDatabase(" ");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getUid(), friendID[0]);
+        editor.apply();
     }
 
     public void addFriend(String friendMail) {
@@ -99,6 +168,23 @@ public class DatabaseHelperFirebase {
 
         AddFriend friend = new AddFriend(getUid(), userMail.toString());
         this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
+        checkForFriend();
+    }
+
+    public void deleteFriend(String friendMail) {
+        StringBuilder friendMailSb = new StringBuilder();
+
+        for (int i = 0; i < friendMail.length(); i++) {
+            if (friendMail.charAt(i) == '.') {
+                friendMailSb.append("__");
+            } else {
+                friendMailSb.append(friendMail.charAt(i));
+            }
+        }
+
+        AddFriend friend = new AddFriend("NOFRIEND", "NOFRIEND");
+        this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
+        checkForFriend();
     }
 
     public String getUid() {
@@ -115,9 +201,9 @@ public class DatabaseHelperFirebase {
         this.base.child(userId).push().setValue(moneyFlow);
     }
 
-    private void readDatabase(){
+    private void readDatabase(String fr){
         data = new ArrayList<>();
-        DatabaseReference fdbuser = base;
+        DatabaseReference fdbuser = FirebaseDatabase.getInstance().getReference(); // base;
         elapsedTime = SystemClock.elapsedRealtime();
         fdbuser.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(new ChildEventListener() {
             @Override
@@ -147,7 +233,7 @@ public class DatabaseHelperFirebase {
             }
         });
 
-        fdbuser.child(myFriend).addChildEventListener(new ChildEventListener() {
+        fdbuser.child(fr).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
