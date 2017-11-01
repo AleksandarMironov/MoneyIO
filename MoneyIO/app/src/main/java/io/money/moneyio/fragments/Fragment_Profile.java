@@ -42,7 +42,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private View view;
     private DatabaseHelperSQLite db;
     private FirebaseUser user;
-    private TextView email, names;
+    private TextView email, names, noTypes;
     private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
     private RecyclerView recyclerView;
@@ -78,10 +78,23 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                 typeFilter.add(types.get(i));
             }
         }
-        adapter = new ShowCustomTypesRecyclerViewAdapter(view.getContext(), typeFilter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+        if (isTypeFilerEmpty()) {
+            noTypes.setVisibility(View.GONE);
+            adapter = new ShowCustomTypesRecyclerViewAdapter(view.getContext(), typeFilter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            adapter.setClickListener(this);
+            recyclerView.setAdapter(adapter);
+        } else {
+            noTypes.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean isTypeFilerEmpty() {
+        if (typeFilter.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -103,6 +116,11 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         adapter.notifyItemRemoved(position);
                         adapter.notifyItemRangeChanged(position, typeFilter.size());
                         Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                        if (isTypeFilerEmpty()) {
+                            noTypes.setVisibility(View.GONE);
+                        } else {
+                            noTypes.setVisibility(View.VISIBLE);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -114,10 +132,6 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         AlertDialog alert = a_builder.create();
         alert.setTitle("DELETE");
         alert.show();
-
-
-
-
     }
 
     private void initialiseElements() {
@@ -136,19 +150,20 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         deleteImg = view.findViewById(R.id.profile_delete_salary_btn);
         payDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
+        noTypes = (TextView)view.findViewById(R.id.profile_no_types);
         setTextValues();
     }
 
     private void setTextValues() {
-        email.setText(user.getEmail());
-        names.setText(user.getDisplayName());
+        email.setText(email.getText().toString() + " " + user.getEmail());
+        names.setText(names.getText().toString() + " " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");
-            dayOfSalary.setText("pay day: SELECT" );
+            dayOfSalary.setText("Pay Day: SELECT" );
         } else {
             salary.setText("" + plannedFlow.getAmount());
-            dayOfSalary.setText("pay day: " + plannedFlow.getDate());
+            dayOfSalary.setText("Pay Day: " + plannedFlow.getDate());
         }
     }
 
@@ -240,6 +255,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                 if(ch) {
                     Toast.makeText(view.getContext(), "Type added", Toast.LENGTH_SHORT).show();
                     startRecycler();
+                    type.setText("");
                 } else {
                     Toast.makeText(view.getContext(), "Already exists", Toast.LENGTH_SHORT).show();
                 }

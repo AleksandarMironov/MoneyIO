@@ -50,7 +50,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
     private long mLastClickTime;
     private AlarmsRecyclerViewAdapter adapter;
     private List<Alarm> alarms;
-    private EditText dateEdit, timeEdit, massageEdit;
+    private EditText dateEdit, timeEdit, messageEdit;
     private Button addAlarmBtn;
     private Calendar calendar;
     private int hour, minute, date;
@@ -86,7 +86,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         mLastClickTime = SystemClock.elapsedRealtime();
         dateEdit = view.findViewById(R.id.alarm_date_set_edit);
         timeEdit = view.findViewById(R.id.alarm_time_set_edit);
-        massageEdit = view.findViewById(R.id.alarm_massage_set_edit);
+        messageEdit = view.findViewById(R.id.alarm_message_set_edit);
         addAlarmBtn = view.findViewById(R.id.alarm_add_btn);
         monthYearPicker = new MonthYearPicker(view.getContext());
         layout = (LinearLayout) view.findViewById(R.id.alarms_layout);
@@ -193,16 +193,20 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         addAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String massage = massageEdit.getText().toString();
-                boolean isAdded = db.addAlarm(user.getUid(), date, hour, minute,
-                                                (Utilities.checkString(massage)? massage : ""));
-                if(isAdded){
-                    Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
-                    startRecycler();
-                    AlarmUtilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, (Utilities.checkString(massage)? massage : "")));
-                    setInitialStateDateTimeFields();
+                String message = messageEdit.getText().toString();
+                boolean isAdded = false;
+                if (Utilities.checkString(message)) {
+                    isAdded = db.addAlarm(user.getUid(), date, hour, minute, message);
+                    if (isAdded) {
+                        Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
+                        startRecycler();
+                        AlarmUtilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, message));
+                        setInitialStateDateTimeFields();
+                    } else {
+                        Toast.makeText(view.getContext(), "Already exists", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(view.getContext(), "Sorry, alarm is not added (already exists)", Toast.LENGTH_SHORT).show();
+                    messageEdit.setError("Adding message is required.");
                 }
             }
         });
@@ -213,7 +217,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
         calendar = Calendar.getInstance();
         dateEdit.setText("Day: " + calendar.get(Calendar.DAY_OF_MONTH));
         timeEdit.setText("Time:" + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
-        massageEdit.setText("");
+        messageEdit.setText("");
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
         date = calendar.get(Calendar.DAY_OF_MONTH);
@@ -226,7 +230,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                 hideKeyboard();
             }
         });
-        massageEdit.setOnKeyListener(new View.OnKeyListener() {
+        messageEdit.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN
                         && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_BACK)) {

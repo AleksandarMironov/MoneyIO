@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_profile"
     android:focusable="true"
+    android:layout_margin="5dp"
     android:focusableInTouchMode="true">
     <requestFocus/>
 
@@ -11,10 +12,10 @@
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/personal_name"
         android:layout_marginTop="10dp"
+        android:text="Name: "
         android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/profile_email"
@@ -22,23 +23,30 @@
         android:layout_height="wrap_content"
         android:text="@string/email_two_dots"
         android:textColor="#000000"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/salary"
+            android:textStyle="bold"
+            android:fontFamily="serif"
             android:textColor="#000000"
             android:gravity="center"
             android:textSize="20sp" />
-
-
 
     </LinearLayout>
 
@@ -56,7 +64,7 @@
             android:textSize="20sp"
             android:inputType="numberDecimal"
             android:gravity="center"
-            android:hint="amount"/>
+            android:hint="Amount"/>
 
         <EditText
             android:id="@+id/profile_choose_date"
@@ -76,12 +84,21 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/delete_button" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:text="*By adding your salary here, each month the added amount of money will be added to your account as Income."/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#000000"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -160,6 +177,14 @@
         android:textColor="#000000"
         android:fontFamily="serif"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/profile_no_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="**No added types."/>
 
 
     <android.support.v7.widget.RecyclerView

@@ -34,7 +34,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         row = inflater.inflate(R.layout.recycler_alarm_row, parent, false);
         viewHolder = new AlarmsRecyclerViewAdapter.MyViewHolder(row,
                 (TextView)row.findViewById(R.id.alarm_datetime_text),
-                (TextView)row.findViewById(R.id.alarm_massage_text),
+                (TextView)row.findViewById(R.id.alarm_message_text),
                 (ImageView)row.findViewById(R.id.alarm_remove));
         row.setTag(viewHolder);
         return viewHolder;
@@ -44,7 +44,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Alarm alarm = alarms.get(position);
         holder.massage.setText(alarm.getMassage());
-        holder.dateTime.setText("Date: " + alarm.getDate() + "   Time: " + alarm.getHour() + ":" + alarm.getMinutes());
+        holder.dateTime.setText("Date: " + alarm.getDate() + " / " + alarm.getHour() + ":" + alarm.getMinutes() + " h.");
     }
 
     @Override
