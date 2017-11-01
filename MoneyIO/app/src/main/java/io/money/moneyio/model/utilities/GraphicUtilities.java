@@ -85,9 +85,9 @@ public abstract class GraphicUtilities {
 
         //draw the graph
         BarDataSet set1, set2;
-        set1 = new BarDataSet(yVals1, "Income");
+        set1 = new BarDataSet(yVals2, "Expense");
         set1.setColor(Color.GREEN);
-        set2 = new BarDataSet(yVals2, "Expense");
+        set2 = new BarDataSet(yVals1, "Income");
         set2.setColor(Color.RED);
 
         ArrayList<IBarDataSet> sets = new ArrayList<>();
@@ -128,17 +128,17 @@ public abstract class GraphicUtilities {
             Map.Entry<String, Float> entry = iterator.next();
             pieDataSave.add(new Entry(entry.getValue(), i));
             if (entry.getKey().equalsIgnoreCase("true")) {
-                names.add("Expense");
-            } else {
                 names.add("Income");
+            } else {
+                names.add("Expense");
             }
             i++;
         }
 
         PieDataSet pieDataSet = new PieDataSet(pieDataSave, "- Income/Expense");
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GREEN);
         colors.add(Color.RED);
+        colors.add(Color.GREEN);
         pieDataSet.setColors(colors);
         pieDataSet.setSliceSpace(5);
 
