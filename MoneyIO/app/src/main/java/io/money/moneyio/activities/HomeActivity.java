@@ -83,7 +83,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialiseElements(){
         fdb = DatabaseHelperFirebase.getInstance(this);
-        fdb.updateMyFriend();
         firebaseData = fdb.getData();
         fragment_incomeExpense = new Fragment_Income_Expense();
         bundle = new Bundle();
