@@ -5,7 +5,7 @@
     android:id="@+id/register_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp"
+    android:background="@drawable/login_background"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     tools:context="io.money.moneyio.activities.RegisterMailActivity"
@@ -13,119 +13,206 @@
     android:focusableInTouchMode="true">
     <requestFocus/>
 
-    <TextView
-        android:text="@string/register"
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="40sp"
-        android:layout_marginBottom="10dp"/>
+        android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <EditText
-            android:id="@+id/registermail_email"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:maxLength="60"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="MONEY IO"
             android:gravity="center"
-            android:layout_marginTop="20dp"/>
+            android:textColor="#FFFFFF"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="50sp" />
 
-    </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:text="@string/register"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout3"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColorHint="#ffffff">
+
+            <EditText
+                android:id="@+id/registermail_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:background="#607D8B"
+                android:drawableLeft="@drawable/email_icon"
+                android:drawableStart="@drawable/email_icon"
+                android:maxLength="60"
+                android:layout_marginTop="20dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#ffffff"
+            android:textColorHint="#ffffff">
+
+            <EditText
+                android:id="@+id/registermail_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#FFFFFF"
+                android:background="#607D8B"
+                android:hint="@string/password"
+                android:drawableStart="@drawable/password_icon"
+                android:drawableLeft="@drawable/password_icon"
+                android:maxLines="1"
+                android:maxLength="70"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:passwordToggleTint="#ffffff"
+            android:textColorHint="#ffffff"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/registermail_repeatpassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/repeat_password"
+                android:textColor="#FFFFFF"
+                android:background="#607D8B"
+                android:drawableStart="@drawable/password_icon"
+                android:drawableLeft="@drawable/password_icon"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:maxLength="70"
+                android:layout_marginTop="10dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColorHint="#ffffff">
+
+            <EditText
+                android:id="@+id/registermail_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/first_name"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:maxLength="30"
+                android:drawableLeft="@drawable/personal_info_icon"
+                android:drawableStart="@drawable/personal_info_icon"
+                android:background="#607D8B"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout6"
+            android:layout_width="match_parent"
+            android:textColorHint="#ffffff"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/registermail_secondname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/second_name"
+                android:drawableLeft="@drawable/personal_info_icon"
+                android:drawableStart="@drawable/personal_info_icon"
+                android:maxLines="1"
+                android:maxLength="30"
+                android:background="#607D8B"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="10dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:passwordToggleEnabled="true">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <EditText
-        android:id="@+id/registermail_password"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/password"
-        android:maxLines="1"
-        android:maxLength="70"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
-    </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/registermail_register_btn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="Sign up"
+            android:fontFamily="serif"
+            android:background="@drawable/log_reg_btn_design"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:passwordToggleEnabled="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"/>
 
-    <EditText
-        android:id="@+id/registermail_repeatpassword"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/repeat_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:maxLength="70"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        <TextView
+            android:id="@+id/register_signin_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="17dp"
+            android:layout_marginBottom="5dp"
+            android:text="Do you have an account? Sign in"/>
+    </LinearLayout>
 
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/registermail_firstname"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/first_name"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:maxLength="30"
-        android:gravity="center"
-        />
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout6"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-    <EditText
-        android:id="@+id/registermail_secondname"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/second_name"
-        android:gravity="center"
-        android:maxLines="1"
-        android:maxLength="30"
-        android:layout_marginTop="10dp"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/registermail_register_btn"
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/register"
-        android:fontFamily="serif"
-        android:textStyle="bold"
-        android:textSize="20sp"/>
 
 
 </LinearLayout>

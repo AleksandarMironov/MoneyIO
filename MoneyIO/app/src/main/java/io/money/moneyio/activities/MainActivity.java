@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText email;
     private TextInputEditText psw;
     private TextView registerMail;
-    private SignInButton loginGoogle;
+    private Button loginGoogle;
     private LinearLayout layout;
 
     @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         email = (EditText)findViewById(R.id.loginmail_email);
         psw = (TextInputEditText)findViewById(R.id.loginmail_password);
         registerMail = (TextView) findViewById(R.id.main_registermail_btn);
-        loginGoogle = (SignInButton) findViewById(R.id.main_googlelogin_btn);
+        loginGoogle = (Button) findViewById(R.id.main_googlelogin_btn);
         layout = (LinearLayout) findViewById(R.id.layout_main);
     }
 
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-    AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
         a_builder.setMessage(getString(R.string.do_you_want_to_exit))
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {

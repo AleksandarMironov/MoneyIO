@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class RegisterMailActivity extends AppCompatActivity {
 
     private EditText email, password, password2, firstName, secondName;
     private Button register;
+    private TextView signIn;
     private FirebaseAuth firebaseAuth;
     private LinearLayout layout;
 
@@ -39,6 +41,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         initialiseElements();
         registerBtnListener();
         keyboardHideListener();
+        signInListener();
     }
 
     private void initialiseElements(){
@@ -50,6 +53,7 @@ public class RegisterMailActivity extends AppCompatActivity {
         secondName = (EditText)findViewById(R.id.registermail_secondname);
         register = (Button)findViewById(R.id.registermail_register_btn);
         layout = (LinearLayout) findViewById(R.id.register_activity);
+        signIn = (TextView)findViewById(R.id.register_signin_text);
     }
 
     private void removeActionBar() {
@@ -58,6 +62,16 @@ public class RegisterMailActivity extends AppCompatActivity {
         }
     }
 
+    private void signInListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterMailActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 
     public void registerBtnListener() {
         register.setOnClickListener(new View.OnClickListener() {
