@@ -229,6 +229,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
                 fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
             }
             moneyView.setText("Insert price");
+            comment.setText("");
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
@@ -255,9 +256,9 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     private void hideKeyboard(){
-        layout.requestFocus();
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
     }
 }
 

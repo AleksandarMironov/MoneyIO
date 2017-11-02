@@ -64,36 +64,38 @@ public class AlarmUtilities {
 
         Calendar calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH);
+        int curentDay = calendar.get(Calendar.DAY_OF_MONTH);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), alarm.getDate(), alarm.getHour(), alarm.getMinutes());
 
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        switch (currentMonth){
-            case 1:
-                if(day == 29 || day == 30 || day == 31) {
-                    if(calendar.get(Calendar.YEAR)%4 == 0)
-                    {
-                        calendar.set(Calendar.DAY_OF_MONTH, 29);
-                    } else {
-                        calendar.set(Calendar.DAY_OF_MONTH, 28);
+        if(curentDay<=day) {
+            switch (currentMonth){
+                case 1:
+                    if(day == 29 || day == 30 || day == 31) {
+                        if(calendar.get(Calendar.YEAR)%4 == 0)
+                        {
+                            calendar.set(Calendar.DAY_OF_MONTH, 29);
+                        } else {
+                            calendar.set(Calendar.DAY_OF_MONTH, 28);
+                        }
                     }
-                }
-                break;
-            case 3:
-            case 5:
-            case 8:
-            case 10:
-                if(day == 31) {
-                    calendar.set(Calendar.DAY_OF_MONTH, 30);
-                }
-                break;
-            default:
-                break;
+                    break;
+                case 3:
+                case 5:
+                case 8:
+                case 10:
+                    if(day == 31) {
+                        calendar.set(Calendar.DAY_OF_MONTH, 30);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            Intent myIntent = new Intent(context, AlarmReceiver.class);
+            myIntent.putExtra("message", alarm.getMassage());
+            PendingIntent pi = PendingIntent.getBroadcast(context, reminderID++, myIntent, 0);
+            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
         }
-        AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent myIntent = new Intent(context, AlarmReceiver.class);
-        myIntent.putExtra("message", alarm.getMassage());
-        PendingIntent pi = PendingIntent.getBroadcast(context, reminderID++, myIntent, 0);
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
-
     }
 }

@@ -158,10 +158,10 @@ public class RegisterMailActivity extends AppCompatActivity {
     }
 
     private void hideKeyboard(){
-        layout.requestFocus();
         View view = this.getCurrentFocus();
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        layout.requestFocus();
     }
 
     @Override
