@@ -193,7 +193,7 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         addAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = messageEdit.getText().toString();
+                String message = messageEdit.getText().toString().trim();
                 boolean isAdded = false;
                 if (Utilities.checkString(message)) {
                     isAdded = db.addAlarm(user.getUid(), date, hour, minute, message);

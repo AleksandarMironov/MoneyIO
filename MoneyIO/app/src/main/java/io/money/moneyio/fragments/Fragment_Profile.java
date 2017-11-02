@@ -171,7 +171,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         okImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Utilities.isNumber(salary.getText().toString())){
+                if(Utilities.isNumber(salary.getText().toString().trim())){
                     if(plannedFlow != null){
                         //TODO make edit method :D
                         db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
@@ -243,7 +243,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         saveType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String typeNew = type.getText().toString();
+                String typeNew = type.getText().toString().trim();
                 String checked = ((RadioButton)view.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
 
                 if (!Utilities.checkString(typeNew)){

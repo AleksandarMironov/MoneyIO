@@ -40,21 +40,23 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            app:hintTextAppearance="@style/GreenTextInputLayout"
             android:textColorHint="#ffffff">
 
             <EditText
                 android:id="@+id/registermail_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:textColor="#FFFFFF"
+                android:layout_marginTop="20dp"
                 android:background="#607D8B"
                 android:drawableLeft="@drawable/email_icon"
                 android:drawableStart="@drawable/email_icon"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:maxLength="60"
-                android:layout_marginTop="20dp"/>
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textCursorDrawable="@drawable/cursor_color" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -62,6 +64,7 @@
             android:id="@+id/text_input_layout3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:hintTextAppearance="@style/GreenTextInputLayout"
             android:layout_weight="1"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="#ffffff"
@@ -71,6 +74,7 @@
                 android:id="@+id/registermail_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:textColor="#FFFFFF"
                 android:background="#607D8B"
                 android:hint="@string/password"
@@ -86,6 +90,7 @@
             android:id="@+id/text_input_layout4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:hintTextAppearance="@style/GreenTextInputLayout"
             android:layout_weight="1"
             app:passwordToggleTint="#ffffff"
             android:textColorHint="#ffffff"
@@ -96,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/repeat_password"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:textColor="#FFFFFF"
                 android:background="#607D8B"
                 android:drawableStart="@drawable/password_icon"
@@ -112,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            app:hintTextAppearance="@style/GreenTextInputLayout"
             android:textColorHint="#ffffff">
 
             <EditText
@@ -123,6 +130,7 @@
                 android:maxLines="1"
                 android:textColor="#FFFFFF"
                 android:maxLength="30"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:drawableLeft="@drawable/personal_info_icon"
                 android:drawableStart="@drawable/personal_info_icon"
                 android:background="#607D8B"/>
@@ -133,6 +141,7 @@
             android:layout_width="match_parent"
             android:textColorHint="#ffffff"
             android:layout_height="0dp"
+            app:hintTextAppearance="@style/GreenTextInputLayout"
             android:layout_weight="1">
 
             <EditText
@@ -143,6 +152,7 @@
                 android:drawableLeft="@drawable/personal_info_icon"
                 android:drawableStart="@drawable/personal_info_icon"
                 android:maxLines="1"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:maxLength="30"
                 android:background="#607D8B"
                 android:textColor="#FFFFFF"
