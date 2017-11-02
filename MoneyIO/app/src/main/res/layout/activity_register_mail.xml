@@ -19,28 +19,11 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:text="MONEY IO"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:textSize="50sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/moneyioshort"/>
 
-        <TextView
-            android:text="@string/register"
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 
@@ -209,10 +192,5 @@
             android:layout_marginBottom="5dp"
             android:text="Do you have an account? Sign in"/>
     </LinearLayout>
-
-
-
-
-
 
 </LinearLayout>
