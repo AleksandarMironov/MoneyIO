@@ -75,16 +75,7 @@ public class Fragment_AddFriend extends Fragment {
                editor.putString(user.getCurrentUser().getEmail(), mail);
                editor.apply();
 
-               StringBuilder sb = new StringBuilder();
-               for (int i = 0; i < mail.length(); i++) {
-                   if (mail.charAt(i) == '.') {
-                       sb.append("__");
-                   } else {
-                       sb.append(mail.charAt(i));
-                   }
-               }
-
-               fdb.addFriend(sb.toString());
+               fdb.addFriend(Utilities.filterMail(mail));
                Utilities.setHasFriend(true);
                Toast.makeText(view.getContext(), "added", Toast.LENGTH_SHORT).show();
                setEditText();

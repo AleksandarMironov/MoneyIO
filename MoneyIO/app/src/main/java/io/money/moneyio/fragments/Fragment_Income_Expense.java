@@ -224,17 +224,9 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
 
         if (!price.equalsIgnoreCase("Insert price") && Float.parseFloat(price) != 0) {
             if (!isExpense) {
-                if (com == null) {
-                fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), Float.parseFloat(price)));
-            } else {
                 fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
-            }
             } else {
-                if (com == null) {
-                    fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), Float.parseFloat(price)));
-                } else {
-                    fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
-                }
+                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
             }
             moneyView.setText("Insert price");
             Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();

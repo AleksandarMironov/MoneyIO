@@ -45,4 +45,5 @@ public class MoneyFlow {
     public float getSum() {
         return sum;
     }
+
 }

@@ -104,6 +104,21 @@ public class Utilities {
             // number to NotificationManager.cancel().
             mNotificationManager.notify(gnerateID(), mBuilder.build());
         }
+    }
 
+    public static String filterMail(String inputStr){
+        if(inputStr == null){
+            return "";
+        }
+
+        StringBuilder filtered = new StringBuilder();
+        for (int i = 0; i < inputStr.length(); i++) {
+            if (inputStr.charAt(i) == '.') {
+                filtered.append("__");
+            } else {
+                filtered.append(inputStr.charAt(i));
+            }
+        }
+        return filtered.toString();
     }
 }

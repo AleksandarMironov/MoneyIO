@@ -36,6 +36,7 @@ public class DatabaseHelperFirebase {
     private static DatabaseHelperFirebase instance;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference base;
+    private String friendUid;
 
     public static void resetFirebaseDatabase(){
         data = new ArrayList<>();
@@ -61,9 +62,9 @@ public class DatabaseHelperFirebase {
     public DatabaseHelperFirebase(Context con) {
         firebaseAuth = FirebaseAuth.getInstance();
         base = FirebaseDatabase.getInstance().getReference();
-        //base.keepSynced(true);
+        //base.keepSynced(true);  //TODO !!
         context = con;
-        readDatabase(" ");
+        friendUid = " ";
         getMyFriend();
         updateContext(con);
         updateMyFriend();
@@ -82,12 +83,9 @@ public class DatabaseHelperFirebase {
     }
 
     public void updateMyFriend(){
-
         getMyFriend();
 
-
         checkForFriend();
-
     }
 
     private void getMyFriend(){
@@ -98,27 +96,9 @@ public class DatabaseHelperFirebase {
     private void checkForFriend(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         final String[] friendID = {""};
-        String addedFriend = preferences.getString(getEmail(), " ");
+        String addedFriend = Utilities.filterMail(preferences.getString(getEmail(), " "));
 
-        String userMail =  firebaseAuth.getCurrentUser().getEmail();
-        StringBuilder userMailSb = new StringBuilder();
-        for (int i = 0; i < userMail.length(); i++) {
-            if (userMail.charAt(i) == '.') {
-                userMailSb.append("__");
-            } else {
-                userMailSb.append(userMail.charAt(i));
-            }
-        }
-        userMail = userMailSb.toString();
-        StringBuilder addedFriendSb = new StringBuilder();
-        for (int i = 0; i < addedFriend.length(); i++) {
-            if (addedFriend.charAt(i) == '.') {
-                addedFriendSb.append("__");
-            } else {
-                addedFriendSb.append(addedFriend.charAt(i));
-            }
-        }
-        addedFriend = addedFriendSb.toString();
+        String userMail = Utilities.filterMail(getEmail());
 
         final String addedFr = addedFriend;
         base.child("friends").child(userMail).addValueEventListener(new ValueEventListener() {
@@ -128,8 +108,10 @@ public class DatabaseHelperFirebase {
                 if(t != null && t.getMyEmail() != null && t.getMyEmail().equals(addedFr)){
                     friendID[0] = t.getMyUid();
                     Utilities.setHasFriend(true);
+                    friendUid = friendID[0];
                     readDatabase(friendID[0]);
                 } else {
+                    friendUid = " ";
                     readDatabase(" ");
                 }
             }
@@ -146,44 +128,18 @@ public class DatabaseHelperFirebase {
     }
 
     public void addFriend(String friendMail) {
-        String mail = getEmail();
-        StringBuilder userMail = new StringBuilder();
-        StringBuilder friendMailSb = new StringBuilder();
-
-        for (int i = 0; i < mail.length(); i++) {
-            if (mail.charAt(i) == '.') {
-                userMail.append("__");
-            } else {
-                userMail.append(mail.charAt(i));
-            }
-        }
-
-        for (int i = 0; i < friendMail.length(); i++) {
-            if (friendMail.charAt(i) == '.') {
-                friendMailSb.append("__");
-            } else {
-                friendMailSb.append(friendMail.charAt(i));
-            }
-        }
-
-        AddFriend friend = new AddFriend(getUid(), userMail.toString());
-        this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
+        String mail = Utilities.filterMail(getEmail());
+        String filteredFriendMail = Utilities.filterMail(friendMail);
+        AddFriend friend = new AddFriend(getUid(), mail);
+        this.base.child("friends").child(filteredFriendMail).setValue(friend);
         checkForFriend();
     }
 
     public void deleteFriend(String friendMail) {
-        StringBuilder friendMailSb = new StringBuilder();
-
-        for (int i = 0; i < friendMail.length(); i++) {
-            if (friendMail.charAt(i) == '.') {
-                friendMailSb.append("__");
-            } else {
-                friendMailSb.append(friendMail.charAt(i));
-            }
-        }
-
         AddFriend friend = new AddFriend("NOFRIEND", "NOFRIEND");
-        this.base.child("friends").child(friendMailSb.toString()).setValue(friend);
+        this.base.child("friends").child(Utilities.filterMail(friendMail)).setValue(friend);
+        base.child(friendUid).removeEventListener(friendEventListener);
+        friendUid = " ";
         checkForFriend();
     }
 
@@ -201,68 +157,76 @@ public class DatabaseHelperFirebase {
         this.base.child(userId).push().setValue(moneyFlow);
     }
 
-    private void readDatabase(String fr){
+    private ChildEventListener userEvent = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
+            data.add(t);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+    private ChildEventListener friendEventListener =  new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
+            data.add(t);
+            if(SystemClock.elapsedRealtime() - elapsedTime > 3000){
+                Utilities.notifyFriend(context, t.getType(), Float.toString(t.getSum()));
+            }
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+
+    private void readDatabase(String friendId) {
         data = new ArrayList<>();
-        DatabaseReference fdbuser = FirebaseDatabase.getInstance().getReference(); // base;
+
         elapsedTime = SystemClock.elapsedRealtime();
-        fdbuser.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
-                data.add(t);
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        base.child(firebaseAuth.getCurrentUser().getUid()).removeEventListener(userEvent);
 
-            }
+        base.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(userEvent);
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        fdbuser.child(fr).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MoneyFlow t = dataSnapshot.getValue(MoneyFlow.class);
-                data.add(t);
-                if(SystemClock.elapsedRealtime() - elapsedTime > 3000){
-                    Utilities.notifyFriend(context, t.getType(), Float.toString(t.getSum()));
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        base.child(friendId).addChildEventListener(friendEventListener);
     }
 
     public void resetData(){
