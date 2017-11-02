@@ -1,7 +1,6 @@
 package io.money.moneyio.activities;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,7 +25,7 @@ import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.fragments.Fragment_AddFriend;
-import io.money.moneyio.fragments.Fragment_Alarm;
+import io.money.moneyio.fragments.Fragment_Reminders;
 import io.money.moneyio.fragments.Fragment_DataHistory;
 import io.money.moneyio.fragments.Fragment_Income_Expense;
 import io.money.moneyio.fragments.Fragment_Profile;
@@ -257,7 +256,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_alarms_btn:
-                drawerMenuButtonsAction(getString(R.string.alarms), new Fragment_Alarm());
+                drawerMenuButtonsAction("Reminders", new Fragment_Reminders());
                 break;
             case R.id.home_toolbar_statistics_icon_btn:
                 drawerMenuButtonsAction(getString(R.string.my_stats), new Fragment_DataHistory());

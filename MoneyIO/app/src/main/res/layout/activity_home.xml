@@ -61,10 +61,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+            <!--<ProgressBar-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal" />-->
 
         </FrameLayout>
 
@@ -157,6 +157,26 @@
                 android:background="#1eFFFFFF"/>
 
             <Button
+                android:id="@+id/home_alarms_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="25dp"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/alarm_icon"
+                android:drawableStart="@drawable/alarm_icon"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/drawer_button_design"
+                android:text="Reminders" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#1eFFFFFF"/>
+
+            <Button
                 android:id="@+id/home_add_friend_btn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -171,25 +191,6 @@
                 android:background="@drawable/drawer_button_design"
                 android:text="add friend" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#1eFFFFFF"/>
-
-            <Button
-                android:id="@+id/home_alarms_btn"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textColor="#FFFFFF"
-                android:gravity="start|center_vertical"
-                android:paddingLeft="25dp"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/alarm_icon"
-                android:drawableStart="@drawable/alarm_icon"
-                android:fontFamily="sans-serif"
-                android:background="@drawable/drawer_button_design"
-                android:text="alarms" />
 
             <View
                 android:layout_width="match_parent"

@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Friend"/>
+        android:gravity="right"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/addfriend_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Friend e-mail"/>
+        <EditText
+            android:id="@+id/addfriend_email"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Friend e-mail"/>
 
-    <ImageView
-        android:id="@+id/addfriend_add_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ok_button"/>
+        <ImageView
+            android:id="@+id/addfriend_add_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ok_button"/>
 
-    <ImageView
-        android:id="@+id/addfriend_remove"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/delete_button" />
+        <ImageView
+            android:id="@+id/addfriend_refresh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/refresh" />
 
-    <ImageView
-        android:id="@+id/addfriend_refresh"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/refresh" />
+        <ImageView
+            android:id="@+id/addfriend_remove"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/delete_button" />
+
+    </LinearLayout>
 
     <Switch
+        android:layout_marginTop="10dp"
         android:id="@+id/addfriend_notifications_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

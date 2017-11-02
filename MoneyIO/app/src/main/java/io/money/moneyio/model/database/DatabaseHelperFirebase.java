@@ -226,6 +226,8 @@ public class DatabaseHelperFirebase {
 
         base.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(userEvent);
 
+        base.child(friendId).removeEventListener(friendEventListener);
+
         base.child(friendId).addChildEventListener(friendEventListener);
     }
 

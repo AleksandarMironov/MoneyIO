@@ -41,7 +41,7 @@ import io.money.moneyio.model.utilities.MonthYearPicker;
 import io.money.moneyio.model.utilities.Utilities;
 
 
-public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapter.ItemClickListener {
+public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAdapter.ItemClickListener {
 
     private View view;
     private RecyclerView recyclerView;
@@ -151,7 +151,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         hour = calendar.get(Calendar.HOUR_OF_DAY);
                         minute = calendar.get(Calendar.MINUTE);
-                        timeEdit.setText("Time: " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+                        timeEdit.setText("Time:  " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -170,7 +170,7 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
                     public void onClick(DialogInterface dialog, int which) {
                         date = monthYearPicker.getSelectedDay();
 
-                        dateEdit.setText("Day: " + date);
+                        dateEdit.setText("Day:  " + date);
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
@@ -215,8 +215,8 @@ public class Fragment_Alarm extends Fragment implements AlarmsRecyclerViewAdapte
 
     private void setInitialStateDateTimeFields(){
         calendar = Calendar.getInstance();
-        dateEdit.setText("Day: " + calendar.get(Calendar.DAY_OF_MONTH));
-        timeEdit.setText("Time:" + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+        dateEdit.setText("Day:  " + calendar.get(Calendar.DAY_OF_MONTH));
+        timeEdit.setText("Time:  " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
         messageEdit.setText("");
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);

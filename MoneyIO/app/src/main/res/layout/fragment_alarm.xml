@@ -8,14 +8,14 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:id="@+id/alarms_layout"
-    tools:context="io.money.moneyio.fragments.Fragment_Alarm">
+    tools:context="io.money.moneyio.fragments.Fragment_Reminders">
 
     <requestFocus/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CREATE YOUR NEW ALARM"
+        android:text="Add new reminder"
         android:textColor="#000000"
         android:textSize="25sp"
         android:layout_marginTop="10dp"
@@ -29,33 +29,39 @@
         android:layout_marginRight="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TIME"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="TIME"-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textStyle="bold"/>-->
 
         <EditText
             android:id="@+id/alarm_time_set_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="false"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:focusable="false"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="DAY"/>
+            android:textColorHint="#000000"
+            android:textStyle="bold"/>
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="DAY"/>-->
 
         <EditText
             android:id="@+id/alarm_date_set_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:textSize="20sp"
+            android:textColorHint="#000000"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="match_parent"
