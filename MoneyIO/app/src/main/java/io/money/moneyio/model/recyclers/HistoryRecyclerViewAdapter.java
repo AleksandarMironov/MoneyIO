@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,24 +24,27 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     private Context context;
     private List<MoneyFlow> data;
     private LayoutInflater inflater;
+    private String uid;
 
     public HistoryRecyclerViewAdapter(Context context, List<MoneyFlow> data) {
         inflater = LayoutInflater.from(context);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.context = context;
         this.data = data;
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-        ImageView image;
+        ImageView imageIE, imageFriend;
         TextView date, type, comment, price;
 
         MyHolder(View row) {
             super(row);
-            type = (TextView) row.findViewById(R.id.row_history_type);
-            date = (TextView) row.findViewById(R.id.row_history_date);
-            comment = (TextView) row.findViewById(R.id.row_history_comment);
-            price = (TextView) row.findViewById(R.id.row_history_price);
-            image = (ImageView) row.findViewById(R.id.row_history_img);
+            type = row.findViewById(R.id.row_history_type);
+            date = row.findViewById(R.id.row_history_date);
+            comment = row.findViewById(R.id.row_history_comment);
+            price = row.findViewById(R.id.row_history_price);
+            imageIE = row.findViewById(R.id.row_history_img);
+            imageFriend = row.findViewById(R.id.row_history_img_friend);
         }
 
 
@@ -61,12 +65,21 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.type.setText(moneyFlow.getType());
         holder.price.setText(Float.toString(moneyFlow.getSum()));
         holder.date.setText(new SimpleDateFormat("d-MMM-yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
+
         if (moneyFlow.getExpense().equals("ex")) {
-            holder.image.setImageResource(R.drawable.outcome_icon);//outcome
+            holder.imageIE.setImageResource(R.drawable.outcome_icon);//outcome
             holder.price.setTextColor(Color.argb(255,255,85,85));
+            holder.imageFriend.setImageResource(R.drawable.friend_expence);
         } else {
-            holder.image.setImageResource(R.drawable.income_icon);//income
+            holder.imageIE.setImageResource(R.drawable.income_icon);//income
             holder.price.setTextColor(Color.argb(255,0,255,64));
+            holder.imageFriend.setImageResource(R.drawable.friend_income);
+        }
+        
+        if(moneyFlow.getUid().equals(uid)){
+            holder.imageFriend.setVisibility(View.INVISIBLE);
+        } else {
+            holder.imageFriend.setVisibility(View.VISIBLE);
         }
 
     }
