@@ -58,7 +58,7 @@ public class Fragment_AddFriend extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        switchNotifications.setChecked(preferences.getString(user.getCurrentUser().getEmail()  + "notifications", "EMPTY").equals("ON"));
+        switchNotifications.setChecked(!(preferences.getString(user.getCurrentUser().getEmail()  + "notifications", "EMPTY").equals("OFF")));
     }
 
     public void onAddListener() {
@@ -151,4 +151,3 @@ public class Fragment_AddFriend extends Fragment {
        });
    }
 }
-

@@ -3,6 +3,10 @@ package io.money.moneyio.fragments;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -15,10 +19,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -55,7 +63,8 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
     private Calendar calendar;
     private int hour, minute, date;
     private MonthYearPicker monthYearPicker;
-    private LinearLayout layout;
+    private LinearLayout layout, layoutAdd;
+    private ImageView imgEye, imgQuestion;
 
     @Nullable
     @Override
@@ -89,7 +98,10 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         messageEdit = view.findViewById(R.id.alarm_message_set_edit);
         addAlarmBtn = view.findViewById(R.id.alarm_add_btn);
         monthYearPicker = new MonthYearPicker(view.getContext());
-        layout = (LinearLayout) view.findViewById(R.id.alarms_layout);
+        layout = view.findViewById(R.id.alarms_layout);
+        layoutAdd = view.findViewById(R.id.alarm_add_layout);
+        imgEye = view.findViewById(R.id.alarm_eye);
+        imgQuestion = view.findViewById(R.id.alarm_question);
     }
 
     private void startRecycler() {
@@ -98,6 +110,32 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        onEyeClickListener();
+        onQuestionClickListener();
+    }
+
+    public void onQuestionClickListener(){
+        imgQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "/laskgildsauhgildafvliadfjvbadflis kasjglisajn lasjvlasjnv djznvdakfjngdj ;djfgdkjgh hjhh");
+            }
+        });
+    }
+
+    public void onEyeClickListener(){
+        imgEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutAdd.getVisibility() == View.VISIBLE){
+                    layoutAdd.setVisibility(View.GONE);
+                    imgEye.setImageResource(R.drawable.eye_invisible);
+                } else {
+                    layoutAdd.setVisibility(View.VISIBLE);
+                    imgEye.setImageResource(R.drawable.eye_visible);
+                }
+            }
+        });
     }
 
     @Override

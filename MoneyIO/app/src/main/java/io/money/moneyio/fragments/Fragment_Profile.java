@@ -42,7 +42,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private View view;
     private DatabaseHelperSQLite db;
     private FirebaseUser user;
-    private TextView email, names, noTypes;
+    private TextView email, name, noTypes;
     private EditText salary, type, dayOfSalary;
     private RadioGroup radioGroup;
     private RecyclerView recyclerView;
@@ -52,7 +52,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private long mLastClickTime;
     private MonthYearPicker monthYearPicker;
     private int payDay;
-    private ImageView okImg, deleteImg, saveType;
+    private ImageView okImg, deleteImg, saveType, imgEye, imgQuestionSalary, imgQuestionType;
     private LinearLayout layout;
 
     @Nullable
@@ -67,6 +67,9 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         onDeleteSalaryListener();
         mLastClickTime = SystemClock.elapsedRealtime();
         onDayOfSalaryClickListener();
+        seOnImgEyeClickListener();
+        seOnImgQuestionTypeClickListener();
+        seOnImgQuestionSalaryClickListener();
         return view;
     }
 
@@ -140,7 +143,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         monthYearPicker = new MonthYearPicker(view.getContext());
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = view.findViewById(R.id.profile_email);
-        names = view.findViewById(R.id.profile_name);
+        name = view.findViewById(R.id.profile_name);
         salary = view.findViewById(R.id.profile_salary);
         type = view.findViewById(R.id.profile_type);
         radioGroup = view.findViewById(R.id.profile_radiogr_kind);
@@ -151,12 +154,57 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         payDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
         noTypes = (TextView)view.findViewById(R.id.profile_no_types);
+        imgEye = view.findViewById(R.id.profile_eye);
+        imgQuestionType = view.findViewById(R.id.profile_add_type_question);
+        imgQuestionSalary = view.findViewById(R.id.profile_salary_question);
         setTextValues();
     }
 
+
+    public void seOnImgEyeClickListener(){
+        imgEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(name.getVisibility() == View.VISIBLE){
+                    name.setVisibility(View.GONE);
+                    email.setVisibility(View.GONE);
+                    view.findViewById(R.id.profile_l0).setVisibility(View.GONE);
+                    view.findViewById(R.id.profile_l1).setVisibility(View.GONE);
+                    view.findViewById(R.id.profile_l2).setVisibility(View.GONE);
+                    imgEye.setImageResource(R.drawable.eye_invisible);
+                } else {
+                    name.setVisibility(View.VISIBLE);
+                    email.setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.profile_l0).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.profile_l1).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.profile_l2).setVisibility(View.VISIBLE);
+                    imgEye.setImageResource(R.drawable.eye_visible);
+                }
+            }
+        });
+    }
+
+    public void seOnImgQuestionTypeClickListener(){
+        imgQuestionType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "You can create your own types of Incomes and Expenses");
+            }
+        });
+    }
+
+    public void seOnImgQuestionSalaryClickListener(){
+        imgQuestionSalary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "By adding your salary here, each month, on selected date, the added amount of money will be added to your account as Income");
+            }
+        });
+    }
+
     private void setTextValues() {
-        email.setText(email.getText().toString() + " " + user.getEmail());
-        names.setText(names.getText().toString() + " " + user.getDisplayName());
+        email.setText("Email: " + user.getEmail());
+        name.setText("Hi, " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");

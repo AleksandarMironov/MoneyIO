@@ -9,9 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,7 +75,7 @@ public class Utilities {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 
-        if(preferences.getString(uID  + "notifications", "EMPTY").equals("ON")){
+        if(!preferences.getString(uID  + "notifications", "EMPTY").equals("OFF")){
             String CHANNEL_ID = "my_channel_01";
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context, CHANNEL_ID)
@@ -120,5 +126,22 @@ public class Utilities {
             }
         }
         return filtered.toString();
+    }
+
+    // Display popup attached to the button as a position anchor
+   public static void displayPopupWindow(View anchorView, String text) {
+        PopupWindow popup = new PopupWindow(anchorView.getContext());
+        View layout = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.popup_content, null);
+        ((TextView)(layout.findViewById(R.id.popup_text))).setText(text);
+        popup.setContentView(layout);
+        // Set content width and height
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        // Closes the popup window when touch outside of it - when looses focus
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
+        // Show anchored to button
+        popup.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        popup.showAsDropDown(anchorView);
     }
 }

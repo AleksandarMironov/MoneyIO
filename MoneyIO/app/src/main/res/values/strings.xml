@@ -38,7 +38,7 @@
     <string name="email_two_dots">Email: </string>
     <string name="personal_name">Personal name: </string>
     <string name="salary">Salary:</string>
-    <string name="create_your_own_types_of_income_and_outcome_money">Create your own types of Income and Expense money</string>
+    <string name="create_your_own_types">Create type</string>
     <string name="your_type">Your type</string>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
