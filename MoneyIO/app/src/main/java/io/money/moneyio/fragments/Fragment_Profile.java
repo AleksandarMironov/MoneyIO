@@ -77,7 +77,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         final List<Type> types = DatabaseHelperSQLite.getInstance(view.getContext()).getUserTypes(user.getUid());
         typeFilter = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).getPictureId() == R.mipmap.ic_launcher) {
+            if (types.get(i).getPictureId() == R.drawable.custom_type) {
                 typeFilter.add(types.get(i));
             }
         }
@@ -299,7 +299,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     return;
                 }
 
-                boolean ch = db.addType(user.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.mipmap.ic_launcher);
+                boolean ch = db.addType(user.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.drawable.custom_type);
                 if(ch) {
                     Toast.makeText(view.getContext(), "Type added", Toast.LENGTH_SHORT).show();
                     startRecycler();

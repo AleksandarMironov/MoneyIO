@@ -47,7 +47,6 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
             imageFriend = row.findViewById(R.id.row_history_img_friend);
         }
 
-
     }
 
     @Override
@@ -75,7 +74,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
             holder.price.setTextColor(Color.argb(255,0,255,64));
             holder.imageFriend.setImageResource(R.drawable.friend_income);
         }
-        
+
         if(moneyFlow.getUid().equals(uid)){
             holder.imageFriend.setVisibility(View.INVISIBLE);
         } else {
