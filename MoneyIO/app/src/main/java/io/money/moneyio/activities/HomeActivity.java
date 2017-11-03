@@ -188,6 +188,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else if (fragment_incomeExpense != null && fragment_incomeExpense.isVisible()){
             exit();
         } else {
+            bundle.putBoolean("isExpense", true);
+            fragment_incomeExpense.setArguments(bundle);
             loadFragment(fragment_incomeExpense);
             setCurrentFragment(getString(R.string.expense));
             statisticsButton.setVisibility(View.VISIBLE);
