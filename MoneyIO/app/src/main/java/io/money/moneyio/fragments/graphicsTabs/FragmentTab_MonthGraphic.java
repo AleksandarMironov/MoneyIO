@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -36,6 +39,10 @@ public class FragmentTab_MonthGraphic extends Fragment {
     private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
     private MonthYearPicker monthYearPicker;
+    private Spinner spinner;
+    private long start, end;
+    private int spinnerPosition;
+    private int year, month;
 
     @Nullable
     @Override
@@ -44,7 +51,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         initialiseElements();
         filterDataOnStart();
         setFilterClickListener();
-        incomeExpenseDay();
+        setSpinnerSettings();
         return view;
     }
 
@@ -59,7 +66,40 @@ public class FragmentTab_MonthGraphic extends Fragment {
         monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.graphics_date_edit);
-        editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " + (calendar.get(Calendar.MONTH)+1));
+        editDate.setText("" + calendar.get(Calendar.YEAR) + " / " + (calendar.get(Calendar.MONTH)+1));
+        spinner = view.findViewById(R.id.statistics_spinner_menu);
+        spinnerPosition = 0;
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+    }
+
+    private void setSpinnerSettings() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                calendar.set(year, month, 1, 0, 0, 0);
+                start = calendar.getTimeInMillis();
+
+                if(month == 12){
+                    calendar.set(Calendar.YEAR, year + 1);
+                    calendar.set(Calendar.MONTH, 1);
+                } else {
+                    calendar.set(Calendar.MONTH, month + 1);
+                }
+                end = calendar.getTimeInMillis();
+
+                filteredArr = DatabaseHelperFirebase.filterData(start, end, position);
+                spinnerPosition = position;
+                incomeExpenseDay();
+            }
+
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
     }
 
     private void setFilterClickListener(){
@@ -74,7 +114,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
 
-                        long start = calendar.getTimeInMillis();
+                        start = calendar.getTimeInMillis();
 
                         if(monthYearPicker.getSelectedMonth() == 12){
                             calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
@@ -83,10 +123,10 @@ public class FragmentTab_MonthGraphic extends Fragment {
                             calendar.set(Calendar.MONTH, monthYearPicker.getSelectedMonth() + 1);
                         }
 
-                        long end = calendar.getTimeInMillis();
+                        end = calendar.getTimeInMillis();
 
-                        filteredArr = fdb.filterData(start, end);
-                        editDate.setText("Picked: " + monthYearPicker.getSelectedYear() + " / " + (monthYearPicker.getSelectedMonth()+1));
+                        filteredArr = fdb.filterData(start, end, spinnerPosition);
+                        editDate.setText("" + monthYearPicker.getSelectedYear() + " / " + (monthYearPicker.getSelectedMonth()+1));
                         calendar = Calendar.getInstance();
                         monthYearPicker = new MonthYearPicker(view.getContext());
                         incomeExpenseDay();
@@ -107,13 +147,12 @@ public class FragmentTab_MonthGraphic extends Fragment {
     }
 
     private void filterDataOnStart(){
-        long end = calendar.getTimeInMillis();
+        end = calendar.getTimeInMillis();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        long start = calendar.getTimeInMillis();
-        filteredArr = fdb.filterData(start, end);
+        start = calendar.getTimeInMillis();
     }
 
     private void incomeExpenseDay() {

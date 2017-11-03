@@ -7,8 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -37,6 +40,9 @@ public class FragmentTab_DayGraphic extends Fragment {
     private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
     private MonthYearPicker monthYearPicker;
+    private Spinner spinner;
+    private long start, end;
+    private int spinnerPosition;
 
     @Nullable
     @Override
@@ -45,7 +51,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         initialiseElements();
         setFilterClickListener();
         filterDataOnStart();
-        incomeExpenseDay();
+        setSpinnerSettings();
         return view;
     }
 
@@ -59,8 +65,31 @@ public class FragmentTab_DayGraphic extends Fragment {
         calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.graphics_date_edit);
-        editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
+        editDate.setText(calendar.get(Calendar.YEAR) + " / " +
                 (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
+        spinner = view.findViewById(R.id.statistics_spinner_menu);
+        spinnerPosition = 0;
+    }
+
+
+    private void setSpinnerSettings() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0,0,0);
+                start = calendar.getTimeInMillis();
+                end = start + 1000*60*60*24;
+                filteredArr = fdb.filterData(start, end, position);
+                incomeExpenseDay();
+                spinnerPosition = position;
+            }
+
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
     }
 
     private void setFilterClickListener(){
@@ -71,12 +100,11 @@ public class FragmentTab_DayGraphic extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
-                long start = calendar.getTimeInMillis();
-                long end = start + 1000*60*60*24;
-                filteredArr = fdb.filterData(start, end);
-                editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
+                start = calendar.getTimeInMillis();
+                end = start + 1000*60*60*24;
+                filteredArr = fdb.filterData(start, end, spinnerPosition);
+                editDate.setText(dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                 incomeExpenseDay();
-                calendar = Calendar.getInstance();
             }
         };
 
@@ -92,12 +120,11 @@ public class FragmentTab_DayGraphic extends Fragment {
     }
 
     private void filterDataOnStart(){
-        long end = calendar.getTimeInMillis();
+        end = calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        long start = calendar.getTimeInMillis();
-        filteredArr = fdb.filterData(start, end);
+        start = calendar.getTimeInMillis();
     }
 
     private void incomeExpenseDay() {

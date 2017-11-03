@@ -73,8 +73,6 @@ public abstract class GraphicUtilities {
             }
         }
 
-        Log.e("ivan", Arrays.toString(income) + " -->> \n" +  Arrays.toString(expense));
-
         ArrayList<BarEntry> yVals1 = new ArrayList(); //expense
         ArrayList<BarEntry> yVals2 = new ArrayList(); //income
 

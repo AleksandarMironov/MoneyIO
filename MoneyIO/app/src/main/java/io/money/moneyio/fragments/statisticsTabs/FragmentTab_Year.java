@@ -70,6 +70,8 @@ public class FragmentTab_Year extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                spinnerPosition = position;
+
                 calendar.set(year, 1, 1, 0, 0, 0);
 
                 long start = calendar.getTimeInMillis();

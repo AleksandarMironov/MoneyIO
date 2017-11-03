@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -36,6 +39,10 @@ public class FragmentTab_YearGraphic extends Fragment {
     private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
     private MonthYearPicker monthYearPicker;
+    private Spinner spinner;
+    private long start, end;
+    private int spinnerPosition;
+    private int year;
 
     @Nullable
     @Override
@@ -44,7 +51,8 @@ public class FragmentTab_YearGraphic extends Fragment {
         initialiseElements();
         setFilterClickListener();
         filterDataOnStart();
-        incomeExpenseYear();
+        setSpinnerSettings();
+//        incomeExpenseYear();
 //        incomeExpenseDay();
         return view;
     }
@@ -60,6 +68,34 @@ public class FragmentTab_YearGraphic extends Fragment {
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.graphics_date_edit);
         editDate.setText("Picked: " + calendar.get(Calendar.YEAR));
+        spinner = view.findViewById(R.id.statistics_spinner_menu);
+        spinnerPosition = 0;
+        year = calendar.get(Calendar.YEAR);
+    }
+
+    private void setSpinnerSettings() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                calendar.set(year, 1, 1, 0, 0, 0);
+
+                long start = calendar.getTimeInMillis();
+
+                calendar.set(Calendar.YEAR, year + 1);
+
+                long end = calendar.getTimeInMillis();
+                filteredArr = fdb.filterData(start, end, position);
+                calendar = Calendar.getInstance();
+                incomeExpenseYear();
+            }
+
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
     }
 
     private void setFilterClickListener(){
@@ -74,12 +110,12 @@ public class FragmentTab_YearGraphic extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
 
-                        long start = calendar.getTimeInMillis();
+                        start = calendar.getTimeInMillis();
 
                         calendar.set(Calendar.YEAR, monthYearPicker.getSelectedYear() + 1);
 
-                        long end = calendar.getTimeInMillis();
-                        filteredArr = fdb.filterData(start, end);
+                        end = calendar.getTimeInMillis();
+                        filteredArr = fdb.filterData(start, end, spinnerPosition);
                         calendar = Calendar.getInstance();
                         editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
                         monthYearPicker = new MonthYearPicker(view.getContext());
@@ -101,14 +137,13 @@ public class FragmentTab_YearGraphic extends Fragment {
     }
 
     private void filterDataOnStart(){
-        long end = calendar.getTimeInMillis();
+        end = calendar.getTimeInMillis();
         calendar.set(Calendar.MONTH, 1);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        long start = calendar.getTimeInMillis();
-        filteredArr = fdb.filterData(start, end);
+        start = calendar.getTimeInMillis();
     }
 
     private void incomeExpenseYear() {
