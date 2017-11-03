@@ -57,7 +57,7 @@ public class FragmentTab_Day extends Fragment {
         recyclerView = view.findViewById(R.id.history_recycler_view);
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.history_date_edit);
-        editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
+        editDate.setText(calendar.get(Calendar.YEAR) + " / " +
                         (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
         spinner = view.findViewById(R.id.history_spinner);
         spinnerPosition = 0;
@@ -99,7 +99,7 @@ public class FragmentTab_Day extends Fragment {
                     end = start + 1000*60*60*24;
                     filteredArr = fdb.filterData(start, end, spinnerPosition);
                     startRecycler(filteredArr);
-                    editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
+                    editDate.setText(dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                     calendar = Calendar.getInstance();
                 }
             };

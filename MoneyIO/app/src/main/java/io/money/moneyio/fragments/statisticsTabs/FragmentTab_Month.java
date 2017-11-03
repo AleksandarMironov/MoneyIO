@@ -56,7 +56,7 @@ public class FragmentTab_Month extends Fragment {
         monthYearPicker = new MonthYearPicker(view.getContext());
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.history_date_edit);
-        editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " + (calendar.get(Calendar.MONTH)+1));
+        editDate.setText(calendar.get(Calendar.YEAR) + " / " + (calendar.get(Calendar.MONTH)+1));
         spinner = view.findViewById(R.id.history_spinner);
         spinnerPosition = 0;
         year = calendar.get(Calendar.YEAR);
@@ -119,7 +119,7 @@ public class FragmentTab_Month extends Fragment {
 
                         filteredArr = fdb.filterData(start, end, spinnerPosition);
                         startRecycler(filteredArr);
-                        editDate.setText("Picked: " + year + " / " + (month+1));
+                        editDate.setText(year + " / " + (month+1));
                         calendar = Calendar.getInstance();
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }

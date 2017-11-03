@@ -46,5 +46,10 @@
         android:layout_height="wrap_content"
         android:text="Notifications from friend:   " />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/friend_hands" />
+
 
 </LinearLayout>
