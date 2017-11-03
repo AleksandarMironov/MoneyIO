@@ -118,7 +118,8 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         imgQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "/laskgildsauhgildafvliadfjvbadflis kasjglisajn lasjvlasjnv djznvdakfjngdj ;djfgdkjgh hjhh");
+                Utilities.displayPopupWindow(v, "Set your personal reminders here! \n" +
+                        "The reminders will pop-up in your notification bar on the chosen day and hour every month.");
             }
         });
     }

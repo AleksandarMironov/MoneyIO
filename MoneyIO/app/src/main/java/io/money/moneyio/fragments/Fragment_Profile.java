@@ -188,7 +188,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         imgQuestionType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "You can create your own types of Incomes and Expenses");
+                Utilities.displayPopupWindow(v, "You can create your own types of Incomes and Expenses.");
             }
         });
     }
@@ -197,7 +197,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         imgQuestionSalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "By adding your salary here, each month, on selected date, the added amount of money will be added to your account as Income");
+                Utilities.displayPopupWindow(v, "By adding your salary here, each month, on selected date, the added amount of money will be added to your account as Income.");
             }
         });
     }

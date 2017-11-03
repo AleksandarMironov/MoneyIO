@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showCaseView() {
         ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(400);
+        config.setDelay(250);
 
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, firebaseAuth.getCurrentUser().getUid());
         sequence.setConfig(config);
