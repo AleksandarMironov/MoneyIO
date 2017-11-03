@@ -10,8 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +35,7 @@ public class FragmentTab_Day extends Fragment {
     private Calendar calendar;
     private EditText editDate;
     private List<MoneyFlow> filteredArr;
+    private Spinner spinner;
 
     @Nullable
     @Override
@@ -40,6 +45,7 @@ public class FragmentTab_Day extends Fragment {
         setFilter();
         filterDataOnStart();
         startRecycler(filteredArr);
+        setSpinnerSettings();
         return view;
     }
 
@@ -51,6 +57,24 @@ public class FragmentTab_Day extends Fragment {
         editDate = view.findViewById(R.id.history_date_edit);
         editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
                         (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
+        spinner = view.findViewById(R.id.history_spinner);
+    }
+
+    private void setSpinnerSettings() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //code to implement on spinner item select
+            }
+
+            public void onNothingSelected(AdapterView<?> parent){
+
+            }
+        });
     }
 
         private void setFilter(){

@@ -15,8 +15,15 @@
             android:gravity="center"
             android:drawableLeft="@drawable/calendar_icon"
             android:drawableStart="@drawable/calendar_icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        <Spinner
+            android:id="@+id/history_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 
 
