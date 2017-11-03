@@ -79,7 +79,7 @@ public class Utilities {
             String CHANNEL_ID = "my_channel_01";
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context, CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ioicon)
+                            .setSmallIcon(R.mipmap.moneyioicon)
                             .setContentTitle("Your friend spend")
                             .setContentText(sum + " for " + type);
             // Creates an explicit intent for an Activity in your app

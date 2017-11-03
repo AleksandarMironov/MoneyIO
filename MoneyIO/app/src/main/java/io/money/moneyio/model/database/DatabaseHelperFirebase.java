@@ -138,6 +138,7 @@ public class DatabaseHelperFirebase {
     }
 
     public void deleteFriend(String friendMail) {
+        base.child(usersIE).child(Utilities.filterMail(friendMail)).removeEventListener(friendEventListener);
         AddFriend friend = new AddFriend("NOFRIEND", "NOFRIEND");
         this.base.child("friends").child(Utilities.filterMail(friendMail)).setValue(friend);
         base.child(friendUid).removeEventListener(friendEventListener);
