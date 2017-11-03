@@ -30,7 +30,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     private View view;
     private DatabaseHelperFirebase fdb;
     private EditText editDate;
-    private ArrayList<MoneyFlow> filteredArr;
+    private List<MoneyFlow> filteredArr;
     private PieChart pieChart;
     private BarChart chart;
     private HorizontalBarChart horizontalBarChart;

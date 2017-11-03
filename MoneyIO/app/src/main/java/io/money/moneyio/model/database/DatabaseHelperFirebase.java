@@ -44,11 +44,29 @@ public class DatabaseHelperFirebase {
         data = new ArrayList<>();
     }
 
-    public static ArrayList<MoneyFlow> filterData(long start, long end){
-        ArrayList<MoneyFlow> filteredArr = new ArrayList<>();
+    //spinnerPos -> 0 = my stats, 1 = friends stats, 2 = combined stats
+    public static List<MoneyFlow> filterData(long start, long end, int spinnerPos){
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        List<MoneyFlow> filteredArr = new ArrayList<>();
+
         for (MoneyFlow f: data) {
-            if(start <= f.getCalendar() && f.getCalendar() <= end){
-                filteredArr.add(f);
+            switch (spinnerPos) {
+                case 0:
+                        if(start <= f.getCalendar() && f.getCalendar() <= end && f.getUid().equals(uid)){
+                        filteredArr.add(f);
+                    }
+                    break;
+                case 1:
+                    if(start <= f.getCalendar() && f.getCalendar() <= end && !f.getUid().equals(uid)){
+                    filteredArr.add(f);
+                    }
+                    break;
+                case 2:
+                    if(start <= f.getCalendar() && f.getCalendar() <= end){
+                    filteredArr.add(f);
+                    }
+                    break;
             }
         }
 
@@ -58,7 +76,13 @@ public class DatabaseHelperFirebase {
                 return (o1.getCalendar() > o2.getCalendar())? -1 : 1;
             }
         });
-        return filteredArr;
+        return Collections.unmodifiableList(filteredArr);
+    }
+
+
+    public static List<MoneyFlow> filterData(long start, long end) {
+
+        return filterData(start, end, 0);
     }
 
     public DatabaseHelperFirebase(Context con) {

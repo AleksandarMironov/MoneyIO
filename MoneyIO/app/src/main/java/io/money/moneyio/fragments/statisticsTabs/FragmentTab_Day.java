@@ -26,6 +26,7 @@ import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.MoneyFlow;
+import io.money.moneyio.model.utilities.Utilities;
 
 public class FragmentTab_Day extends Fragment {
 
@@ -36,6 +37,8 @@ public class FragmentTab_Day extends Fragment {
     private EditText editDate;
     private List<MoneyFlow> filteredArr;
     private Spinner spinner;
+    private long start, end;
+    private int spinnerPosition;
 
     @Nullable
     @Override
@@ -44,31 +47,38 @@ public class FragmentTab_Day extends Fragment {
         initialiseElements();
         setFilter();
         filterDataOnStart();
-        startRecycler(filteredArr);
         setSpinnerSettings();
         return view;
     }
 
     private void initialiseElements() {
+        calendar = Calendar.getInstance();
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         recyclerView = view.findViewById(R.id.history_recycler_view);
-        calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.history_date_edit);
         editDate.setText("Picked: " + calendar.get(Calendar.YEAR) + " / " +
                         (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
         spinner = view.findViewById(R.id.history_spinner);
+        spinnerPosition = 0;
     }
 
     private void setSpinnerSettings() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //code to implement on spinner item select
+                calendar = Calendar.getInstance();
+                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0,0,0);
+                start = calendar.getTimeInMillis();
+                end = start + 1000*60*60*24;
+                startRecycler(filteredArr);
+                calendar = Calendar.getInstance();
+                filteredArr = DatabaseHelperFirebase.filterData(start, end, position);
+                spinnerPosition = position;
+                startRecycler(filteredArr);
             }
 
             public void onNothingSelected(AdapterView<?> parent){
@@ -85,9 +95,9 @@ public class FragmentTab_Day extends Fragment {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
                                       int dayOfMonth) {
                     calendar.set(year, monthOfYear, dayOfMonth, 0,0,0);
-                    long start = calendar.getTimeInMillis();
-                    long end = start + 1000*60*60*24;
-                    filteredArr = fdb.filterData(start, end);
+                    start = calendar.getTimeInMillis();
+                    end = start + 1000*60*60*24;
+                    filteredArr = fdb.filterData(start, end, spinnerPosition);
                     startRecycler(filteredArr);
                     editDate.setText("Picked: " + dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
                     calendar = Calendar.getInstance();
@@ -111,7 +121,6 @@ public class FragmentTab_Day extends Fragment {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long start = calendar.getTimeInMillis();
-        filteredArr = fdb.filterData(start, end);
     }
 
     // must add AsyncTask!
