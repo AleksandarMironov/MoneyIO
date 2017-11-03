@@ -64,7 +64,7 @@ public abstract class GraphicUtilities {
         float [] expense = {0,0,0,0,0,0,0,0,0,0,0,0};
         Calendar cal = Calendar.getInstance();
         for(MoneyFlow m : filteredArr){
-            if(m.getExpense().equalsIgnoreCase("false")){
+            if(m.getExpense().equalsIgnoreCase("in")){
                 cal.setTimeInMillis(m.getCalendar());
                 income[cal.get(Calendar.MONTH)] += m.getSum();
             } else {
@@ -85,9 +85,9 @@ public abstract class GraphicUtilities {
 
         //draw the graph
         BarDataSet set1, set2;
-        set1 = new BarDataSet(yVals2, "Expense");
+        set1 = new BarDataSet(yVals2, "Income");
         set1.setColor(Color.GREEN);
-        set2 = new BarDataSet(yVals1, "Income");
+        set2 = new BarDataSet(yVals1, "Expense");
         set2.setColor(Color.RED);
 
         ArrayList<IBarDataSet> sets = new ArrayList<>();
@@ -127,7 +127,7 @@ public abstract class GraphicUtilities {
         for (Iterator<Map.Entry<String, Float>> iterator = structuredData2.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry<String, Float> entry = iterator.next();
             pieDataSave.add(new Entry(entry.getValue(), i));
-            if (entry.getKey().equalsIgnoreCase("true")) {
+            if (entry.getKey().equalsIgnoreCase("ex")) {
                 names.add("Expense");
             } else {
                 names.add("Income");
@@ -137,8 +137,8 @@ public abstract class GraphicUtilities {
 
         PieDataSet pieDataSet = new PieDataSet(pieDataSave, "- Income/Expense");
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GREEN);
         colors.add(Color.RED);
+        colors.add(Color.GREEN);
         pieDataSet.setColors(colors);
         pieDataSet.setSliceSpace(5);
 
@@ -165,7 +165,7 @@ public abstract class GraphicUtilities {
         final List<String> names = new ArrayList<String>();
 
         for (int i = 0; i < filteredArr.size(); i++) {
-            if (filteredArr.get(i).getExpense().equalsIgnoreCase("true")) {
+            if (filteredArr.get(i).getExpense().equalsIgnoreCase("ex")) {
                 if (!structuredData.containsKey(filteredArr.get(i).getType())) {
                     structuredData.put(filteredArr.get(i).getType(),filteredArr.get(i).getSum());
                 } else {

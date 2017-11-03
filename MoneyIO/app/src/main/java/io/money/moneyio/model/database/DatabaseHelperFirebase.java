@@ -31,6 +31,7 @@ public class DatabaseHelperFirebase {
 
 
     private static List<MoneyFlow> data = new ArrayList<>();
+    private static final String usersIE = "usersie";
     private Context context;
     private String myFriend;
     private long elapsedTime;
@@ -155,7 +156,7 @@ public class DatabaseHelperFirebase {
     }
 
     public void addData(String userId, MoneyFlow moneyFlow){
-        this.base.child(userId).push().setValue(moneyFlow);
+        this.base.child(usersIE).child(userId).push().setValue(moneyFlow);
     }
 
     private ChildEventListener userEvent = new ChildEventListener() {
@@ -223,13 +224,13 @@ public class DatabaseHelperFirebase {
 
         elapsedTime = SystemClock.elapsedRealtime();
 
-        base.child(firebaseAuth.getCurrentUser().getUid()).removeEventListener(userEvent);
+        base.child(usersIE).child(firebaseAuth.getCurrentUser().getUid()).removeEventListener(userEvent);
 
-        base.child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(userEvent);
+        base.child(usersIE).child(firebaseAuth.getCurrentUser().getUid()).addChildEventListener(userEvent);
 
-        base.child(friendId).removeEventListener(friendEventListener);
+        base.child(usersIE).child(friendId).removeEventListener(friendEventListener);
 
-        base.child(friendId).addChildEventListener(friendEventListener);
+        base.child(usersIE).child(friendId).addChildEventListener(friendEventListener);
     }
 
     public void resetData(){

@@ -9,22 +9,21 @@ public class MoneyFlow {
     private long calendar;
     private String comment;
     private float sum;
+    private String uid;
 
     //this constructor is required for firebase
     public MoneyFlow() {
     }
 
-    public MoneyFlow(String expense, String type, String comment, float sum) {
+    public MoneyFlow(String uid, String expense, String type, String comment, float sum) {
         this.expense = expense;
         this.type = type;
         this.calendar = Calendar.getInstance().getTimeInMillis();
         this.comment = comment;
         this.sum = sum;
+        this.uid = uid;
     }
 
-    public MoneyFlow(String expense, String type, float sum) {
-        this(expense, type, "", sum);
-    }
 
     public String getExpense() {
         return expense;
@@ -46,4 +45,7 @@ public class MoneyFlow {
         return sum;
     }
 
+    public String getUid() {
+        return uid;
+    }
 }

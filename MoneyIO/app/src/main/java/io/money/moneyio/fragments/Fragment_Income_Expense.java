@@ -221,12 +221,13 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         Type type = adapter.getItem(position);
         String price = moneyView.getText().toString().trim();
         String com = comment.getText().toString().trim();
+        String uid = user.getUid();
 
         if (!price.equalsIgnoreCase("Insert price") && Float.parseFloat(price) != 0) {
-            if (!isExpense) {
-                fdb.addData(user.getUid(), new MoneyFlow("false", type.getType(), com, Float.parseFloat(price)));
+            if (isExpense) {
+                fdb.addData(uid, new MoneyFlow(uid, "ex", type.getType(), com, Float.parseFloat(price)));
             } else {
-                fdb.addData(user.getUid(), new MoneyFlow("true", type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, "in", type.getType(), com, Float.parseFloat(price)));
             }
             moneyView.setText("Insert price");
             comment.setText("");

@@ -61,7 +61,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.type.setText(moneyFlow.getType());
         holder.price.setText(Float.toString(moneyFlow.getSum()));
         holder.date.setText(new SimpleDateFormat("d-MMM-yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
-        if (moneyFlow.getExpense().equals("true")) {
+        if (moneyFlow.getExpense().equals("ex")) {
             holder.image.setImageResource(R.drawable.outcome_icon);//outcome
             holder.price.setTextColor(Color.argb(255,255,85,85));
         } else {

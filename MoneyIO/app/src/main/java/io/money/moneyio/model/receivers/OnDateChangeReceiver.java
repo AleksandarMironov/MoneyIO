@@ -43,13 +43,13 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                     {
                         if(date == 29){
                             if(plannedFlow.getDate() > 29){
-                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
                             }
                         }
                     } else {
                         if(date == 28){
                             if(plannedFlow.getDate() > 28){
-                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                                fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
                             }
                         }
                     }
@@ -61,7 +61,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                 case 10:
                     if(date == 30){
                         if(plannedFlow.getDate() == 31){
-                            fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                            fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
                         }
                     }
                     break;
@@ -69,7 +69,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                     break;
             }
             if(plannedFlow.getDate() == date){
-                fdb.addData(plannedFlow.getUserID(), new MoneyFlow("false", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
+                fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }
         }
 
