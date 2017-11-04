@@ -2,8 +2,8 @@ package io.money.moneyio.model.utilities;
 
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -22,7 +22,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,14 +30,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.money.moneyio.R;
 import io.money.moneyio.model.MoneyFlow;
 
 public abstract class GraphicUtilities {
 
-    public static void dataFilerForCurrentTab(TextView income, TextView expense, TextView overall, List<MoneyFlow> filtererArray) {
+    public static void dataFilerForCurrentTab(TextView income, TextView expense, TextView overall, List<MoneyFlow> filtererArray, ImageView imgPlusMinus) {
         float inc = 0;
         float exp = 0;
-        float ovrall;
+        float ovrallF;
 
         for (int i = 0; i < filtererArray.size(); i++) {
             if (filtererArray.get(i).getExpense().equalsIgnoreCase("ex")) {
@@ -48,10 +48,15 @@ public abstract class GraphicUtilities {
             }
         }
 
-        ovrall = inc - exp;
+        ovrallF = inc - exp;
+        if(ovrallF > 0){
+            imgPlusMinus.setImageResource(R.drawable.ie_progres);
+        } else {
+            imgPlusMinus.setImageResource(R.drawable.ie_progres_low);
+        }
         income.setText(String.format("%.2f", inc));
         expense.setText(String.format("%.2f", exp));
-        overall.setText(String.format("%.2f", ovrall));
+        overall.setText(String.format("%.2f", ovrallF));
     }
 
     //creating and setting data to the combined chart in the tab fragment FragmentTab_YearGraphic

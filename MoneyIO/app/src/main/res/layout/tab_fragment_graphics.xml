@@ -64,6 +64,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:id="@+id/ststistics_plusminus"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
@@ -107,8 +108,8 @@
 
             <ImageView
                 android:id="@+id/statistics_question_pie"
-                android:layout_height="30dp"
-                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_width="20dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/question_mark" />
 
@@ -119,8 +120,8 @@
 
             <ImageView
                 android:id="@+id/statistics_question_combined"
-                android:layout_height="30dp"
-                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_width="20dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/question_mark" />
 
@@ -131,8 +132,8 @@
 
             <ImageView
                 android:id="@+id/statistics_question_horizontal_bar"
-                android:layout_height="30dp"
-                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_width="20dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/question_mark" />
 
