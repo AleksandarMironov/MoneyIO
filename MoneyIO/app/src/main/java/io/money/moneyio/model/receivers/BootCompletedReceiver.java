@@ -17,6 +17,7 @@ import io.money.moneyio.model.utilities.Utilities;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
+    //sets all alarms when phone is turned on
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -27,6 +28,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             String userID = firebaseAuth.getCurrentUser().getUid();
             List<Alarm> alarms = db.getUserAlarms(userID);
 
+            //set all alarms
             AlarmUtilities.setAlarms(context, alarms);
         }
     }

@@ -10,9 +10,13 @@ import io.money.moneyio.model.utilities.Utilities;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    //receiver for notifications
     @Override
     public void onReceive(Context context, Intent intent) {
+        //get notification text from intent
         String message = intent.getExtras().getString("message");
+
+        //fires notification
         AlarmUtilities.notifyMe(context, message);
     }
 }
