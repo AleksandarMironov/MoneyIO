@@ -243,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Toast.makeText(MainActivity.this, "Sorry, internet problem. Please try again.", Toast.LENGTH_SHORT).show();
-                Log.e("MoneyIO", result.getStatus().toString());
+                Toast.makeText(MainActivity.this, R.string.sorry_internet_problem_please_try_again, Toast.LENGTH_SHORT).show();
+                Log.e(getString(R.string.money_io), result.getStatus().toString());
             }
         }
     }
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            Toast.makeText(MainActivity.this, "Hello, " + ((user.getDisplayName() == null)? "" : user.getDisplayName()), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.hello) + ((user.getDisplayName() == null)? "" : user.getDisplayName()), Toast.LENGTH_SHORT).show();
                             Log.e("MoneyIO", "signInWithCredential:success");
                         } else {
                             Log.e("MoneyIO", "signInWithCredential:failure", task.getException());
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         AlertDialog alert = a_builder.create();
-        alert.setTitle("Quit");
+        alert.setTitle(getString(R.string.quit));
         alert.show();
     }
 }

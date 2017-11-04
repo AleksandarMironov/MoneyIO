@@ -131,8 +131,8 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         imgQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "Set your personal reminders here! \n" +
-                        "The reminders will pop-up in your notification bar on the chosen day and hour every month.");
+                Utilities.displayPopupWindow(v, getString(R.string.set_your_personal_reminders_here) +
+                        getString(R.string.reminders_text));
             }
         });
     }
@@ -161,9 +161,9 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         mLastClickTime = SystemClock.elapsedRealtime();
 
         AlertDialog.Builder a_builder = new AlertDialog.Builder(view.getContext());
-        a_builder.setMessage("Are you sure?")
+        a_builder.setMessage(getString(R.string.are_you_sure))
                 .setCancelable(false)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.deleteAlarm(user.getUid(), alarms.get(position).getDate(), alarms.get(position).getHour(),
@@ -173,18 +173,18 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
                         recyclerView.removeViewAt(position);
                         adapter.notifyItemRemoved(position);
                         adapter.notifyItemRangeChanged(position, alarms.size());
-                        Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.DELETED), Toast.LENGTH_SHORT).show();
                         startRecycler();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
         AlertDialog alert = a_builder.create();
-        alert.setTitle("DELETE");
+        alert.setTitle(getString(R.string.DELETE));
         alert.show();
         }
 
@@ -203,10 +203,10 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         hour = calendar.get(Calendar.HOUR_OF_DAY);
                         minute = calendar.get(Calendar.MINUTE);
-                        timeEdit.setText("Time:  " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+                        timeEdit.setText(getString(R.string.time) + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getString(R.string.select_time));
                 mTimePicker.show();
             }
         });
@@ -222,7 +222,7 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
                     public void onClick(DialogInterface dialog, int which) {
                         date = monthYearPicker.getSelectedDay();
 
-                        dateEdit.setText("Day:  " + date);
+                        dateEdit.setText(getString(R.string.Day) + date);
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
@@ -250,15 +250,15 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
                 if (Utilities.checkString(message)) {
                     isAdded = db.addAlarm(user.getUid(), date, hour, minute, message);
                     if (isAdded) {
-                        Toast.makeText(view.getContext(), "Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), getString(R.string.added), Toast.LENGTH_SHORT).show();
                         startRecycler();
                         AlarmUtilities.setAlarm(view.getContext(), new Alarm(date, hour, minute, message));
                         setInitialStateDateTimeFields();
                     } else {
-                        Toast.makeText(view.getContext(), "Already exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), getString(R.string.already_exists), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    messageEdit.setError("Adding message is required.");
+                    messageEdit.setError(getString(R.string.message_is_required));
                 }
             }
         });
@@ -267,8 +267,8 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
 
     private void setInitialStateDateTimeFields(){
         calendar = Calendar.getInstance();
-        dateEdit.setText("Day:  " + calendar.get(Calendar.DAY_OF_MONTH));
-        timeEdit.setText("Time:  " + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+        dateEdit.setText(getString(R.string.Day) + calendar.get(Calendar.DAY_OF_MONTH));
+        timeEdit.setText(getString(R.string.time) + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
         messageEdit.setText("");
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);

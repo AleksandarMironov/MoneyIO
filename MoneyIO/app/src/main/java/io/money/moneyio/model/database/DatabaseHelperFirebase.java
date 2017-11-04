@@ -243,7 +243,6 @@ public class DatabaseHelperFirebase {
         }
     };
 
-
     private void readDatabase(String friendId) {
         data = new ArrayList<>();
 

@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         firebaseData = fdb.getData();
         fragment_incomeExpense = new Fragment_Income_Expense();
         bundle = new Bundle();
-        bundle.putBoolean("isExpense", true);
+        bundle.putBoolean(getString(R.string.is_Expense), true);
         fragment_incomeExpense.setArguments(bundle);
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else if (fragment_incomeExpense != null && fragment_incomeExpense.isVisible()){
             exit();
         } else {
-            bundle.putBoolean("isExpense", true);
+            bundle.putBoolean(getString(R.string.is_Expense), true);
             fragment_incomeExpense.setArguments(bundle);
             loadFragment(fragment_incomeExpense);
             setCurrentFragment(getString(R.string.expense));
@@ -233,7 +233,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_income_btn:
-                bundle.putBoolean("isExpense", false);
+                bundle.putBoolean(getString(R.string.is_Expense), false);
                 Fragment_Income_Expense fragment_incomeExpense1 = new Fragment_Income_Expense();
                 fragment_incomeExpense1.setArguments(bundle);
                 drawerMenuButtonsAction(getString(R.string.income), fragment_incomeExpense1);
@@ -254,7 +254,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 drawerMenuButtonsAction("Add Friend", new Fragment_AddFriend());
                 break;
             case R.id.home_alarms_btn:
-                drawerMenuButtonsAction("Reminders", new Fragment_Reminders());
+                drawerMenuButtonsAction(getString(R.string.reminders), new Fragment_Reminders());
                 break;
             case R.id.home_toolbar_statistics_icon_btn:
                 drawerMenuButtonsAction(getString(R.string.my_stats), new Fragment_DataHistory());

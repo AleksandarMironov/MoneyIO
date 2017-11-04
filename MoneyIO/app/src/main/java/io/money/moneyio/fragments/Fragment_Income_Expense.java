@@ -82,7 +82,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     private void initialiseElements() {
-        isExpense = getArguments().getBoolean("isExpense");
+        isExpense = getArguments().getBoolean(getString(R.string.is_Expense));
         user = FirebaseAuth.getInstance().getCurrentUser();
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         one = (Button) view.findViewById(R.id.outcome_keyboard_1);
@@ -172,7 +172,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
 
         String text = moneyView.getText().toString().trim();
 
-        if (moneyView.getText().toString().trim().equalsIgnoreCase("Insert price")) {
+        if (moneyView.getText().toString().trim().equalsIgnoreCase(getString(R.string.insert_price))) {
             moneyView.setText("");
         }
         if (moneyView.getText().toString().trim().length() < 10) {
@@ -185,7 +185,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     private void addDot(char dot) {
-        if (moneyView.getText().toString().trim().equalsIgnoreCase("Insert price") || moneyView.getText().toString().equals("")) {
+        if (moneyView.getText().toString().trim().equalsIgnoreCase(getString(R.string.insert_price)) || moneyView.getText().toString().equals("")) {
             moneyView.setText("0");
         }
         String text = moneyView.getText().toString();
@@ -204,7 +204,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
 
     private void deleteOneChar() {
         String s = moneyView.getText().toString();
-        if (s.length() > 1 && !moneyView.getText().toString().trim().equalsIgnoreCase("Insert price")) {
+        if (s.length() > 1 && !moneyView.getText().toString().trim().equalsIgnoreCase(getString(R.string.insert_price))) {
             StringBuffer buffer = new StringBuffer();
 
             for (int i = 0; i < s.length() - 1; i++) {
@@ -223,17 +223,17 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         String com = comment.getText().toString().trim();
         String uid = user.getUid();
 
-        if (!price.equalsIgnoreCase("Insert price") && Float.parseFloat(price) != 0) {
+        if (!price.equalsIgnoreCase(getString(R.string.insert_price)) && Float.parseFloat(price) != 0) {
             if (isExpense) {
-                fdb.addData(uid, new MoneyFlow(uid, "ex", type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, getString(R.string.ex), type.getType(), com, Float.parseFloat(price)));
             } else {
-                fdb.addData(uid, new MoneyFlow(uid, "in", type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, getString(R.string.in), type.getType(), com, Float.parseFloat(price)));
             }
-            moneyView.setText("Insert price");
+            moneyView.setText(getString(R.string.insert_price));
             comment.setText("");
-            Toast.makeText(view.getContext(), "ADDED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.ADDED, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(view.getContext(), "Price not added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.price_not_added, Toast.LENGTH_SHORT).show();
         }
     }
 

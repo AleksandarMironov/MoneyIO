@@ -88,16 +88,16 @@ public class FragmentTab_MonthGraphic extends Fragment {
         questionPie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "Pie Chart \n" +
-                "Shows your monthly incomes and expenses.");
+                Utilities.displayPopupWindow(v, getString(R.string.pie_chart) +
+                getString(R.string.pc_text));
             }
         });
 
         questionHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "Horizontal Bar Chart \n" +
-                        "Graphic that shows your monthly expenses. By clicking on the calendar icon, you can check your statistics about the month you want to see.");
+                Utilities.displayPopupWindow(v, getString(R.string.horizontal_bar_chart) +
+                        getString(R.string.hbc_month_text));
             }
         });
     }

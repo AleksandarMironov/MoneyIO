@@ -31,9 +31,9 @@ public class Fragment_DataHistory extends Fragment {
     private void startTabView() {
         //adding names of tabs
         final TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("DAY"));
-        tabLayout.addTab(tabLayout.newTab().setText("MONTH"));
-        tabLayout.addTab(tabLayout.newTab().setText("YEAR"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.DAY));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.MONTH));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.YEAR));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.viewPager);

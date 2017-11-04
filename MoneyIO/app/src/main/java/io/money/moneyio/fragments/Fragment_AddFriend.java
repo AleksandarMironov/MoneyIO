@@ -67,7 +67,7 @@ public class Fragment_AddFriend extends Fragment {
            public void onClick(View view) {
                String mail = email.getText().toString().trim();
                if(!Utilities.isMail(mail)){
-                   email.setError("Enter valid email");
+                   email.setError(getString(R.string.enter_valid_mail));
                    return;
                }
 
@@ -77,7 +77,7 @@ public class Fragment_AddFriend extends Fragment {
 
                fdb.addFriend(Utilities.filterMail(mail));
                Utilities.setHasFriend(true);
-               Toast.makeText(view.getContext(), "added", Toast.LENGTH_SHORT).show();
+               Toast.makeText(view.getContext(), R.string.added, Toast.LENGTH_SHORT).show();
                setEditText();
            }
        });
@@ -89,14 +89,14 @@ public class Fragment_AddFriend extends Fragment {
            public void onClick(View v) {
                String frendMail = preferences.getString(user.getCurrentUser().getEmail(), " ");
                SharedPreferences.Editor editor = preferences.edit();
-               editor.putString(user.getCurrentUser().getEmail(), "NOFRIEND");
+               editor.putString(user.getCurrentUser().getEmail(), getString(R.string.no_friend));
                editor.apply();
 
                Utilities.setHasFriend(false);
 
                fdb.deleteFriend(frendMail);
 
-               Toast.makeText(view.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+               Toast.makeText(view.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
                setEditText();
            }
        });
@@ -107,7 +107,7 @@ public class Fragment_AddFriend extends Fragment {
            @Override
            public void onClick(View v) {
                fdb.updateMyFriend();
-               Toast.makeText(view.getContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+               Toast.makeText(view.getContext(), R.string.refreshing, Toast.LENGTH_SHORT).show();
                setEditText();
            }
        });
@@ -115,7 +115,7 @@ public class Fragment_AddFriend extends Fragment {
 
    private void setEditText(){
        String frendMail = preferences.getString(user.getCurrentUser().getEmail(), " ");
-       if(frendMail.equals(" ") || frendMail.equals("NOFRIEND")){
+       if(frendMail.equals(" ") || frendMail.equals(R.string.no_friend)){
            refresh.setVisibility(View.GONE);
            delete.setVisibility(View.GONE);
            add.setVisibility(View.VISIBLE);
@@ -129,22 +129,22 @@ public class Fragment_AddFriend extends Fragment {
    }
    
    public void notificationsSwithListener(){
-       if(preferences.getString(user.getCurrentUser().getUid()  + "notifications", "EMPTY").equals("EMPTY")){
+       if(preferences.getString(user.getCurrentUser().getUid()  + getString(R.string.notifications), getString(R.string.empty)).equals(getString(R.string.empty))){
            SharedPreferences.Editor editor = preferences.edit();
-           editor.putString(user.getCurrentUser().getUid()  + "notifications", "ON");
+           editor.putString(user.getCurrentUser().getUid()  +getString(R.string.notifications) , getString(R.string.on));
            editor.apply();
        }
        switchNotifications.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Toast.makeText(view.getContext(), switchNotifications.isChecked()? "ON" : "OFF", Toast.LENGTH_SHORT).show();
+               Toast.makeText(view.getContext(), switchNotifications.isChecked()? getString(R.string.on) : getString(R.string.off), Toast.LENGTH_SHORT).show();
 
                SharedPreferences.Editor editor = preferences.edit();
 
                if(switchNotifications.isChecked()){
-                   editor.putString(user.getCurrentUser().getUid() + "notifications", "ON");
+                   editor.putString(user.getCurrentUser().getUid() + getString(R.string.notifications), getString(R.string.on));
                } else {
-                   editor.putString(user.getCurrentUser().getUid()  + "notifications", "OFF");
+                   editor.putString(user.getCurrentUser().getUid()  + getString(R.string.notifications), getString(R.string.off));
                }
                editor.apply();
            }

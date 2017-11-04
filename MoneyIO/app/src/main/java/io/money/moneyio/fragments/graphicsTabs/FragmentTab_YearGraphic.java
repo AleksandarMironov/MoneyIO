@@ -87,24 +87,24 @@ public class FragmentTab_YearGraphic extends Fragment {
         questionPie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "Pie Chart \n" +
-                        "Shows your yearly incomes and expenses.");
+                Utilities.displayPopupWindow(v, getString(R.string.pie_chart) +
+                        getString(R.string.pie_year_text));
             }
         });
 
         questionCombined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "Combined chart \n" +
-                        "Chart that shows your incomes and expenses during the months in the chosen year.");
+                Utilities.displayPopupWindow(v, getString(R.string.combined_chart) +
+                        getString(R.string.combined_year_text));
             }
         });
 
         questionHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "\"Horizontal Bar Chart \n" +
-                        "Graphic that shows your yearly expenses. By clicking on the calendar icon, you can check your statistics about the year you want to see.\"");
+                Utilities.displayPopupWindow(v, getString(R.string.horizontal_bar_chart) +
+                        getString(R.string.horizontal_year_text));
             }
         });
     }
@@ -158,7 +158,7 @@ public class FragmentTab_YearGraphic extends Fragment {
                         end = calendar.getTimeInMillis();
                         filteredArr = fdb.filterData(start, end, spinnerPosition);
                         calendar = Calendar.getInstance();
-                        editDate.setText("Picked: " + monthYearPicker.getSelectedYear());
+                        editDate.setText("" + monthYearPicker.getSelectedYear());
                         monthYearPicker = new MonthYearPicker(view.getContext());
                         incomeExpenseYear();
                     }

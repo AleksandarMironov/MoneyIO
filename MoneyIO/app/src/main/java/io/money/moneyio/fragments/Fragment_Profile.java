@@ -110,9 +110,9 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         }
         mLastClickTime = SystemClock.elapsedRealtime();
         AlertDialog.Builder a_builder = new AlertDialog.Builder(view.getContext());
-        a_builder.setMessage("Are you sure?")
+        a_builder.setMessage(R.string.are_you_sure)
                 .setCancelable(false)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.deleteType(user.getUid(), typeFilter.get(position).getExpense(), typeFilter.get(position).getType());
@@ -120,7 +120,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         recyclerView.removeViewAt(position);
                         adapter.notifyItemRemoved(position);
                         adapter.notifyItemRangeChanged(position, typeFilter.size());
-                        Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.DELETED, Toast.LENGTH_SHORT).show();
                         if (isTypeFilerEmpty()) {
                             noTypes.setVisibility(View.GONE);
                             imgEye.setVisibility(View.VISIBLE);
@@ -130,14 +130,14 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         }
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
         AlertDialog alert = a_builder.create();
-        alert.setTitle("DELETE");
+        alert.setTitle(getString(R.string.DELETE));
         alert.show();
     }
 
@@ -192,7 +192,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         imgQuestionType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "You can create your own types of Incomes and Expenses.");
+                Utilities.displayPopupWindow(v, getString(R.string.profile_text));
             }
         });
     }
@@ -201,21 +201,21 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         imgQuestionSalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "By adding your salary here, each month, on selected date, the added amount of money will be added to your account as Income.");
+                Utilities.displayPopupWindow(v, getString(R.string.profile_salary_text));
             }
         });
     }
 
     private void setTextValues() {
-        email.setText("Email: " + user.getEmail());
-        name.setText("Hello, " + user.getDisplayName());
+        email.setText(email.getText().toString() + user.getEmail());
+        name.setText(name.getText().toString() + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");
-            dayOfSalary.setText("Pay Day: SELECT" );
+            dayOfSalary.setText(R.string.pay_day );
         } else {
             salary.setText("" + plannedFlow.getAmount());
-            dayOfSalary.setText("Pay Day: " + plannedFlow.getDate());
+            dayOfSalary.setText(getString(R.string.PAY_DAY) + plannedFlow.getDate());
         }
     }
 
@@ -228,15 +228,15 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         //TODO make edit method :D
                         db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
                     }
-                    boolean isAdded = db.addPlanned(user.getUid(), payDay, "Salary",Float.parseFloat(salary.getText().toString()));
+                    boolean isAdded = db.addPlanned(user.getUid(), payDay, getString(R.string.Salary),Float.parseFloat(salary.getText().toString()));
                     if(isAdded){
-                        Toast.makeText(view.getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), R.string.saved, Toast.LENGTH_SHORT).show();
                         setTextValues();
                     } else {
-                        Toast.makeText(view.getContext(), "NOT saved, please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), R.string.not_saved_please_try_again, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(view.getContext(), "Add salary", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), R.string.add_salary, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -248,11 +248,11 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
             public void onClick(View v) {
                 if(plannedFlow != null){
                     db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
-                    Toast.makeText(view.getContext(), "DELETED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), getString(R.string.DELETED), Toast.LENGTH_SHORT).show();
                     plannedFlow = null;
                 }
                 salary.setText("");
-                dayOfSalary.setText("pay day: SELECT" );
+                dayOfSalary.setText(getString(R.string.pay_day));
             }
         });
     }
@@ -266,7 +266,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         payDay = monthYearPicker.getSelectedDay();
-                        dayOfSalary.setText("pay day: " + payDay);
+                        dayOfSalary.setText(getString(R.string.pay_day) + payDay);
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
@@ -299,17 +299,17 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                 String checked = ((RadioButton)view.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
 
                 if (!Utilities.checkString(typeNew)){
-                    Toast.makeText(getContext(), "Invalid type", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.invalid_type, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                boolean ch = db.addType(user.getUid(), checked.equalsIgnoreCase("income")? "FALSE" : "TRUE", typeNew, R.drawable.custom_type);
+                boolean ch = db.addType(user.getUid(), checked.equalsIgnoreCase(getString(R.string.income))? getString(R.string.FALSE) : getString(R.string.TRUE), typeNew, R.drawable.custom_type);
                 if(ch) {
-                    Toast.makeText(view.getContext(), "Type added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), R.string.type_added, Toast.LENGTH_SHORT).show();
                     startRecycler();
                     type.setText("");
                 } else {
-                    Toast.makeText(view.getContext(), "Already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), R.string.already_exists, Toast.LENGTH_SHORT).show();
                 }
             }
         });
