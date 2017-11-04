@@ -64,14 +64,14 @@ public class FragmentTab_YearGraphic extends Fragment {
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
-        pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
-        chart = (BarChart) view.findViewById(R.id.statistics_income_expense_year_combined);
-        horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
+        pieChart = view.findViewById(R.id.statistics_income_expense_year_pie);
+        chart = view.findViewById(R.id.statistics_income_expense_year_combined);
+        horizontalBarChart = view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
         monthYearPicker = new MonthYearPicker(view.getContext());
         calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.graphics_date_edit);
-        editDate.setText("Picked: " + calendar.get(Calendar.YEAR));
+        editDate.setText("" + calendar.get(Calendar.YEAR));
         spinner = view.findViewById(R.id.statistics_spinner_menu);
         spinnerPosition = 0;
         year = calendar.get(Calendar.YEAR);
@@ -130,7 +130,8 @@ public class FragmentTab_YearGraphic extends Fragment {
 
                 long end = calendar.getTimeInMillis();
                 filteredArr = fdb.filterData(start, end, position);
-                calendar = Calendar.getInstance();
+                calendar.set(year, 1, 1, 0, 0, 0);
+                editDate.setText("" + year);
                 incomeExpenseYear();
             }
 

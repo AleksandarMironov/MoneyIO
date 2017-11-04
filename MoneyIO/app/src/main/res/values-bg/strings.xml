@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MoneyIO</string>
-    <string name="add_salary">Заплата</string>
+    <string name="add_salary">Добави Заплата</string>
     <string name="are_you_sure">Сигурни ли сте?</string>
+    <string name="DELETED">ИЗТРИТО</string>
+    <string name="DELETE">Изтрии</string>
+    <string name="DAY">ДЕН</string>
+    <string name="YEAR" translatable="false">ГОДИНА</string>
+    <string name="Day">"Ден  "</string>
+    <string name="MONTH">МЕСЕЦ</string>
+    <string name="ADDED">ДОБАВЕНО</string>
+    <string name="PAY_DAY"></string>
+    <string name="Salary">Заплата</string>
+    <string name="add">добави</string>
+    <string name="add_friend">добави приятел</string>
+    <string name="added">добавено</string>
+    <string name="already_exists">Вече съществува</string>
+    <string name="amount">Сума</string>
+    <string name="cancel">Отказ</string>
+    <string name="year">година</string>
+    <string name="username"></string>
+    <string name="tutorial_got_it_btn_text">РАЗБРАХ</string>
+    <string name="yes">Да</string>
+    <string name="no">Не</string>
+    <string name="my_stats">Статистики</string>
+    <string name="month"></string>
+    <string name="or">ИЛИ</string>
+    <string name="hello">Здравейте,</string>
 </resources>

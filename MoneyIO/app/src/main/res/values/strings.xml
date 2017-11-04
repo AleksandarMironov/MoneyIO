@@ -97,7 +97,7 @@
     <string name="refreshing">Refreshing...</string>
     <string name="DAY">DAY</string>
     <string name="MONTH">MONTH</string>
-    <string name="YEAR" translatable="false">YEAR</string>
+    <string name="YEAR">YEAR</string>
     <string name="ADDED">ADDED</string>
     <string name="price_not_added">Price not added</string>
     <string name="are_you_sure">Are you sure?</string>

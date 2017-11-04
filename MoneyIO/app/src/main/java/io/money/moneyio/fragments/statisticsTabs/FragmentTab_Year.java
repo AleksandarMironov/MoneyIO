@@ -81,7 +81,8 @@ public class FragmentTab_Year extends Fragment {
                 long end = calendar.getTimeInMillis();
                 filteredArr = fdb.filterData(start, end, position);
                 startRecycler(filteredArr);
-                calendar = Calendar.getInstance();
+                calendar.set(year, 1, 1, 0, 0, 0);
+                editDate.setText("" + year);
             }
 
             public void onNothingSelected(AdapterView<?> parent){

@@ -203,7 +203,8 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         hour = calendar.get(Calendar.HOUR_OF_DAY);
                         minute = calendar.get(Calendar.MINUTE);
-                        timeEdit.setText(getString(R.string.time) + calendar.get(Calendar.HOUR_OF_DAY) + " : " + calendar.get(Calendar.MINUTE));
+                        timeEdit.setText(getString(R.string.time) + " " + calendar.get(Calendar.HOUR_OF_DAY) + " : " +
+                                ((calendar.get(Calendar.MINUTE) < 10)? "0" : "") + calendar.get(Calendar.MINUTE));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle(getString(R.string.select_time));
