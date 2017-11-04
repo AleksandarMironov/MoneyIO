@@ -237,25 +237,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Fragment_Income_Expense fragment_incomeExpense1 = new Fragment_Income_Expense();
                 fragment_incomeExpense1.setArguments(bundle);
                 drawerMenuButtonsAction(getString(R.string.income), fragment_incomeExpense1);
-                statisticsButton.setVisibility(View.VISIBLE);
+//                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_outcome_btn:
                 bundle.putBoolean("isExpense", true);
                 fragment_incomeExpense.setArguments(bundle);
                 drawerMenuButtonsAction(getString(R.string.expense), fragment_incomeExpense);
-                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_statistics_btn:
                 drawerMenuButtonsAction(getString(R.string.statistics), new Fragment_Statistics());
-                statisticsButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.home_myProfile_btn:
                 drawerMenuButtonsAction(getString(R.string.my_profile), new Fragment_Profile());
-                statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_add_friend_btn:
                 drawerMenuButtonsAction("Add Friend", new Fragment_AddFriend());
-                statisticsButton.setVisibility(View.INVISIBLE);
                 break;
             case R.id.home_alarms_btn:
                 drawerMenuButtonsAction("Reminders", new Fragment_Reminders());

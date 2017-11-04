@@ -82,12 +82,14 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
             }
         }
         if (isTypeFilerEmpty()) {
+            imgEye.setVisibility(View.VISIBLE);
             noTypes.setVisibility(View.GONE);
             adapter = new ShowCustomTypesRecyclerViewAdapter(view.getContext(), typeFilter);
             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
             adapter.setClickListener(this);
             recyclerView.setAdapter(adapter);
         } else {
+            imgEye.setVisibility(View.INVISIBLE);
             noTypes.setVisibility(View.VISIBLE);
         }
     }
@@ -121,8 +123,10 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                         Toast.makeText(getContext(), "DELETED", Toast.LENGTH_SHORT).show();
                         if (isTypeFilerEmpty()) {
                             noTypes.setVisibility(View.GONE);
+                            imgEye.setVisibility(View.VISIBLE);
                         } else {
                             noTypes.setVisibility(View.VISIBLE);
+                            imgEye.setVisibility(View.INVISIBLE);
                         }
                     }
                 })

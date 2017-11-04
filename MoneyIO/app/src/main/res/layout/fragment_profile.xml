@@ -218,7 +218,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="**No added types."/>
+        android:text="*No added types."/>
 
 
     <android.support.v7.widget.RecyclerView

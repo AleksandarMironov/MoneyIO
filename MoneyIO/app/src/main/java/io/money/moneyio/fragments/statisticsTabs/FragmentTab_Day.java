@@ -31,7 +31,7 @@ import io.money.moneyio.model.utilities.Utilities;
 public class FragmentTab_Day extends Fragment {
 
     private View view;
-    DatabaseHelperFirebase fdb;
+    private DatabaseHelperFirebase fdb;
     private RecyclerView recyclerView;
     private Calendar calendar;
     private EditText editDate;

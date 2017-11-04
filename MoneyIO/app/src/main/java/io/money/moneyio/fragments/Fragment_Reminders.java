@@ -104,8 +104,21 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
         imgQuestion = view.findViewById(R.id.alarm_question);
     }
 
+    private boolean isRemindersArrayEmpty() {
+        if (alarms.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void startRecycler() {
         alarms = db.getUserAlarms(user.getUid());
+        if (isRemindersArrayEmpty()) {
+            imgEye.setVisibility(View.INVISIBLE);
+        } else {
+            imgEye.setVisibility(View.VISIBLE);
+        }
         adapter = new AlarmsRecyclerViewAdapter(view.getContext(), alarms);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter.setClickListener(this);
