@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -225,9 +224,9 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
 
         if (!price.equalsIgnoreCase(getString(R.string.insert_price)) && Float.parseFloat(price) != 0) {
             if (isExpense) {
-                fdb.addData(uid, new MoneyFlow(uid, "ex", type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, "ex", type.getType(), com, Double.parseDouble(price)));
             } else {
-                fdb.addData(uid, new MoneyFlow(uid, "in", type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, "in", type.getType(), com, Double.parseDouble(price)));
             }
             moneyView.setText(getString(R.string.insert_price));
             comment.setText("");

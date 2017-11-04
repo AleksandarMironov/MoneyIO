@@ -76,6 +76,7 @@
             android:inputType="numberDecimal"
             android:gravity="center"
             android:hint="@string/amount"
+            android:maxLength="9"
             android:textColor="@color/appSilver"
             android:textColorHint="@color/appSilver"
             android:textCursorDrawable="@drawable/cursor_color_silver"

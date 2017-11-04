@@ -97,7 +97,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
     }
 
     //add planned expense (for notifications)
-    public boolean addPlanned(String userID, int date, String type, float amount) {
+    public boolean addPlanned(String userID, int date, String type, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(T_PLANNED_COL_1, userID);
@@ -110,7 +110,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
     }
 
     //delete planned expense (for notifications)
-    public void deletePlanned(String userID, int date, String type, float amount) {
+    public void deletePlanned(String userID, int date, String type, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "DELETE FROM " + TABLE_PLANED
                 + " WHERE " +

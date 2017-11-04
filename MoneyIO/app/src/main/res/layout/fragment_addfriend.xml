@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="@string/friend_e_mail"
+            android:maxLength="40"
             android:textCursorDrawable="@drawable/cursor_color_silver"
             android:textColorHint="@color/appSilver"
             android:textColor="@color/appSilver"

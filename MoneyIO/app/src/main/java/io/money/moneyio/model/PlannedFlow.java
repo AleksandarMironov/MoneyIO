@@ -5,9 +5,9 @@ public class PlannedFlow {
     private String userID;
     private int date;
     private String type;
-    private float amount;
+    private double amount;
 
-    public PlannedFlow(String userID, int date, String type, float amount) {
+    public PlannedFlow(String userID, int date, String type, double amount) {
         this.userID = userID;
         this.date = date;
         this.type = type;
@@ -26,7 +26,7 @@ public class PlannedFlow {
         return type;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 }

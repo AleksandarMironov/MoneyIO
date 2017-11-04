@@ -36,9 +36,9 @@ import io.money.moneyio.model.MoneyFlow;
 public abstract class GraphicUtilities {
 
     public static void dataFilerForCurrentTab(TextView income, TextView expense, TextView overall, List<MoneyFlow> filtererArray, ImageView imgPlusMinus) {
-        float inc = 0;
-        float exp = 0;
-        float ovrallF;
+        double inc = 0;
+        double exp = 0;
+        double ovrallF;
 
         for (int i = 0; i < filtererArray.size(); i++) {
             if (filtererArray.get(i).getExpense().equalsIgnoreCase("ex")) {
@@ -143,9 +143,9 @@ public abstract class GraphicUtilities {
         //filtering the data
         for (int z = 0; z < utilitiesArray.size(); z++) {
             if (structuredData2.containsKey(utilitiesArray.get(z).getExpense())) {
-                structuredData2.put(utilitiesArray.get(z).getExpense(), structuredData2.get(utilitiesArray.get(z).getExpense())+utilitiesArray.get(z).getSum());
+                structuredData2.put(utilitiesArray.get(z).getExpense(), structuredData2.get(utilitiesArray.get(z).getExpense()) + (float)utilitiesArray.get(z).getSum());
             } else {
-                structuredData2.put(utilitiesArray.get(z).getExpense(),utilitiesArray.get(z).getSum());
+                structuredData2.put(utilitiesArray.get(z).getExpense(), (float)utilitiesArray.get(z).getSum());
             }
         }
 
@@ -195,9 +195,9 @@ public abstract class GraphicUtilities {
         for (int i = 0; i < filteredArr.size(); i++) {
             if (filteredArr.get(i).getExpense().equalsIgnoreCase("ex")) {
                 if (!structuredData.containsKey(filteredArr.get(i).getType())) {
-                    structuredData.put(filteredArr.get(i).getType(),filteredArr.get(i).getSum());
+                    structuredData.put(filteredArr.get(i).getType(), (float)filteredArr.get(i).getSum());
                 } else {
-                    structuredData.put(filteredArr.get(i).getType(), (structuredData.get(filteredArr.get(i).getType())+filteredArr.get(i).getSum()));
+                    structuredData.put(filteredArr.get(i).getType(), (structuredData.get(filteredArr.get(i).getType())+ (float)filteredArr.get(i).getSum()));
                 }
             }
         }
