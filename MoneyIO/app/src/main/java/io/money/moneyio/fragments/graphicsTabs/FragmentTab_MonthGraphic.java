@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -43,6 +44,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
     private long start, end;
     private int spinnerPosition;
     private int year, month;
+    private TextView income, expense, overall;
 
     @Nullable
     @Override
@@ -71,6 +73,9 @@ public class FragmentTab_MonthGraphic extends Fragment {
         spinnerPosition = 0;
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
+        income = view.findViewById(R.id.statistics_income_bar);
+        expense = view.findViewById(R.id.statistics_expense_bar);
+        overall = view.findViewById(R.id.statistics_overall_bar);
     }
 
     private void setSpinnerSettings() {
@@ -166,6 +171,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         pieChart.setVisibility(View.VISIBLE);
         horizontalBarChart.setVisibility(View.VISIBLE);
 
+        GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr);
         GraphicUtilities.pieChart(pieChart, filteredArr);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr);
     }

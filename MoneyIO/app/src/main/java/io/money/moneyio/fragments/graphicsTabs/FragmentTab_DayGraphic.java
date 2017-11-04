@@ -12,10 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +46,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     private Spinner spinner;
     private long start, end;
     private int spinnerPosition;
+    private TextView income, expense, overall;
 
     @Nullable
     @Override
@@ -59,9 +63,9 @@ public class FragmentTab_DayGraphic extends Fragment {
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
-        pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
-        chart = (BarChart) view.findViewById(R.id.statistics_income_expense_year_combined);
-        horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
+        pieChart = view.findViewById(R.id.statistics_income_expense_year_pie);
+        chart = view.findViewById(R.id.statistics_income_expense_year_combined);
+        horizontalBarChart = view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
         monthYearPicker = new MonthYearPicker(view.getContext());
         calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();
@@ -70,6 +74,9 @@ public class FragmentTab_DayGraphic extends Fragment {
                 (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
         spinner = view.findViewById(R.id.statistics_spinner_menu);
         spinnerPosition = 0;
+        income = view.findViewById(R.id.statistics_income_bar);
+        expense = view.findViewById(R.id.statistics_expense_bar);
+        overall = view.findViewById(R.id.statistics_overall_bar);
     }
 
     private void setSpinnerSettings() {
@@ -140,6 +147,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         pieChart.setVisibility(View.GONE);
         horizontalBarChart.setVisibility(View.VISIBLE);
 
+        GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr);
     }
 }

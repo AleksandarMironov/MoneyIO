@@ -4,6 +4,7 @@ package io.money.moneyio.model.utilities;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -33,6 +34,25 @@ import java.util.TreeMap;
 import io.money.moneyio.model.MoneyFlow;
 
 public abstract class GraphicUtilities {
+
+    public static void dataFilerForCurrentTab(TextView income, TextView expense, TextView overall, List<MoneyFlow> filtererArray) {
+        float inc = 0;
+        float exp = 0;
+        float ovrall;
+
+        for (int i = 0; i < filtererArray.size(); i++) {
+            if (filtererArray.get(i).getExpense().equalsIgnoreCase("ex")) {
+                exp += filtererArray.get(i).getSum();
+            } else {
+                inc += filtererArray.get(i).getSum();
+            }
+        }
+
+        ovrall = inc - exp;
+        income.setText(Float.toString(inc));
+        expense.setText(Float.toString(exp));
+        overall.setText(Float.toString(ovrall));
+    }
 
     //creating and setting data to the combined chart in the tab fragment FragmentTab_YearGraphic
     public static void combinedBarChart(BarChart chart, List<MoneyFlow> filteredArr){
