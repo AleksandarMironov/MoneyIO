@@ -54,7 +54,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         setSpinnerSettings();
         return view;
     }
-
+    //method used for initialisations
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
@@ -74,10 +74,14 @@ public class FragmentTab_MonthGraphic extends Fragment {
     }
 
     private void setSpinnerSettings() {
+        //creating spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        //set the theme of the spinner
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        //setting the spinner's adapter
         spinner.setAdapter(adapter);
 
+        //spinner item selected listener functionality
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -103,7 +107,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
     }
 
     private void setFilterClickListener(){
-
+        //edit text with calendar settings click listener for changing the date
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -112,6 +116,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //date picker settings
                         calendar.set(monthYearPicker.getSelectedYear(), monthYearPicker.getSelectedMonth(), 1, 0,0,0);
 
                         start = calendar.getTimeInMillis();
@@ -145,7 +150,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
             }
         });
     }
-
+    //this method sets hour range which is passed to the filter array
     private void filterDataOnStart(){
         end = calendar.getTimeInMillis();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -154,7 +159,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         calendar.set(Calendar.SECOND, 0);
         start = calendar.getTimeInMillis();
     }
-
+    //start the charts and set them visible/gone
     private void incomeExpenseDay() {
 
         chart.setVisibility(View.GONE);

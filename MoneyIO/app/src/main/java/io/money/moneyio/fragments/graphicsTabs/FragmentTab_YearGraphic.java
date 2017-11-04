@@ -52,11 +52,10 @@ public class FragmentTab_YearGraphic extends Fragment {
         setFilterClickListener();
         filterDataOnStart();
         setSpinnerSettings();
-//        incomeExpenseYear();
-//        incomeExpenseDay();
         return view;
     }
 
+    //method used for initialisations
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
@@ -74,13 +73,17 @@ public class FragmentTab_YearGraphic extends Fragment {
     }
 
     private void setSpinnerSettings() {
+        //creating spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        //set the theme of the spinner
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        //setting the spinner's adapter
         spinner.setAdapter(adapter);
 
+        //spinner item selected listener functionality
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                //date picker settings
                 calendar.set(year, 1, 1, 0, 0, 0);
 
                 long start = calendar.getTimeInMillis();
@@ -99,7 +102,7 @@ public class FragmentTab_YearGraphic extends Fragment {
     }
 
     private void setFilterClickListener(){
-
+    //edit text with calendar settings click listener for changing the date
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -108,6 +111,7 @@ public class FragmentTab_YearGraphic extends Fragment {
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //date picker settings
                         calendar.set(monthYearPicker.getSelectedYear(), 1, 1, 0,0,0);
 
                         start = calendar.getTimeInMillis();
@@ -136,6 +140,7 @@ public class FragmentTab_YearGraphic extends Fragment {
         });
     }
 
+    //this method sets hour range which is passed to the filter array
     private void filterDataOnStart(){
         end = calendar.getTimeInMillis();
         calendar.set(Calendar.MONTH, 1);
@@ -146,6 +151,7 @@ public class FragmentTab_YearGraphic extends Fragment {
         start = calendar.getTimeInMillis();
     }
 
+    //start the charts and set them visible/gone
     private void incomeExpenseYear() {
 
         pieChart.setVisibility(View.VISIBLE);

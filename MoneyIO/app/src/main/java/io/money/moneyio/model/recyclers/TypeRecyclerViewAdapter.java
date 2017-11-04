@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Type;
-
+//This is recycler view adapter which loads the types of Income/Expense in the fragments Fragment_Income and Fragment_Expense
 public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerViewAdapter.MyViewHolder>{
 
     private Context context;
@@ -79,6 +79,7 @@ public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerVi
         this.mClickListener = itemClickListener;
     }
 
+    //interface which is implemented in the view holder. The method is used when an item in the row is clicked
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

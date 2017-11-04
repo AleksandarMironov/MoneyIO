@@ -14,6 +14,7 @@ import java.util.List;
 import io.money.moneyio.R;
 import io.money.moneyio.model.Alarm;
 
+//This is recycler view adapter which loads the user's reminders in Fragment_Reminders
 public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
@@ -56,6 +57,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         return alarms.get(id);
     }
 
+    //interface which is implemented in the view holder. The method is used when an item in the row is clicked
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

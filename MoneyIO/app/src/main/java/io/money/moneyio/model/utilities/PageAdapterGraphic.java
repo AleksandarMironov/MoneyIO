@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import io.money.moneyio.fragments.graphicsTabs.FragmentTab_DayGraphic;
 import io.money.moneyio.fragments.graphicsTabs.FragmentTab_MonthGraphic;
 import io.money.moneyio.fragments.graphicsTabs.FragmentTab_YearGraphic;
-
+//page adapter used for the sliding tabs in the fragment Fragment_Graphics
 public class PageAdapterGraphic extends FragmentPagerAdapter {
 
     private int numberOfTabs;
@@ -24,6 +24,7 @@ public class PageAdapterGraphic extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        //getting the items with switch/case construction
         switch (position) {
             case 0:
                 FragmentTab_DayGraphic day = new FragmentTab_DayGraphic();
@@ -40,6 +41,7 @@ public class PageAdapterGraphic extends FragmentPagerAdapter {
     }
 
     @Override
+    //get the number of the tabs loaded
     public int getCount() {
         return numberOfTabs;
     }

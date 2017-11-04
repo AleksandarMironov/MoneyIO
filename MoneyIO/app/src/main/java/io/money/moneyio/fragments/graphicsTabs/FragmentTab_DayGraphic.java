@@ -55,6 +55,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         return view;
     }
 
+    //method used for initialisations
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         moneyFlowData = fdb.getData();
@@ -71,16 +72,20 @@ public class FragmentTab_DayGraphic extends Fragment {
         spinnerPosition = 0;
     }
 
-
     private void setSpinnerSettings() {
+        //creating spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.history_spinner, R.layout.support_simple_spinner_dropdown_item);
+        //set the theme of the spinner
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        //setting the spinner's adapter
         spinner.setAdapter(adapter);
 
+        //spinner item selected listener functionality
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0,0,0);
                 start = calendar.getTimeInMillis();
+                //1000*60*60*24 = 1 day
                 end = start + 1000*60*60*24;
                 filteredArr = fdb.filterData(start, end, position);
                 incomeExpenseDay();
@@ -93,7 +98,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     }
 
     private void setFilterClickListener(){
-
+        //date picker settings
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -107,7 +112,7 @@ public class FragmentTab_DayGraphic extends Fragment {
                 incomeExpenseDay();
             }
         };
-
+        //edit text with calendar settings click listener for changing the date
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -119,6 +124,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         });
     }
 
+    //this method sets hour range which is passed to the filter array
     private void filterDataOnStart(){
         end = calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -127,6 +133,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         start = calendar.getTimeInMillis();
     }
 
+    //start the charts and set them visible/gone
     private void incomeExpenseDay() {
 
         chart.setVisibility(View.GONE);

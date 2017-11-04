@@ -18,7 +18,7 @@ import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.MoneyFlow;
-
+//This is recycler view adapter which loads the users histroy data in the fragment Fragment_DataHistory
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.MyHolder>{
 
     private Context context;

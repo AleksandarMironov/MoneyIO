@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Type;
-
+//This is recycler view adapter which loads the user's custom created types of Income and Outcome money. This data is loaded in the fragment Fragment_Profile
 public class ShowCustomTypesRecyclerViewAdapter extends RecyclerView.Adapter<ShowCustomTypesRecyclerViewAdapter.MyViewHolder>{
 
     private Context context;

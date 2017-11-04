@@ -34,10 +34,9 @@ import io.money.moneyio.model.MoneyFlow;
 
 public abstract class GraphicUtilities {
 
-
+    //creating and setting data to the combined chart in the tab fragment FragmentTab_YearGraphic
     public static void combinedBarChart(BarChart chart, List<MoneyFlow> filteredArr){
 
-        //Set the chart setting
         chart.setDescription(null);
         chart.setPinchZoom(true);
         chart.setDoubleTapToZoomEnabled(true);
@@ -62,6 +61,8 @@ public abstract class GraphicUtilities {
 
         float [] income = {0,0,0,0,0,0,0,0,0,0,0,0};
         float [] expense = {0,0,0,0,0,0,0,0,0,0,0,0};
+
+        //filter the database array to monthly incomes and expenses
         Calendar cal = Calendar.getInstance();
         for(MoneyFlow m : filteredArr){
             if(m.getExpense().equalsIgnoreCase("in")){
@@ -100,6 +101,7 @@ public abstract class GraphicUtilities {
         chart.invalidate();
     }
 
+    //setting the data to the pie chart used in the tab fragments in the folder graphicsTabs
     public static void pieChart(PieChart pieChart, List<MoneyFlow> utilitiesArray){
         pieChart.setUsePercentValues(true);
         pieChart.setHoleColor(Color.YELLOW);
@@ -113,6 +115,7 @@ public abstract class GraphicUtilities {
         ArrayList<Entry> pieDataSave = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
 
+        //filtering the data
         for (int z = 0; z < utilitiesArray.size(); z++) {
             if (structuredData2.containsKey(utilitiesArray.get(z).getExpense())) {
                 structuredData2.put(utilitiesArray.get(z).getExpense(), structuredData2.get(utilitiesArray.get(z).getExpense())+utilitiesArray.get(z).getSum());
@@ -133,6 +136,7 @@ public abstract class GraphicUtilities {
             i++;
         }
 
+        //set some settings of the pie chart
         PieDataSet pieDataSet = new PieDataSet(pieDataSave, "- Income/Expense");
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.RED);
@@ -150,8 +154,9 @@ public abstract class GraphicUtilities {
         pieChart.invalidate();
     }
 
+    //setting data to the horizontal bar chart
     public static void horizontalBarChart(HorizontalBarChart horizontalBarChart, List<MoneyFlow> filteredArr){
-
+        //map used to filter the data
         TreeMap<String, Float> structuredData = new TreeMap<>(new Comparator<String>() {
             @Override
             public int compare(String s, String t1) {
@@ -176,7 +181,7 @@ public abstract class GraphicUtilities {
             horizontalBarChart.setVisibility(View.INVISIBLE);
             return;
         }
-
+        //filter the names and values of the expenses
         int i = 0;
         ArrayList<Float> values = new ArrayList<>();
         for (Iterator<Map.Entry<String, Float>> iterator = structuredData.entrySet().iterator(); iterator.hasNext();) {
@@ -190,6 +195,7 @@ public abstract class GraphicUtilities {
             horizontalBarChart.getLayoutParams().height += 50;
         }
 
+        //set the settings of the horizontal bar char
         BarDataSet bardataset = new BarDataSet(horizontalBarChartArr, "Expenses");
         bardataset.setColor(Color.RED);
         BarData data = new BarData(names, bardataset);
