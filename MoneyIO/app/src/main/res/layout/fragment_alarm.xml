@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -30,8 +31,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Add new reminder"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
             android:textSize="25sp"
+            android:textStyle="bold|italic"
             android:layout_marginTop="10dp"
             android:gravity="center"/>
 
@@ -45,6 +47,15 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/alarm_add_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,66 +67,64 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/alarm_date_set_edit"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:focusable="false"
-            android:textSize="20sp"
-            android:textColorHint="#000000"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/alarm_date_set_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:focusable="false"
+                android:textColor="@color/appSilver"
+                android:textColorHint="@color/appSilver"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/alarm_time_set_edit"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:focusable="false"
-            android:textSize="20sp"
-            android:textColorHint="#000000"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/alarm_time_set_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="3"
+                android:focusable="false"
+                android:textColor="@color/appSilver"
+                android:textColorHint="@color/appSilver"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MESSAGE"
             android:gravity="center"
-            android:textColor="#000000"
+            android:text="Mesage"
+            android:textColor="@color/appSilver"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_layout6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/SilverTextInputLayout">
 
             <EditText
                 android:id="@+id/alarm_message_set_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLines="1"
+                android:hint="Message text"
                 android:maxLength="30"
-                android:hint="Message text" />
+                android:maxLines="1"
+                android:textColor="@color/appSilver"
+                android:textColorHint="@color/appSilver"
+                android:textCursorDrawable="@drawable/cursor_color_silver" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/alarm_add_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/add"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
+            android:radius="5dp"
+            android:text="@string/add" />
 
     </LinearLayout>
 
@@ -125,7 +134,7 @@
         android:text="@string/reminders"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="@color/appSilver"
         android:textSize="20sp"
         />
 

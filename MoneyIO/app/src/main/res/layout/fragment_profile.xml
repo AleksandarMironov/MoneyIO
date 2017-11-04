@@ -12,9 +12,10 @@
         android:id="@+id/profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="10dp"
         android:text="Name: "
-        android:textColor="#000000"
+        android:textColor="@color/appSilver"
         android:textSize="20sp" />
 
     <TextView
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/email_two_dots"
-        android:textColor="#000000"
+        android:gravity="center"
+        android:textColor="@color/appSilver"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:textSize="20sp"/>
@@ -31,7 +33,7 @@
         android:id="@+id/profile_l0"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#000000"
+        android:background="@color/appSilver"
         android:layout_marginBottom="10dp"/>
 
     <LinearLayout
@@ -53,7 +55,7 @@
             android:text="@string/salary"
             android:textStyle="bold"
             android:fontFamily="serif"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
             android:gravity="center"
             android:textSize="20sp" />
 
@@ -69,20 +71,27 @@
             android:id="@+id/profile_salary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#000000"
+            android:layout_weight="2"
             android:textSize="18sp"
             android:inputType="numberDecimal"
             android:gravity="center"
-            android:hint="Amount"/>
+            android:hint="Amount"
+            android:textColor="@color/appSilver"
+            android:textColorHint="@color/appSilver"
+            android:textCursorDrawable="@drawable/cursor_color_silver"
+            />
 
         <EditText
             android:id="@+id/profile_choose_date"
             android:layout_width="0dp"
             android:textSize="18sp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
+            android:textColor="@color/appSilver"
+            android:textColorHint="@color/appSilver"
+            android:textCursorDrawable="@drawable/cursor_color_silver"
             android:focusable="false" />
+
 
         <ImageView
             android:id="@+id/profile_add_salary_btn"
@@ -102,7 +111,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#000000"
+        android:background="@color/appSilver"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"/>
 
@@ -124,7 +133,7 @@
             android:text="@string/create_your_own_types"
             android:textStyle="bold"
             android:fontFamily="serif"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
             android:gravity="center"
             android:textSize="20sp" />
 
@@ -148,7 +157,9 @@
             android:maxLines="1"
             android:maxLength="10"
             android:hint="@string/your_type"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
+            android:textColorHint="@color/appSilver"
+            android:textCursorDrawable="@drawable/cursor_color_silver"
             android:textSize="18sp"/>
 
         <RadioGroup
@@ -158,19 +169,21 @@
             android:orientation="horizontal"
             android:layout_weight="2">
 
-                <RadioButton
-                    android:id="@+id/profile_income_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/income"/>
-                <RadioButton
-                    android:id="@+id/profile_outcome_radio"
-                    android:layout_weight="3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/expense"/>
+            <RadioButton
+                android:id="@+id/profile_income_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/appSilver"
+                android:checked="true"
+                android:text="@string/income"/>
+            <RadioButton
+                android:id="@+id/profile_outcome_radio"
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/appSilver"
+                android:text="@string/expense"/>
         </RadioGroup>
 
         <ImageView
@@ -184,7 +197,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#000000"
+        android:background="@color/appSilver"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"/>
 
@@ -206,7 +219,7 @@
             android:text="@string/your_types"
             android:textStyle="bold"
             android:fontFamily="serif"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
             android:gravity="center"
             android:textSize="20sp" />
 
@@ -217,7 +230,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textColor="@color/appSilver"
         android:text="*No added types."/>
 
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class FragmentTab_YearGraphic extends Fragment {
     private int spinnerPosition;
     private int year;
     private TextView income, expense, overall;
+    private ImageView questionPie, questionCombined, questionHorizontal;
 
     @Nullable
     @Override
@@ -54,6 +56,7 @@ public class FragmentTab_YearGraphic extends Fragment {
         setFilterClickListener();
         filterDataOnStart();
         setSpinnerSettings();
+        setQuestionListeners();
         return view;
     }
 
@@ -75,6 +78,32 @@ public class FragmentTab_YearGraphic extends Fragment {
         income = view.findViewById(R.id.statistics_income_bar);
         expense = view.findViewById(R.id.statistics_expense_bar);
         overall = view.findViewById(R.id.statistics_overall_bar);
+        questionPie = view.findViewById(R.id.statistics_question_pie);
+        questionCombined = view.findViewById(R.id.statistics_question_combined);
+        questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
+    }
+
+    public void setQuestionListeners(){
+        questionPie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
+
+        questionCombined.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
+
+        questionHorizontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
     }
 
     private void setSpinnerSettings() {
@@ -159,9 +188,12 @@ public class FragmentTab_YearGraphic extends Fragment {
     //start the charts and set them visible/gone
     private void incomeExpenseYear() {
 
-        pieChart.setVisibility(View.VISIBLE);
         chart.setVisibility(View.VISIBLE);
+        questionCombined.setVisibility(View.VISIBLE);
+        pieChart.setVisibility(View.VISIBLE);
+        questionPie.setVisibility(View.VISIBLE);
         horizontalBarChart.setVisibility(View.VISIBLE);
+        questionHorizontal.setVisibility(View.VISIBLE);
 
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr);
         GraphicUtilities.pieChart(pieChart, filteredArr);

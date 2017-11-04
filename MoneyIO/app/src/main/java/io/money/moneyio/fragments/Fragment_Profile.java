@@ -156,8 +156,8 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         okImg = view.findViewById(R.id.profile_add_salary_btn);
         deleteImg = view.findViewById(R.id.profile_delete_salary_btn);
         payDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        layout = (LinearLayout) view.findViewById(R.id.fragment_profile);
-        noTypes = (TextView)view.findViewById(R.id.profile_no_types);
+        layout = view.findViewById(R.id.fragment_profile);
+        noTypes = view.findViewById(R.id.profile_no_types);
         imgEye = view.findViewById(R.id.profile_eye);
         imgQuestionType = view.findViewById(R.id.profile_add_type_question);
         imgQuestionSalary = view.findViewById(R.id.profile_salary_question);
@@ -208,7 +208,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
 
     private void setTextValues() {
         email.setText("Email: " + user.getEmail());
-        name.setText("Hi, " + user.getDisplayName());
+        name.setText("Hello, " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");

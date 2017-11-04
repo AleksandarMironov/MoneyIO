@@ -12,4 +12,8 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
+    <style name="SilverTextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/appSilver</item>
+    </style>
+
 </resources>

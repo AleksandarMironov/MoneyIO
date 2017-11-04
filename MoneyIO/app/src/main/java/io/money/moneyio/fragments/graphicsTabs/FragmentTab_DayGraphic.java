@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     private long start, end;
     private int spinnerPosition;
     private TextView income, expense, overall;
+    private ImageView questionPie, questionCombined, questionHorizontal;
 
     @Nullable
     @Override
@@ -56,6 +58,7 @@ public class FragmentTab_DayGraphic extends Fragment {
         setFilterClickListener();
         filterDataOnStart();
         setSpinnerSettings();
+        setQuestionListeners();
         return view;
     }
 
@@ -77,6 +80,32 @@ public class FragmentTab_DayGraphic extends Fragment {
         income = view.findViewById(R.id.statistics_income_bar);
         expense = view.findViewById(R.id.statistics_expense_bar);
         overall = view.findViewById(R.id.statistics_overall_bar);
+        questionPie = view.findViewById(R.id.statistics_question_pie);
+        questionCombined = view.findViewById(R.id.statistics_question_combined);
+        questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
+    }
+
+    public void setQuestionListeners(){
+        questionPie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
+
+        questionCombined.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
+
+        questionHorizontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.displayPopupWindow(v, "");
+            }
+        });
     }
 
     private void setSpinnerSettings() {
@@ -144,8 +173,11 @@ public class FragmentTab_DayGraphic extends Fragment {
     private void incomeExpenseDay() {
 
         chart.setVisibility(View.GONE);
+        questionCombined.setVisibility(View.GONE);
         pieChart.setVisibility(View.GONE);
+        questionPie.setVisibility(View.GONE);
         horizontalBarChart.setVisibility(View.VISIBLE);
+        questionHorizontal.setVisibility(View.VISIBLE);
 
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr);

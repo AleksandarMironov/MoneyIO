@@ -17,7 +17,11 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="Friend e-mail"/>
+            android:hint="Friend e-mail"
+            android:textCursorDrawable="@drawable/cursor_color_silver"
+            android:textColorHint="@color/appSilver"
+            android:textColor="@color/appSilver"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/addfriend_add_btn"
@@ -45,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
+        android:textColor="@color/appSilver"
         android:text="Notify me about friend activity:   " />
 
     <ImageView

@@ -11,7 +11,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#607d8b">
+        android:background="@color/appSilver">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,9 +62,9 @@
             android:layout_height="match_parent">
 
             <!--<ProgressBar-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="30dp"-->
-                <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="30dp"-->
+            <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal" />-->
 
         </FrameLayout>
 
