@@ -31,6 +31,7 @@ public class Utilities {
     private static boolean hasFriend = false;
     private static int idGeneratorNotifications = 0;
 
+    //id generator for notifications
     public static int gnerateID(){
         idGeneratorNotifications++;
         return idGeneratorNotifications;
@@ -52,6 +53,7 @@ public class Utilities {
         Utilities.isFirebasePersistence = isFirebasePersistence;
     }
 
+    //checks for forbidden symbols
     public static boolean checkString(String str){
         if (TextUtils.isEmpty(str) ||  str.matches("[&.\\;'\"]")){
             return false;
@@ -59,10 +61,12 @@ public class Utilities {
         return true;
     }
 
+
     public static boolean isMail(String str){
         return !TextUtils.isEmpty(str) && android.util.Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 
+    //check is string is number
     public static boolean isNumber(String str){
         if (!TextUtils.isEmpty(str) ||  str.matches("[0-9.]+")){
             return true;
@@ -70,6 +74,7 @@ public class Utilities {
         return false;
     }
 
+    //fires notification when friend has income or expense
     public static void notifyFriend(Context context, String type, String sum){
         String uID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -112,6 +117,7 @@ public class Utilities {
         }
     }
 
+    //filter "." from mail address, "." is forbidden in firebase.
     public static String filterMail(String inputStr){
         if(inputStr == null){
             return "";

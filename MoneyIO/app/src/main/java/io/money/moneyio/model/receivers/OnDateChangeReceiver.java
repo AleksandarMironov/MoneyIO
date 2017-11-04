@@ -36,8 +36,10 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
         int date = calendar.get(Calendar.DAY_OF_MONTH);
         int currentMonth = calendar.get(Calendar.MONTH);
 
+        //check length of month. If selected date is out of month, alarm will be triggered on last day of month
         for (PlannedFlow plannedFlow : allPlanned) {
             switch (currentMonth){
+                //february
                 case 1:
                     if(calendar.get(Calendar.YEAR)%4 == 0)
                     {
@@ -55,6 +57,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                     }
 
                     break;
+                //april, june, september, november
                 case 3:
                 case 5:
                 case 8:
@@ -75,10 +78,8 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
 
         //resets alarms, if it is first day of month
         if(date == 1){
-                List<Alarm> alarms = db.getAllAlarms();
+            List<Alarm> alarms = db.getAllAlarms();
             AlarmUtilities.setAlarms(context, alarms);
         }
-
-
     }
 }

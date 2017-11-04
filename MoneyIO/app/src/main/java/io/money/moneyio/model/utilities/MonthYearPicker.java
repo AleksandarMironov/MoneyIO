@@ -217,6 +217,7 @@ public class MonthYearPicker {
         yearNumberPicker.setWrapSelectorWheel(wrapSelectorWheel);
     }
 
+    //sets visibility of year picker
     private void setYearVisibility(boolean isVisible){
         if(isVisible){
             yearLinear.setVisibility(View.VISIBLE);
@@ -225,6 +226,7 @@ public class MonthYearPicker {
         }
     }
 
+    //sets visibility of month picker
     private void setMonthVisibility(boolean isVisible){
         if(isVisible){
             monthLinear.setVisibility(View.VISIBLE);
@@ -233,6 +235,7 @@ public class MonthYearPicker {
         }
     }
 
+    //sets visibility of day picker
     private void setDayVisibility(boolean isVisible){
         if(isVisible){
             dayLinear.setVisibility(View.VISIBLE);

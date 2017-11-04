@@ -88,6 +88,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //Singleton for SQLite database helper
     public static synchronized DatabaseHelperSQLite getInstance(Context context) {
         if (instance == null) {
             instance = new DatabaseHelperSQLite(context.getApplicationContext());
@@ -95,6 +96,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         return instance;
     }
 
+    //add planned expense (for notifications)
     public boolean addPlanned(String userID, int date, String type, float amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -107,6 +109,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         return (b != -1);
     }
 
+    //delete planned expense (for notifications)
     public void deletePlanned(String userID, int date, String type, float amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "DELETE FROM " + TABLE_PLANED
@@ -118,6 +121,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         db.execSQL(myRawQuery);
     }
 
+    //returns all planed expenses for current user
     public PlannedFlow getUserPlanned(String userID){
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT * FROM " + TABLE_PLANED + " WHERE " + T_PLANNED_COL_1 + " = \"" + userID + "\";";
@@ -133,6 +137,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         }
     }
 
+    //returns all planed expenses
     public List<PlannedFlow> getAllPlaned() {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT * FROM " + TABLE_PLANED + ";";
@@ -204,6 +209,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         return Collections.unmodifiableList(out);
     }
 
+    //add custom income/expense type
     public boolean addType(String user, String category, String type, Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -216,6 +222,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         return (b != -1);
     }
 
+    //delete custom income/expense type
     public void deleteType(String userID, String category, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "DELETE FROM " + TABLE_SETINGS
@@ -224,6 +231,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         db.execSQL(myRawQuery);
     }
 
+    //terurns all custom income/expense type for current user
     public List<Type> getUserTypes(String userID){
         SQLiteDatabase db = this.getWritableDatabase();
         String myRawQuery = "SELECT " + T_SETTINGS_COL_2 + ", " + T_SETTINGS_COL_3 + ", " + T_SETTINGS_COL_4
@@ -232,6 +240,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         c.moveToFirst();
         ArrayList<Type> out = new ArrayList<>();
 
+        //read all custom added types and put them in front of the grid
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             out.add(new Type(c.getString(0), c.getString(1), c.getInt(2)));
