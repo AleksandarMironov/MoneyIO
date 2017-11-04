@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoneyIO</string>
+    <string name="add_salary">Заплата</string>
+    <string name="are_you_sure">Сигурни ли сте?</string>
+</resources>

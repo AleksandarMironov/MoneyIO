@@ -118,7 +118,7 @@ public class MonthYearPicker {
         monthNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         yearNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-        builder.setTitle("Please select");
+        builder.setTitle(R.string.please_select);
         builder.setPositiveButton("OK", positiveButtonListener);
         builder.setNegativeButton("Cancel", negativeButtonListener);
         builder.setCancelable(false);

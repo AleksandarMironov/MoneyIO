@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         firebaseData = fdb.getData();
         fragment_incomeExpense = new Fragment_Income_Expense();
         bundle = new Bundle();
-        bundle.putBoolean(getString(R.string.is_Expense), true);
+        bundle.putBoolean("isExpense", true);
         fragment_incomeExpense.setArguments(bundle);
         sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
         drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else if (fragment_incomeExpense != null && fragment_incomeExpense.isVisible()){
             exit();
         } else {
-            bundle.putBoolean(getString(R.string.is_Expense), true);
+            bundle.putBoolean("isExpense", true);
             fragment_incomeExpense.setArguments(bundle);
             loadFragment(fragment_incomeExpense);
             setCurrentFragment(getString(R.string.expense));
@@ -233,11 +233,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_income_btn:
-                bundle.putBoolean(getString(R.string.is_Expense), false);
+                bundle.putBoolean("isExpense", false);
                 Fragment_Income_Expense fragment_incomeExpense1 = new Fragment_Income_Expense();
                 fragment_incomeExpense1.setArguments(bundle);
                 drawerMenuButtonsAction(getString(R.string.income), fragment_incomeExpense1);
-//                statisticsButton.setVisibility(View.VISIBLE);
+
                 break;
             case R.id.home_outcome_btn:
                 bundle.putBoolean("isExpense", true);
@@ -251,7 +251,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 drawerMenuButtonsAction(getString(R.string.my_profile), new Fragment_Profile());
                 break;
             case R.id.home_add_friend_btn:
-                drawerMenuButtonsAction("Add Friend", new Fragment_AddFriend());
+                drawerMenuButtonsAction(getString(R.string.add_friend), new Fragment_AddFriend());
                 break;
             case R.id.home_alarms_btn:
                 drawerMenuButtonsAction(getString(R.string.reminders), new Fragment_Reminders());

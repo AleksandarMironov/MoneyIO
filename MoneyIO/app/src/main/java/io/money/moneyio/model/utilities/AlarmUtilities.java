@@ -30,7 +30,7 @@ public class AlarmUtilities {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.moneyioicon)
-                        .setContentTitle("Remember")
+                        .setContentTitle(context.getString(R.string.remember))
                         .setContentText(message);
 
         Intent resultIntent = new Intent(context, HomeActivity.class);

@@ -89,7 +89,7 @@ public class Fragment_AddFriend extends Fragment {
            public void onClick(View v) {
                String frendMail = preferences.getString(user.getCurrentUser().getEmail(), " ");
                SharedPreferences.Editor editor = preferences.edit();
-               editor.putString(user.getCurrentUser().getEmail(), getString(R.string.no_friend));
+               editor.putString(user.getCurrentUser().getEmail(), "NOFRIEND");
                editor.apply();
 
                Utilities.setHasFriend(false);
@@ -115,7 +115,7 @@ public class Fragment_AddFriend extends Fragment {
 
    private void setEditText(){
        String frendMail = preferences.getString(user.getCurrentUser().getEmail(), " ");
-       if(frendMail.equals(" ") || frendMail.equals(R.string.no_friend)){
+       if(frendMail.equals(" ") || frendMail.equals("NOFRIEND")){
            refresh.setVisibility(View.GONE);
            delete.setVisibility(View.GONE);
            add.setVisibility(View.VISIBLE);
@@ -129,22 +129,22 @@ public class Fragment_AddFriend extends Fragment {
    }
    
    public void notificationsSwithListener(){
-       if(preferences.getString(user.getCurrentUser().getUid()  + getString(R.string.notifications), getString(R.string.empty)).equals(getString(R.string.empty))){
+       if(preferences.getString(user.getCurrentUser().getUid()  + "notifications", "EMPTY").equals("EMPTY")){
            SharedPreferences.Editor editor = preferences.edit();
-           editor.putString(user.getCurrentUser().getUid()  +getString(R.string.notifications) , getString(R.string.on));
+           editor.putString(user.getCurrentUser().getUid()  + "notifications" , "ON");
            editor.apply();
        }
        switchNotifications.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Toast.makeText(view.getContext(), switchNotifications.isChecked()? getString(R.string.on) : getString(R.string.off), Toast.LENGTH_SHORT).show();
+               Toast.makeText(view.getContext(), switchNotifications.isChecked()? "ON": "OFF", Toast.LENGTH_SHORT).show();
 
                SharedPreferences.Editor editor = preferences.edit();
 
                if(switchNotifications.isChecked()){
-                   editor.putString(user.getCurrentUser().getUid() + getString(R.string.notifications), getString(R.string.on));
+                   editor.putString(user.getCurrentUser().getUid() + "notifications", "ON");
                } else {
-                   editor.putString(user.getCurrentUser().getUid()  + getString(R.string.notifications), getString(R.string.off));
+                   editor.putString(user.getCurrentUser().getUid()  + "notifications", "OFF");
                }
                editor.apply();
            }

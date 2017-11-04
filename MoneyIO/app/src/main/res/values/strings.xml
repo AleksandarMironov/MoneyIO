@@ -79,7 +79,6 @@
     <string name="amount">Amount</string>
     <string name="no_added_types">*No added types.</string>
     <string name="text">Text</string>
-    <string name="is_Expense">isExpense</string>
     <string name="money_io">MoneyIO</string>
     <string name="sorry_internet_problem_please_try_again">Sorry, internet problem. Please try again.</string>
     <string name="hello">Hello,</string>
@@ -94,18 +93,11 @@
     <string name="horizontal_year_text">Graphic that shows your yearly expenses. By clicking on the calendar icon, you can check your statistics about the year you want to see.\"</string>
     <string name="enter_valid_mail">Enter valid email</string>
     <string name="added">added</string>
-    <string name="no_friend">NOFRIEND</string>
     <string name="deleted">Deleted</string>
     <string name="refreshing">Refreshing...</string>
-    <string name="notifications">notifications</string>
-    <string name="empty">EMPTY</string>
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
     <string name="DAY">DAY</string>
     <string name="MONTH">MONTH</string>
-    <string name="YEAR">YEAR</string>
-    <string name="ex">ex</string>
-    <string name="in">in</string>
+    <string name="YEAR" translatable="false">YEAR</string>
     <string name="ADDED">ADDED</string>
     <string name="price_not_added">Price not added</string>
     <string name="are_you_sure">Are you sure?</string>
@@ -133,4 +125,7 @@
     <string name="Day">Day:  </string>
     <string name="message_is_required">Adding message is required.</string>
     <string name="loading">Loading...</string>
+    <string name="date">Date:</string>
+    <string name="remember">Remember</string>
+    <string name="please_select">Please select</string>
 </resources>

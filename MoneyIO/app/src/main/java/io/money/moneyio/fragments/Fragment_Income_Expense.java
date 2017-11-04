@@ -82,7 +82,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     }
 
     private void initialiseElements() {
-        isExpense = getArguments().getBoolean(getString(R.string.is_Expense));
+        isExpense = getArguments().getBoolean("isExpense");
         user = FirebaseAuth.getInstance().getCurrentUser();
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
         one = (Button) view.findViewById(R.id.outcome_keyboard_1);
@@ -212,7 +212,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
             }
             moneyView.setText(buffer.toString());
         } else {
-            moneyView.setText("Insert price");
+            moneyView.setText(getString(R.string.insert_price));
         }
     }
 
@@ -225,9 +225,9 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
 
         if (!price.equalsIgnoreCase(getString(R.string.insert_price)) && Float.parseFloat(price) != 0) {
             if (isExpense) {
-                fdb.addData(uid, new MoneyFlow(uid, getString(R.string.ex), type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, "ex", type.getType(), com, Float.parseFloat(price)));
             } else {
-                fdb.addData(uid, new MoneyFlow(uid, getString(R.string.in), type.getType(), com, Float.parseFloat(price)));
+                fdb.addData(uid, new MoneyFlow(uid, "in", type.getType(), com, Float.parseFloat(price)));
             }
             moneyView.setText(getString(R.string.insert_price));
             comment.setText("");
