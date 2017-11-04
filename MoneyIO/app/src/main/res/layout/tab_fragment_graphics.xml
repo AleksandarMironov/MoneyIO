@@ -45,7 +45,6 @@
                 android:layout_height="30dp">
 
                 <ImageView
-                    android:id="@+id/imageView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -67,7 +66,8 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ie_progres"/>
 
                 <TextView
                     android:id="@+id/statistics_overall_bar"

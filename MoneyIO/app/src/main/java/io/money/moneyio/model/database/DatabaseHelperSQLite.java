@@ -263,6 +263,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         out.add(new Type("true", "Coffee", R.drawable.coffee));
         out.add(new Type("true", "Concert", R.drawable.concert));
         out.add(new Type("true", "Couple", R.drawable.couple));
+        out.add(new Type("false", "Bitcoin", R.drawable.bitcoint));
         out.add(new Type("false", "Dividends", R.drawable.dividents));
         out.add(new Type("true", "Electricity", R.drawable.electricity));
         out.add(new Type("true", "First Aid", R.drawable.first_aid));

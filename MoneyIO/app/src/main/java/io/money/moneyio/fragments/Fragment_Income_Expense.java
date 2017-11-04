@@ -259,7 +259,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
     private void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
+        layout.requestFocus();
     }
 }
 
