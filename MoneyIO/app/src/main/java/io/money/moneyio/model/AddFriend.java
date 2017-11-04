@@ -5,6 +5,7 @@ public class AddFriend {
     private String myUid;
     private String myEmail;
 
+    //empty constructor for Firebase
     public AddFriend() {}
 
     public AddFriend(String myUid, String myEmail) {

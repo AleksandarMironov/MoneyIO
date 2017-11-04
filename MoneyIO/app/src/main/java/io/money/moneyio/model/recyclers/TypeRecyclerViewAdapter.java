@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.Type;
+
 //This is recycler view adapter which loads the types of Income/Expense in the fragments Fragment_Income and Fragment_Expense
 public class TypeRecyclerViewAdapter extends RecyclerView.Adapter<TypeRecyclerViewAdapter.MyViewHolder>{
 

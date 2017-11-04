@@ -87,24 +87,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bundle = new Bundle();
         bundle.putBoolean("isExpense", true);
         fragment_incomeExpense.setArguments(bundle);
-        sandwichButton = (ImageView)findViewById(R.id.home_toolbar_sandwich_btn);
-        drawerLayout = (DrawerLayout)findViewById(R.id.dlContent);
-        currentFragment = (TextView)findViewById(R.id.home_toolbar_app_name);
+        sandwichButton = findViewById(R.id.home_toolbar_sandwich_btn);
+        drawerLayout = findViewById(R.id.dlContent);
+        currentFragment = findViewById(R.id.home_toolbar_app_name);
         firebaseAuth = FirebaseAuth.getInstance();
-        btnOutcome = (Button)findViewById(R.id.home_outcome_btn);
+        btnOutcome = findViewById(R.id.home_outcome_btn);
         btnOutcome.setOnClickListener(this);
-        btnIncome = (Button)findViewById(R.id.home_income_btn);
+        btnIncome = findViewById(R.id.home_income_btn);
         btnIncome.setOnClickListener(this);
-        btnStatistics = (Button)findViewById(R.id.home_statistics_btn);
+        btnStatistics = findViewById(R.id.home_statistics_btn);
         btnStatistics.setOnClickListener(this);
-        btnProfile = (Button)findViewById(R.id.home_myProfile_btn);
+        btnProfile = findViewById(R.id.home_myProfile_btn);
         btnProfile.setOnClickListener(this);
-        btnAlarms = (Button)findViewById(R.id.home_alarms_btn);
+        btnAlarms = findViewById(R.id.home_alarms_btn);
         btnAlarms.setOnClickListener(this);
-        btnLogOut = (Button) findViewById(R.id.home_logout_btn);
-        statisticsButton = (ImageView)findViewById(R.id.home_toolbar_statistics_icon_btn);
+        btnLogOut = findViewById(R.id.home_logout_btn);
+        statisticsButton = findViewById(R.id.home_toolbar_statistics_icon_btn);
         statisticsButton.setOnClickListener(this);
-        btnAddFriend = (Button)findViewById(R.id.home_add_friend_btn);
+        btnAddFriend = findViewById(R.id.home_add_friend_btn);
         btnAddFriend.setOnClickListener(this);
     }
 
@@ -114,6 +114,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //log out button listener
     public void logOutDrawerMenuBtnListener() {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +155,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    //creates drawer menu
     public void drawerDropMenuCreator() {
 
         //drawer menu settings
@@ -182,11 +184,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+        //closes drawer menu
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
 
+            //check witch fragment is loaded
         } else if (fragment_incomeExpense != null && fragment_incomeExpense.isVisible()){
             exit();
+
         } else {
             bundle.putBoolean("isExpense", true);
             fragment_incomeExpense.setArguments(bundle);
@@ -196,6 +201,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //exit dialog interface
     public void exit(){
         AlertDialog.Builder a_builder = new AlertDialog.Builder(HomeActivity.this);
         a_builder.setMessage(R.string.do_you_want_to_exit)
@@ -228,7 +234,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    //sets click listeners
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -237,7 +243,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Fragment_Income_Expense fragment_incomeExpense1 = new Fragment_Income_Expense();
                 fragment_incomeExpense1.setArguments(bundle);
                 drawerMenuButtonsAction(getString(R.string.income), fragment_incomeExpense1);
-
                 break;
             case R.id.home_outcome_btn:
                 bundle.putBoolean("isExpense", true);
@@ -262,6 +267,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //on drawer button click - loads new fragment, set correct name, hide drawer
     private void drawerMenuButtonsAction(String fragmentTitle, Fragment fragment) {
         loadFragment(fragment);
         setCurrentFragment(fragmentTitle);

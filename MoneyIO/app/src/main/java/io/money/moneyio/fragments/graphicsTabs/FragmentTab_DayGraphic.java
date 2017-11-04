@@ -41,9 +41,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     private PieChart pieChart;
     private BarChart chart;
     private HorizontalBarChart horizontalBarChart;
-    private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
-    private MonthYearPicker monthYearPicker;
     private Spinner spinner;
     private long start, end;
     private int spinnerPosition;
@@ -65,11 +63,9 @@ public class FragmentTab_DayGraphic extends Fragment {
     //method used for initialisations
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
-        moneyFlowData = fdb.getData();
         pieChart = view.findViewById(R.id.statistics_income_expense_year_pie);
         chart = view.findViewById(R.id.statistics_income_expense_year_combined);
         horizontalBarChart = view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
-        monthYearPicker = new MonthYearPicker(view.getContext());
         calendar = Calendar.getInstance();
         filteredArr = new ArrayList<>();
         editDate = view.findViewById(R.id.graphics_date_edit);
@@ -158,7 +154,6 @@ public class FragmentTab_DayGraphic extends Fragment {
 
     //start the charts and set them visible/gone
     private void incomeExpenseDay() {
-
         chart.setVisibility(View.GONE);
         questionCombined.setVisibility(View.GONE);
         pieChart.setVisibility(View.GONE);

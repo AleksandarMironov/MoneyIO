@@ -147,7 +147,6 @@ public class FragmentTab_Month extends Fragment {
         start = calendar.getTimeInMillis();
     }
 
-    // must add AsyncTask!
     private void startRecycler(List<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

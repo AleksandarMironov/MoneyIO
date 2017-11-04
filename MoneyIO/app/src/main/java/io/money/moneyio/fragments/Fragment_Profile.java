@@ -207,7 +207,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void setTextValues() {
-        email.setText("Email " + user.getEmail());
+        email.setText("Email: " + user.getEmail());
         name.setText("Hello, " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){

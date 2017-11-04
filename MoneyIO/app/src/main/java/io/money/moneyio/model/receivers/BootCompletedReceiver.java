@@ -7,13 +7,11 @@ import android.content.Intent;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.money.moneyio.model.Alarm;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.AlarmUtilities;
-import io.money.moneyio.model.utilities.Utilities;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 

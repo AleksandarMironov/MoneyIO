@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import io.money.moneyio.fragments.statisticsTabs.FragmentTab_Day;
 import io.money.moneyio.fragments.statisticsTabs.FragmentTab_Month;
 import io.money.moneyio.fragments.statisticsTabs.FragmentTab_Year;
+
 //page adapter used for the sliding tabs in the fragment Fragment_DataHistory
 public class PageAdapter extends FragmentPagerAdapter{
 

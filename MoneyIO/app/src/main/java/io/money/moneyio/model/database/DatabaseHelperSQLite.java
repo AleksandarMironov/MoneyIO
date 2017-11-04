@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -265,6 +265,7 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         out.add(new Type("true", "Couple", R.drawable.couple));
         out.add(new Type("false", "Bitcoin", R.drawable.bitcoint));
         out.add(new Type("false", "Dividends", R.drawable.dividents));
+        out.add(new Type("false", "Codding", R.drawable.work));
         out.add(new Type("true", "Electricity", R.drawable.electricity));
         out.add(new Type("true", "First Aid", R.drawable.first_aid));
         out.add(new Type("true", "Food", R.drawable.food));
@@ -300,7 +301,6 @@ public class DatabaseHelperSQLite extends SQLiteOpenHelper {
         out.add(new Type("true", "TV", R.drawable.tv));
         out.add(new Type("true", "Wedding", R.drawable.wedding));
         out.add(new Type("true", "Tabacco", R.drawable.weed));
-        out.add(new Type("false", "Codding", R.drawable.work));
 
         c.close();
         return Collections.unmodifiableList(out);

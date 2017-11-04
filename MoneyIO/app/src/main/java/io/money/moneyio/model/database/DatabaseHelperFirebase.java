@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.util.FloatProperty;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -13,7 +11,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -21,10 +18,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.model.AddFriend;
 import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.utilities.AlarmUtilities;
 import io.money.moneyio.model.utilities.Utilities;
 
 public class DatabaseHelperFirebase {
@@ -40,11 +35,7 @@ public class DatabaseHelperFirebase {
     private DatabaseReference base;
     private String friendUid;
 
-    public static void resetFirebaseDatabase(){
-        data = new ArrayList<>();
-    }
-
-    //spinnerPos -> 0 = my stats, 1 = friends stats, 2 = combined stats
+    //spinnerPos -> 2 = my stats, 1 = friends stats, 0 = combined stats
     public static List<MoneyFlow> filterData(long start, long end, int spinnerPos){
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

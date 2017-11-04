@@ -12,12 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-
 import io.money.moneyio.R;
-import io.money.moneyio.model.MoneyFlow;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.utilities.Utilities;
 
@@ -61,6 +57,7 @@ public class Fragment_AddFriend extends Fragment {
         switchNotifications.setChecked(!(preferences.getString(user.getCurrentUser().getEmail()  + "notifications", "EMPTY").equals("OFF")));
     }
 
+    //on add friend listener
     public void onAddListener() {
        add.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -75,6 +72,7 @@ public class Fragment_AddFriend extends Fragment {
                editor.putString(user.getCurrentUser().getEmail(), mail);
                editor.apply();
 
+               //add friend in firebase
                fdb.addFriend(Utilities.filterMail(mail));
                Utilities.setHasFriend(true);
                Toast.makeText(view.getContext(), R.string.added, Toast.LENGTH_SHORT).show();
@@ -83,6 +81,7 @@ public class Fragment_AddFriend extends Fragment {
        });
    }
 
+   //on delete friend listener
    public void onDeleteListener(){
        delete.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -94,6 +93,7 @@ public class Fragment_AddFriend extends Fragment {
 
                Utilities.setHasFriend(false);
 
+               //delete friend from firebase
                fdb.deleteFriend(frendMail);
 
                Toast.makeText(view.getContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
@@ -127,7 +127,8 @@ public class Fragment_AddFriend extends Fragment {
            email.setText(frendMail);
        }
    }
-   
+
+   //on notifications on end off listener
    public void notificationsSwithListener(){
        if(preferences.getString(user.getCurrentUser().getUid()  + "notifications", "EMPTY").equals("EMPTY")){
            SharedPreferences.Editor editor = preferences.edit();

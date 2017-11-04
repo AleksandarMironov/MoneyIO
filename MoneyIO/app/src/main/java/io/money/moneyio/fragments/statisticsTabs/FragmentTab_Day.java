@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +14,15 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 import io.money.moneyio.R;
 import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.HistoryRecyclerViewAdapter;
 import io.money.moneyio.model.MoneyFlow;
-import io.money.moneyio.model.utilities.Utilities;
 
 public class FragmentTab_Day extends Fragment {
 
@@ -116,14 +112,13 @@ public class FragmentTab_Day extends Fragment {
     }
 
     private void filterDataOnStart(){
-        long end = calendar.getTimeInMillis();
+        end = calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        long start = calendar.getTimeInMillis();
+        start = calendar.getTimeInMillis();
     }
 
-    // must add AsyncTask!
     private void startRecycler(List<MoneyFlow> data) {
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

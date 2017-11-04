@@ -27,7 +27,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -100,13 +99,14 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
-        email = (EditText)findViewById(R.id.loginmail_email);
-        psw = (TextInputEditText)findViewById(R.id.loginmail_password);
-        registerMail = (TextView) findViewById(R.id.main_registermail_btn);
-        loginGoogle = (Button) findViewById(R.id.main_googlelogin_btn);
-        layout = (LinearLayout) findViewById(R.id.layout_main);
+        email = findViewById(R.id.loginmail_email);
+        psw = findViewById(R.id.loginmail_password);
+        registerMail = findViewById(R.id.main_registermail_btn);
+        loginGoogle = findViewById(R.id.main_googlelogin_btn);
+        layout = findViewById(R.id.layout_main);
     }
 
+    //checks for logged user
     private void chechForLoggedUser(){
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     psw.setError(getString(R.string.invalid_symbols));
                     return;
                 }
+
                 final ProgressDialog pdi = new ProgressDialog(MainActivity.this);
                 pdi.setMessage(getString(R.string.loading));
                 pdi.show();
@@ -205,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -231,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);

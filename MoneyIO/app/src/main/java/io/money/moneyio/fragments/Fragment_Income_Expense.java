@@ -73,7 +73,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
             }
         }
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.outcome_recycler_view);
+        recyclerView = view.findViewById(R.id.outcome_recycler_view);
         adapter = new TypeRecyclerViewAdapter(view.getContext(), typeFilter);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
         adapter.setClickListener(this);
@@ -84,33 +84,33 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         isExpense = getArguments().getBoolean("isExpense");
         user = FirebaseAuth.getInstance().getCurrentUser();
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
-        one = (Button) view.findViewById(R.id.outcome_keyboard_1);
+        one = view.findViewById(R.id.outcome_keyboard_1);
         one.setOnClickListener(this);
-        two = (Button) view.findViewById(R.id.outcome_keyboard_2);
+        two = view.findViewById(R.id.outcome_keyboard_2);
         two.setOnClickListener(this);
-        three = (Button) view.findViewById(R.id.outcome_keyboard_3);
+        three = view.findViewById(R.id.outcome_keyboard_3);
         three.setOnClickListener(this);
-        four = (Button) view.findViewById(R.id.outcome_keyboard_4);
+        four = view.findViewById(R.id.outcome_keyboard_4);
         four.setOnClickListener(this);
-        five = (Button) view.findViewById(R.id.outcome_keyboard_5);
+        five = view.findViewById(R.id.outcome_keyboard_5);
         five.setOnClickListener(this);
-        six = (Button) view.findViewById(R.id.outcome_keyboard_6);
+        six = view.findViewById(R.id.outcome_keyboard_6);
         six.setOnClickListener(this);
-        seven = (Button) view.findViewById(R.id.outcome_keyboard_7);
+        seven = view.findViewById(R.id.outcome_keyboard_7);
         seven.setOnClickListener(this);
-        eight = (Button) view.findViewById(R.id.outcome_keyboard_8);
+        eight = view.findViewById(R.id.outcome_keyboard_8);
         eight.setOnClickListener(this);
-        nine = (Button) view.findViewById(R.id.outcome_keyboard_9);
+        nine = view.findViewById(R.id.outcome_keyboard_9);
         nine.setOnClickListener(this);
-        zero = (Button) view.findViewById(R.id.outcome_keyboard_0);
+        zero = view.findViewById(R.id.outcome_keyboard_0);
         zero.setOnClickListener(this);
-        dot = (Button) view.findViewById(R.id.outcome_keyboard_dot);
+        dot = view.findViewById(R.id.outcome_keyboard_dot);
         dot.setOnClickListener(this);
-        delete = (Button) view.findViewById(R.id.outcome_keyboard_del);
+        delete = view.findViewById(R.id.outcome_keyboard_del);
         delete.setOnClickListener(this);
-        moneyView = (TextView) view.findViewById(R.id.outcome_keyboard_result);
-        comment = (EditText) view.findViewById(R.id.outcome_comment);
-        layout = (LinearLayout) view.findViewById(R.id.fragment_outcome);
+        moneyView = view.findViewById(R.id.outcome_keyboard_result);
+        comment = view.findViewById(R.id.outcome_comment);
+        layout = view.findViewById(R.id.fragment_outcome);
     }
 
     @Override
@@ -183,6 +183,7 @@ public class Fragment_Income_Expense extends Fragment implements View.OnClickLis
         }
     }
 
+    //checks how many dots are in added sum
     private void addDot(char dot) {
         if (moneyView.getText().toString().trim().equalsIgnoreCase(getString(R.string.insert_price)) || moneyView.getText().toString().equals("")) {
             moneyView.setText("0");

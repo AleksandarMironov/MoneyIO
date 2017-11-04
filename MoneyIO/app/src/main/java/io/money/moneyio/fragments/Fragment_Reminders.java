@@ -2,11 +2,6 @@ package io.money.moneyio.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -19,29 +14,23 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import io.money.moneyio.R;
-import io.money.moneyio.activities.HomeActivity;
 import io.money.moneyio.model.Alarm;
-import io.money.moneyio.model.database.DatabaseHelperFirebase;
 import io.money.moneyio.model.recyclers.AlarmsRecyclerViewAdapter;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.utilities.AlarmUtilities;

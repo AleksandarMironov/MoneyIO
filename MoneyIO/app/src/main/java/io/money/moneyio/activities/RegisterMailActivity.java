@@ -46,14 +46,14 @@ public class RegisterMailActivity extends AppCompatActivity {
 
     private void initialiseElements(){
         firebaseAuth = FirebaseAuth.getInstance();
-        email = (EditText)findViewById(R.id.registermail_email);
-        password = (EditText)findViewById(R.id.registermail_password);
-        password2 = (EditText)findViewById(R.id.registermail_repeatpassword);
-        firstName = (EditText)findViewById(R.id.registermail_firstname);
-        secondName = (EditText)findViewById(R.id.registermail_secondname);
-        register = (Button)findViewById(R.id.registermail_register_btn);
-        layout = (LinearLayout) findViewById(R.id.register_activity);
-        signIn = (TextView)findViewById(R.id.register_signin_text);
+        email = findViewById(R.id.registermail_email);
+        password = findViewById(R.id.registermail_password);
+        password2 = findViewById(R.id.registermail_repeatpassword);
+        firstName = findViewById(R.id.registermail_firstname);
+        secondName = findViewById(R.id.registermail_secondname);
+        register = findViewById(R.id.registermail_register_btn);
+        layout = findViewById(R.id.register_activity);
+        signIn = findViewById(R.id.register_signin_text);
     }
 
     private void removeActionBar() {
@@ -138,6 +138,7 @@ public class RegisterMailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void keyboardHideListener(){
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

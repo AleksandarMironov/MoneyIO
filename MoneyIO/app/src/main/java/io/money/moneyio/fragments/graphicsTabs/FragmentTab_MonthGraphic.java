@@ -38,7 +38,6 @@ public class FragmentTab_MonthGraphic extends Fragment {
     private PieChart pieChart;
     private BarChart chart;
     private HorizontalBarChart horizontalBarChart;
-    private List<MoneyFlow> moneyFlowData; ///filtered arr, equal to Utilities.data onCreate
     private Calendar calendar;
     private MonthYearPicker monthYearPicker;
     private Spinner spinner;
@@ -62,10 +61,9 @@ public class FragmentTab_MonthGraphic extends Fragment {
     //method used for initialisations
     private void initialiseElements() {
         fdb = DatabaseHelperFirebase.getInstance(view.getContext());
-        moneyFlowData = fdb.getData();
-        pieChart = (PieChart) view.findViewById(R.id.statistics_income_expense_year_pie);
-        chart = (BarChart) view.findViewById(R.id.statistics_income_expense_year_combined);
-        horizontalBarChart = (HorizontalBarChart)view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
+        pieChart = view.findViewById(R.id.statistics_income_expense_year_pie);
+        chart = view.findViewById(R.id.statistics_income_expense_year_combined);
+        horizontalBarChart = view.findViewById(R.id.statistics_income_expense_year_horizontal_bar_chart);
         monthYearPicker = new MonthYearPicker(view.getContext());
         calendar = Calendar.getInstance();
         monthYearPicker = new MonthYearPicker(view.getContext());
