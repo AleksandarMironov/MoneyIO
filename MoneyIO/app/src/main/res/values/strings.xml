@@ -4,9 +4,9 @@
     <!-- TODO: Remove or change this placeholder text -->
         
     <string-array name="history_spinner">
-        <item>My stats</item>
-        <item>Friends stats</item>
         <item>Combined</item>
+        <item>Friends stats</item>
+        <item>My stats</item>
     </string-array>
     
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -29,16 +29,6 @@
     <string name="month">month</string>
     <string name="year">year</string>
     <string name="insert_price">Insert price</string>
-    <string name="_1">1</string>
-    <string name="_2">2</string>
-    <string name="_3">3</string>
-    <string name="_4">4</string>
-    <string name="_5">5</string>
-    <string name="_6">6</string>
-    <string name="_7">7</string>
-    <string name="_8">8</string>
-    <string name="_9">9</string>
-    <string name="_0">0</string>
     <string name="dot">.</string>
     <string name="del">DEL</string>
     <string name="insert_comment">Insert comment</string>
@@ -75,4 +65,18 @@
     <string name="could_not_register_successfully">Could not register successfully</string>
     <string name="cancel_registration">Do you want to cancel registration?</string>
     <string name="cancel_registration_btn_text">Cancel registration</string>
+    <string name="add_friend">add friend</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or">OR</string>
+    <string name="sign_in_with">sign in with</string>
+    <string name="sign_up">Sign up</string>
+    <string name="do_you_have_an_account_sign_in">Do you have an account? Sign in</string>
+    <string name="friend_e_mail">Friend e-mail</string>
+    <string name="notify_me_about_friend_activity">Notify me about friend activity:   </string>
+    <string name="add_new_reminder">Add new reminder</string>
+    <string name="name">Name: </string>
+    <string name="amount">Amount</string>
+    <string name="no_added_types">*No added types.</string>
+    <string name="text">Text</string>
 </resources>

@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Add new reminder"
+            android:text="@string/add_new_reminder"
             android:textColor="@color/appSilver"
             android:textSize="25sp"
             android:textStyle="bold|italic"
@@ -96,8 +96,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Mesage"
+            android:text="@string/message"
             android:textColor="@color/appSilver"
+            android:layout_marginTop="5dp"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -124,7 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:radius="5dp"
-            android:text="@string/add" />
+            android:text="@string/add"
+            android:textSize="18sp"
+            android:background="#9E9E9E"/>
 
     </LinearLayout>
 

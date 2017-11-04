@@ -84,8 +84,8 @@
             android:textColor="#ffffff"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
-            android:textSize="17dp"
-            android:text="Don't have an account? Sign Up"/>
+            android:textSize="17sp"
+            android:text="@string/don_t_have_an_account_sign_up"/>
     </LinearLayout>
 
     <LinearLayout
@@ -111,9 +111,9 @@
                 android:fontFamily="serif"
                 android:textStyle="bold"
                 android:background="@drawable/log_reg_btn_design"
-                android:text="Sign in"
+                android:text="@string/sign_in"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -145,9 +145,9 @@
                 android:layout_weight="1"
 
                 android:gravity="center"
-                android:text="OR"
+                android:text="@string/or"
                 android:textColor="#000000"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -173,13 +173,13 @@
                 android:fontFamily="serif"
                 android:textStyle="bold"
                 android:background="@drawable/log_reg_btn_design"
-                android:text="sign in with"
+                android:text="@string/sign_in_with"
                 android:drawableRight="@mipmap/google_logo"
                 android:gravity="right|center_vertical"
                 android:drawablePadding="5dp"
                 android:paddingRight="65dp"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 

@@ -10,6 +10,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:padding="10dp"
-        android:text="Text semple"
+        android:text="@string/text"
         android:textColor="#ffffff" />
 </RelativeLayout>

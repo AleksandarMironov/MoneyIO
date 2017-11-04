@@ -61,11 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--<ProgressBar-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="30dp"-->
-            <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal" />-->
-
         </FrameLayout>
 
         <LinearLayout
@@ -94,7 +89,7 @@
                 android:paddingLeft="25dp"
                 android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
-                android:text="income" />
+                android:text="@string/income" />
 
             <View
                 android:layout_width="match_parent"
@@ -131,7 +126,7 @@
                 android:drawableStart="@drawable/statistics_ic"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
-                android:text="statistics"
+                android:text="@string/statistics"
                 android:gravity="start|center_vertical"
                 android:paddingLeft="25dp"
                 android:drawablePadding="5dp"/>
@@ -154,7 +149,7 @@
                 android:paddingLeft="25dp"
                 android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
-                android:text="my profile" />
+                android:text="@string/my_profile" />
 
             <View
                 android:layout_width="match_parent"
@@ -174,7 +169,7 @@
                 android:drawableStart="@drawable/alarm_icon"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
-                android:text="Reminders" />
+                android:text="@string/reminders" />
 
             <View
                 android:layout_width="match_parent"
@@ -194,7 +189,7 @@
                 android:paddingLeft="25dp"
                 android:drawablePadding="5dp"
                 android:background="@drawable/drawer_button_design"
-                android:text="add friend" />
+                android:text="@string/add_friend" />
 
 
             <View
@@ -225,7 +220,7 @@
                 android:drawableStart="@drawable/logout_icon"
                 android:fontFamily="sans-serif"
                 android:background="@drawable/drawer_button_design"
-                android:text="log out" />
+                android:text="@string/log_out" />
         </LinearLayout>
 
     </android.support.v4.widget.DrawerLayout>

@@ -52,7 +52,7 @@ public class DatabaseHelperFirebase {
 
         for (MoneyFlow f: data) {
             switch (spinnerPos) {
-                case 0:
+                case 2:
                         if(start <= f.getCalendar() && f.getCalendar() <= end && f.getUid().equals(uid)){
                         filteredArr.add(f);
                     }
@@ -62,7 +62,7 @@ public class DatabaseHelperFirebase {
                     filteredArr.add(f);
                     }
                     break;
-                case 2:
+                case 0:
                     if(start <= f.getCalendar() && f.getCalendar() <= end){
                     filteredArr.add(f);
                     }

@@ -125,15 +125,15 @@
                 android:id="@+id/registermail_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/first_name"
                 android:layout_marginTop="10dp"
-                android:maxLines="1"
-                android:textColor="#FFFFFF"
-                android:maxLength="30"
-                android:textCursorDrawable="@drawable/cursor_color"
+                android:background="#607D8B"
                 android:drawableLeft="@drawable/personal_info_icon"
                 android:drawableStart="@drawable/personal_info_icon"
-                android:background="#607D8B"/>
+                android:hint="@string/first_name"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:text="Sign up"
+            android:text="@string/sign_up"
             android:fontFamily="serif"
             android:background="@drawable/log_reg_btn_design"
             android:textStyle="bold"
@@ -200,7 +200,7 @@
             android:gravity="center"
             android:textSize="17dp"
             android:layout_marginBottom="5dp"
-            android:text="Do you have an account? Sign in"/>
+            android:text="@string/do_you_have_an_account_sign_in"/>
     </LinearLayout>
 
 </LinearLayout>
