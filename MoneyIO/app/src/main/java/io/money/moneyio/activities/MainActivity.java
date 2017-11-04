@@ -2,6 +2,7 @@ package io.money.moneyio.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private EditText email;
+    private ProgressDialog pd;
     private TextInputEditText psw;
     private TextView registerMail;
     private Button loginGoogle;
@@ -140,11 +142,15 @@ public class MainActivity extends AppCompatActivity {
                     psw.setError(getString(R.string.invalid_symbols));
                     return;
                 }
+                final ProgressDialog pdi = new ProgressDialog(MainActivity.this);
+                pdi.setMessage(getString(R.string.loading));
+                pdi.show();
 
                 firebaseAuth.signInWithEmailAndPassword(userMail, userPasw)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                pdi.dismiss();
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     startActivity(intent);
@@ -229,12 +235,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        pd = new ProgressDialog(MainActivity.this);
+        pd.setMessage(getString(R.string.loading));
+        pd.show();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        pd.dismiss();
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
