@@ -86,24 +86,11 @@ public class FragmentTab_DayGraphic extends Fragment {
     }
 
     public void setQuestionListeners(){
-        questionPie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
-            }
-        });
-
-        questionCombined.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
-            }
-        });
-
         questionHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
+                Utilities.displayPopupWindow(v, "Horizontal Bar Chart \n" +
+                        "Graphic that shows your daily expenses. By clicking on the calendar icon, you can check your statistics about the day you want to see.");
             }
         });
     }

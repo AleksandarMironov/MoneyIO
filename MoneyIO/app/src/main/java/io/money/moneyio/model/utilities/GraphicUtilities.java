@@ -49,9 +49,9 @@ public abstract class GraphicUtilities {
         }
 
         ovrall = inc - exp;
-        income.setText(Float.toString(inc));
-        expense.setText(Float.toString(exp));
-        overall.setText(Float.toString(ovrall));
+        income.setText(String.format("%.2f", inc));
+        expense.setText(String.format("%.2f", exp));
+        overall.setText(String.format("%.2f", ovrall));
     }
 
     //creating and setting data to the combined chart in the tab fragment FragmentTab_YearGraphic

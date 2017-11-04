@@ -87,21 +87,24 @@ public class FragmentTab_YearGraphic extends Fragment {
         questionPie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
+                Utilities.displayPopupWindow(v, "Pie Chart \n" +
+                        "Shows your yearly incomes and expenses.");
             }
         });
 
         questionCombined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
+                Utilities.displayPopupWindow(v, "Combined chart \n" +
+                        "Chart that shows your incomes and expenses during the months in the chosen year.");
             }
         });
 
         questionHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.displayPopupWindow(v, "");
+                Utilities.displayPopupWindow(v, "\"Horizontal Bar Chart \n" +
+                        "Graphic that shows your yearly expenses. By clicking on the calendar icon, you can check your statistics about the year you want to see.\"");
             }
         });
     }
