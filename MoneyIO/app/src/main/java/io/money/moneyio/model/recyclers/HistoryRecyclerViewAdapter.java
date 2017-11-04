@@ -62,7 +62,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
         holder.comment.setText(moneyFlow.getComment());
         holder.type.setText(moneyFlow.getType());
-        holder.price.setText(String.format("%.2f", moneyFlow.getSum()));
+        holder.price.setText(String.format("%.2f", moneyFlow.getSum()) + " lv");
         holder.date.setText(new SimpleDateFormat("d-MMM-yy' / 'HH:mm").format(new Date(moneyFlow.getCalendar())));
 
         if (moneyFlow.getExpense().equals("ex")) {

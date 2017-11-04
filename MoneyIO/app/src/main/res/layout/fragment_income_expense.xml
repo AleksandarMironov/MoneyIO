@@ -176,7 +176,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:maxLines="1"
-        android:maxLength="30"
+        android:maxLength="25"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

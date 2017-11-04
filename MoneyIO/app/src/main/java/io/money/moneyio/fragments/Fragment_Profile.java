@@ -207,15 +207,15 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void setTextValues() {
-        email.setText(email.getText().toString() + user.getEmail());
-        name.setText(name.getText().toString() + user.getDisplayName());
+        email.setText("Email " + user.getEmail());
+        name.setText("Hello, " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");
-            dayOfSalary.setText(R.string.pay_day );
+            dayOfSalary.setText(R.string.pay_day_ );
         } else {
             salary.setText("" + plannedFlow.getAmount());
-            dayOfSalary.setText(getString(R.string.PAY_DAY) + plannedFlow.getDate());
+            dayOfSalary.setText(getString(R.string.PAY_DAY) + " " + plannedFlow.getDate());
         }
     }
 
@@ -252,7 +252,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     plannedFlow = null;
                 }
                 salary.setText("");
-                dayOfSalary.setText(getString(R.string.pay_day));
+                dayOfSalary.setText(getString(R.string.pay_day_));
             }
         });
     }
@@ -266,7 +266,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         payDay = monthYearPicker.getSelectedDay();
-                        dayOfSalary.setText(getString(R.string.pay_day) + payDay);
+                        dayOfSalary.setText(getString(R.string.PAY_DAY) + " " + payDay);
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
                 };
