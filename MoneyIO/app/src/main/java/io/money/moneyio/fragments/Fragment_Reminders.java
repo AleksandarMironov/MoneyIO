@@ -58,7 +58,7 @@ public class Fragment_Reminders extends Fragment implements AlarmsRecyclerViewAd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_alarm, container, false);
+        view = inflater.inflate(R.layout.fragment_reminders, container, false);
         initialiseElements();
         startRecycler();
         onTimeEditClickListener();

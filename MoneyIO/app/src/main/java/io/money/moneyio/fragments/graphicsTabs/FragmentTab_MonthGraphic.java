@@ -198,7 +198,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         questionHorizontal.setVisibility(View.VISIBLE);
 
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr, plusMinus);
-        GraphicUtilities.pieChart(pieChart, filteredArr);
-        GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr);
+        GraphicUtilities.pieChart(pieChart, filteredArr, questionPie);
+        GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr, questionHorizontal);
     }
 }

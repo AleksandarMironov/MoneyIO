@@ -207,8 +207,8 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     }
 
     private void setTextValues() {
-        email.setText("Email: " + user.getEmail());
-        name.setText("Hello, " + user.getDisplayName());
+        email.setText(getString(R.string.email_two_dots) + " " + user.getEmail());
+        name.setText(getString(R.string.hello) + " " + user.getDisplayName());
         plannedFlow = db.getUserPlanned(user.getUid());
         if(plannedFlow == null){
             salary.setText("");
@@ -225,7 +225,6 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
             public void onClick(View v) {
                 if(Utilities.isNumber(salary.getText().toString().trim())){
                     if(plannedFlow != null){
-                        //TODO make edit method :D
                         db.deletePlanned(plannedFlow.getUserID(), plannedFlow.getDate(), plannedFlow.getType(), plannedFlow.getAmount());
                     }
                     boolean isAdded = db.addPlanned(user.getUid(), payDay, getString(R.string.Salary),Float.parseFloat(salary.getText().toString()));

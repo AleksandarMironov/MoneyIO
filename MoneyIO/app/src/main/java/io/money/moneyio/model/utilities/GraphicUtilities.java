@@ -60,7 +60,13 @@ public abstract class GraphicUtilities {
     }
 
     //creating and setting data to the combined chart in the tab fragment FragmentTab_YearGraphic
-    public static void combinedBarChart(BarChart chart, List<MoneyFlow> filteredArr){
+    public static void combinedBarChart(BarChart chart, List<MoneyFlow> filteredArr, ImageView questionImg){
+
+        if (filteredArr.size() == 0) {
+            chart.setVisibility(View.GONE);
+            questionImg.setVisibility(View.GONE);
+            return;
+        }
 
         chart.setDescription(null);
         chart.setPinchZoom(true);
@@ -127,7 +133,14 @@ public abstract class GraphicUtilities {
     }
 
     //setting the data to the pie chart used in the tab fragments in the folder graphicsTabs
-    public static void pieChart(PieChart pieChart, List<MoneyFlow> utilitiesArray){
+    public static void pieChart(PieChart pieChart, List<MoneyFlow> utilitiesArray, ImageView questionImg){
+
+        if (utilitiesArray.size() == 0) {
+            pieChart.setVisibility(View.GONE);
+            questionImg.setVisibility(View.GONE);
+            return;
+        }
+
         pieChart.setUsePercentValues(true);
         pieChart.setHoleColor(Color.YELLOW);
         pieChart.setHoleRadius(5);
@@ -180,7 +193,14 @@ public abstract class GraphicUtilities {
     }
 
     //setting data to the horizontal bar chart
-    public static void horizontalBarChart(HorizontalBarChart horizontalBarChart, List<MoneyFlow> filteredArr){
+    public static void horizontalBarChart(HorizontalBarChart horizontalBarChart, List<MoneyFlow> filteredArr, ImageView questionImg){
+
+        if (filteredArr.size() == 0) {
+            horizontalBarChart.setVisibility(View.GONE);
+            questionImg.setVisibility(View.GONE);
+            return;
+        }
+
         //map used to filter the data
         TreeMap<String, Float> structuredData = new TreeMap<>(new Comparator<String>() {
             @Override
