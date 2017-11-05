@@ -114,6 +114,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 calendar.set(year, month, 1, 0, 0, 0);
+                editDate.setText(year + " / " + (month+1));
                 start = calendar.getTimeInMillis();
 
                 if(month == 12){
@@ -159,9 +160,11 @@ public class FragmentTab_MonthGraphic extends Fragment {
                         end = calendar.getTimeInMillis();
 
                         filteredArr = fdb.filterData(start, end, spinnerPosition);
-                        editDate.setText("" + monthYearPicker.getSelectedYear() + " / " + (monthYearPicker.getSelectedMonth()+1));
+                        year = monthYearPicker.getSelectedYear();
+                        month = monthYearPicker.getSelectedMonth();
                         calendar = Calendar.getInstance();
                         monthYearPicker = new MonthYearPicker(view.getContext());
+                        editDate.setText(year + " / " + (month+1));
                         incomeExpenseDay();
                     }
                 };

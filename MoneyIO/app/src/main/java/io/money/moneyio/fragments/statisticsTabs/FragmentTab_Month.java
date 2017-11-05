@@ -72,6 +72,7 @@ public class FragmentTab_Month extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 calendar.set(year, month, 1, 0,0,0);
+                editDate.setText(year + " / " + (month+1));
                 start = calendar.getTimeInMillis();
 
                 if(month == 12){
@@ -84,6 +85,7 @@ public class FragmentTab_Month extends Fragment {
 
                 filteredArr = DatabaseHelperFirebase.filterData(start, end, position);
                 spinnerPosition = position;
+
                 startRecycler(filteredArr);
             }
 
@@ -103,6 +105,7 @@ public class FragmentTab_Month extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         year = monthYearPicker.getSelectedYear();
                         month = monthYearPicker.getSelectedMonth();
+                        editDate.setText(year + " / " + (month+1));
                         calendar.set(year, month, 1, 0, 0, 0);
 
                         start = calendar.getTimeInMillis();
@@ -119,7 +122,6 @@ public class FragmentTab_Month extends Fragment {
 
                         filteredArr = fdb.filterData(start, end, spinnerPosition);
                         startRecycler(filteredArr);
-                        editDate.setText(year + " / " + (month+1));
                         calendar = Calendar.getInstance();
                         monthYearPicker = new MonthYearPicker(view.getContext());
                     }
