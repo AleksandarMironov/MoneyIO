@@ -33,16 +33,21 @@
             android:screenOrientation="sensorPortrait"/>
 
         <receiver android:name=".model.receivers.AlarmReceiver"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="true" />
 
-        <receiver android:name=".model.receivers.BootCompletedReceiver">
+        <receiver android:name=".model.receivers.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".model.receivers.OnDateChangeReceiver">
+        <receiver android:name=".model.receivers.OnDateChangeReceiver"
+            android:enabled="true"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <category android:name="android.intent.category.DEFAULT" />

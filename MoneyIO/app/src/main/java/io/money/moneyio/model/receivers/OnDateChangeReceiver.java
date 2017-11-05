@@ -3,6 +3,7 @@ package io.money.moneyio.model.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,6 +22,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         //sets database to be persistent
         if(!Utilities.isFirebasePersistence()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -75,7 +77,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                 fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }
         }
-
+        
         //resets alarms, if it is first day of month
         if(date == 1){
             List<Alarm> alarms = db.getAllAlarms();
