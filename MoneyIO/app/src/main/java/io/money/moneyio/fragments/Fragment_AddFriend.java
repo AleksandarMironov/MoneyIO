@@ -68,6 +68,10 @@ public class Fragment_AddFriend extends Fragment {
                    return;
                }
 
+               if (mail.equals((user.getCurrentUser().getEmail()))) {
+                   Toast.makeText(view.getContext(), "You cannot add youself as friend.", Toast.LENGTH_SHORT).show();
+                   return;
+               }
                SharedPreferences.Editor editor = preferences.edit();
                editor.putString(user.getCurrentUser().getEmail(), mail);
                editor.apply();

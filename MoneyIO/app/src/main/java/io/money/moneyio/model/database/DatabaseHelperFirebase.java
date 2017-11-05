@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -145,11 +146,15 @@ public class DatabaseHelperFirebase {
     }
 
     public void addFriend(String friendMail) {
-        String mail = Utilities.filterMail(getEmail());
-        String filteredFriendMail = Utilities.filterMail(friendMail);
-        AddFriend friend = new AddFriend(getUid(), mail);
-        this.base.child("friends").child(filteredFriendMail).setValue(friend);
-        checkForFriend();
+        if (friendMail.equals(Utilities.filterMail(getEmail()))) {
+//            Toast.makeText(context, "You cannot add youself as friend.", Toast.LENGTH_SHORT).show();
+        } else {
+            String mail = Utilities.filterMail(getEmail());
+            String filteredFriendMail = Utilities.filterMail(friendMail);
+            AddFriend friend = new AddFriend(getUid(), mail);
+            this.base.child("friends").child(filteredFriendMail).setValue(friend);
+            checkForFriend();
+        }
     }
 
     public void deleteFriend(String friendMail) {
