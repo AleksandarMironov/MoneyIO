@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
         showCaseView();
+        clickToolbarHideDrawerListener();
     }
 
     private void showCaseView() {
@@ -76,7 +77,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         sequence.start();
     }
 
-    private  void setCurrentFragment(String s) {
+    //hide the menu if the user clicks on the toolbar text
+    private void clickToolbarHideDrawerListener() {
+        currentFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (drawerLayout.isDrawerOpen(Gravity.START)) {
+                    drawerLayout.closeDrawer(Gravity.START);
+                }
+            }
+        });
+    }
+
+    private void setCurrentFragment(String s) {
         currentFragment.setText(s);
     }
 
