@@ -2,8 +2,10 @@ package io.money.moneyio.model.utilities;
 
 
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -235,16 +237,22 @@ public abstract class GraphicUtilities {
             values.add(entry.getValue());
         }
 
+        int pix = 0;
         for (int z = 0; z < values.size(); z++) {
             horizontalBarChartArr.add(new BarEntry(values.get(z), z));
-            horizontalBarChart.getLayoutParams().height += 50;
+            pix+=50;
         }
+
+        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pix, horizontalBarChart.getContext().getResources().getDisplayMetrics());
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) horizontalBarChart.getLayoutParams();
+        params.height = (int) pixels;
+        horizontalBarChart.setLayoutParams(params);
 
         //set the settings of the horizontal bar char
         BarDataSet bardataset = new BarDataSet(horizontalBarChartArr, "Expenses");
         bardataset.setColor(Color.RED);
         BarData data = new BarData(names, bardataset);
-        data.setValueTextSize(10);
+        data.setValueTextSize(12);
         horizontalBarChart.setDoubleTapToZoomEnabled(false);
         horizontalBarChart.setDescription("");
         horizontalBarChart.invalidate();
