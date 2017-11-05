@@ -77,7 +77,7 @@ public class OnDateChangeReceiver extends BroadcastReceiver {
                 fdb.addData(plannedFlow.getUserID(), new MoneyFlow(plannedFlow.getUserID(), "in", plannedFlow.getType(), "Planned income", plannedFlow.getAmount()));
             }
         }
-        
+
         //resets alarms, if it is first day of month
         if(date == 1){
             List<Alarm> alarms = db.getAllAlarms();
