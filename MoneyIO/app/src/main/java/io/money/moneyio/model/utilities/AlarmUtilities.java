@@ -18,8 +18,6 @@ import io.money.moneyio.model.receivers.AlarmReceiver;
 
 public class AlarmUtilities {
 
-    private static int reminderID = 0; //id generator for reminders // TODO add index to database
-
     //fires notification
     public static void notifyMe (Context context, String message){
 
@@ -91,7 +89,7 @@ public class AlarmUtilities {
             AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             Intent myIntent = new Intent(context, AlarmReceiver.class);
             myIntent.putExtra("message", alarm.getMassage());
-            PendingIntent pi = PendingIntent.getBroadcast(context, reminderID++, myIntent, 0);
+            PendingIntent pi = PendingIntent.getBroadcast(context, Utilities.gnerateID(), myIntent, 0);
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
         }
     }
