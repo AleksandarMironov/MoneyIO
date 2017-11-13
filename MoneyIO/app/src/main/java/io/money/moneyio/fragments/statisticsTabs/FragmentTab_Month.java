@@ -158,6 +158,8 @@ public class FragmentTab_Month extends Fragment {
             activityText.setVisibility(View.VISIBLE);
             return;
         }
+        recyclerView.setVisibility(View.VISIBLE);
+        activityText.setVisibility(View.GONE);
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);

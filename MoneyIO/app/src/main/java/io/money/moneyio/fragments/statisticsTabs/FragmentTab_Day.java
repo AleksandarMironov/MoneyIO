@@ -73,7 +73,6 @@ public class FragmentTab_Day extends Fragment {
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0,0,0);
                 start = calendar.getTimeInMillis();
                 end = start + 1000*60*60*24;
-                startRecycler(filteredArr);
                 calendar = Calendar.getInstance();
                 filteredArr = DatabaseHelperFirebase.filterData(start, end, position);
                 spinnerPosition = position;
@@ -128,6 +127,8 @@ public class FragmentTab_Day extends Fragment {
             activityText.setVisibility(View.VISIBLE);
             return;
         }
+        recyclerView.setVisibility(View.VISIBLE);
+        activityText.setVisibility(View.GONE);
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);

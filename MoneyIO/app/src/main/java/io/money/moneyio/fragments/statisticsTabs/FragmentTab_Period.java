@@ -29,7 +29,7 @@ public class FragmentTab_Period extends Fragment {
 
     private View view;
     private EditText calendarFrom, calendarTo;
-    private TextView from, to;
+    private TextView from, to, activityText;
     private DatabaseHelperFirebase fdb;
     private RecyclerView recyclerView;
     private Calendar calendar;
@@ -64,6 +64,7 @@ public class FragmentTab_Period extends Fragment {
                 (calendar.get(Calendar.MONTH)+1) + " / " +  calendar.get(Calendar.DAY_OF_MONTH));
         from = view.findViewById(R.id.history_text_from);
         to = view.findViewById(R.id.history_text_to);
+        activityText = view.findViewById(R.id.history_activity_text);
         setVisibility();
     }
 
@@ -152,6 +153,13 @@ public class FragmentTab_Period extends Fragment {
     }
 
     private void startRecycler(List<MoneyFlow> data) {
+        if (data.isEmpty()) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            activityText.setVisibility(View.VISIBLE);
+            return;
+        }
+        recyclerView.setVisibility(View.VISIBLE);
+        activityText.setVisibility(View.GONE);
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
