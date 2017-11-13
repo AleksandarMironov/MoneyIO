@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +38,7 @@ public class FragmentTab_Year extends Fragment {
     private long start, end;
     private int spinnerPosition;
     private int year;
+    private TextView activityText;
 
     @Nullable
     @Override
@@ -60,6 +62,7 @@ public class FragmentTab_Year extends Fragment {
         spinner = view.findViewById(R.id.history_spinner);
         spinnerPosition = 0;
         year = calendar.get(Calendar.YEAR);
+        activityText = view.findViewById(R.id.history_activity_text);
     }
 
     private void setSpinnerSettings() {
@@ -139,6 +142,11 @@ public class FragmentTab_Year extends Fragment {
     }
 
     private void startRecycler(List<MoneyFlow> data) {
+        if (data.isEmpty()) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            activityText.setVisibility(View.VISIBLE);
+            return;
+        }
         HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(view.getContext(), data);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
