@@ -44,7 +44,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
     private long start, end;
     private int spinnerPosition;
     private int year, month;
-    private TextView income, expense, overall;
+    private TextView income, expense, overall, activityText;
     private ImageView questionPie, questionCombined, questionHorizontal, plusMinus;
 
     @Nullable
@@ -81,6 +81,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
         questionCombined = view.findViewById(R.id.statistics_question_combined);
         questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
         plusMinus = view.findViewById(R.id.ststistics_plusminus);
+        activityText = view.findViewById(R.id.graphics_activity_text);
     }
 
     public void setQuestionListeners(){
@@ -203,5 +204,9 @@ public class FragmentTab_MonthGraphic extends Fragment {
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr, plusMinus);
         GraphicUtilities.pieChart(pieChart, filteredArr, questionPie);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr, questionHorizontal);
+
+        if (filteredArr.isEmpty()) {
+            activityText.setVisibility(View.VISIBLE);
+        }
     }
 }

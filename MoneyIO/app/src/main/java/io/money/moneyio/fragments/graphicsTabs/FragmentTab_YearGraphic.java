@@ -44,7 +44,7 @@ public class FragmentTab_YearGraphic extends Fragment {
     private long start, end;
     private int spinnerPosition;
     private int year;
-    private TextView income, expense, overall;
+    private TextView income, expense, overall, activityText;
     private ImageView questionPie, questionCombined, questionHorizontal, plusMinus;
 
     @Nullable
@@ -80,6 +80,7 @@ public class FragmentTab_YearGraphic extends Fragment {
         questionCombined = view.findViewById(R.id.statistics_question_combined);
         questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
         plusMinus = view.findViewById(R.id.ststistics_plusminus);
+        activityText = view.findViewById(R.id.graphics_activity_text);
     }
 
     public void setQuestionListeners(){
@@ -203,5 +204,8 @@ public class FragmentTab_YearGraphic extends Fragment {
         GraphicUtilities.combinedBarChart(chart, filteredArr, questionHorizontal);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr, questionCombined);
 
+        if (filteredArr.isEmpty()) {
+            activityText.setVisibility(View.VISIBLE);
+        }
     }
 }
