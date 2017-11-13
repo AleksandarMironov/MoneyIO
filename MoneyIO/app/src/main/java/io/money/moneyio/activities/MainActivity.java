@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private EditText email;
-    private ProgressDialog pd;
+    private ProgressBar progressBar;
     private TextInputEditText psw;
     private TextView registerMail;
     private Button loginGoogle;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         googleLoginBtnListener();
         keyboardHideListener();
         loginBtnListener();
+        progressBar = findViewById(R.id.progressbar_main);
     }
 
     //keep data sync offline
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginBtnListener() {
-        Button login = (Button) findViewById(R.id.main_loginmail_btn);
+        Button login = findViewById(R.id.main_loginmail_btn);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,20 +145,19 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                final ProgressDialog pdi = new ProgressDialog(MainActivity.this);
-                pdi.setMessage(getString(R.string.loading));
-                pdi.show();
+                progressBar.setVisibility(View.VISIBLE);
 
                 firebaseAuth.signInWithEmailAndPassword(userMail, userPasw)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                pdi.dismiss();
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     startActivity(intent);
+                                    progressBar.setVisibility(View.GONE);
                                 } else {
                                     Toast.makeText(MainActivity.this, R.string.invalid_user_or_password, Toast.LENGTH_LONG).show();
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -234,16 +235,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        pd = new ProgressDialog(MainActivity.this);
-        pd.setMessage(getString(R.string.loading));
-        pd.show();
+        progressBar.setVisibility(View.VISIBLE);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        pd.dismiss();
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -254,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, R.string.sorry_internet_problem_please_try_again, Toast.LENGTH_SHORT).show();
                 Log.e(getString(R.string.money_io), result.getStatus().toString());
+                progressBar.setVisibility(View.GONE);
             }
         }
     }
