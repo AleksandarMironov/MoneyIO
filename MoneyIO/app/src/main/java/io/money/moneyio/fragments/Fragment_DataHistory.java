@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +35,15 @@ public class Fragment_DataHistory extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.DAY));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.MONTH));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.YEAR));
+        tabLayout.addTab(tabLayout.newTab().setText("PERIOD"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.viewPager);
         final PageAdapter adapter = new PageAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());

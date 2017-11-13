@@ -32,14 +32,15 @@ public class Fragment_Statistics extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.DAY)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.MONTH)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.YEAR)));
+        tabLayout.addTab(tabLayout.newTab().setText("PERIOD"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.viewPagerGraphics);
         final PageAdapterGraphic adapter = new PageAdapterGraphic(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());

@@ -8,11 +8,43 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/graphics_text_from"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="FROM"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"/>
+
         <EditText
             android:id="@+id/graphics_date_edit"
             android:focusable="false"
             android:layout_gravity="center"
             android:gravity="center"
+            android:drawableLeft="@drawable/calendar_icon"
+            android:drawableStart="@drawable/calendar_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"/>
+
+        <TextView
+            android:id="@+id/graphics_text_to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="TO"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/graphics_date_edit1"
+            android:focusable="false"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
             android:drawableLeft="@drawable/calendar_icon"
             android:drawableStart="@drawable/calendar_icon"
             android:layout_width="0dp"
