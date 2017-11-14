@@ -1,11 +1,17 @@
 package io.money.moneyio.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +37,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import io.money.moneyio.R;
+import io.money.moneyio.activities.HomeActivity;
+import io.money.moneyio.activities.MainActivity;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.recyclers.ShowCustomTypesRecyclerViewAdapter;
 import io.money.moneyio.model.utilities.MonthYearPicker;
@@ -54,6 +66,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
     private int payDay;
     private ImageView okImg, deleteImg, saveType, imgEye, imgQuestionSalary, imgQuestionType;
     private LinearLayout layout;
+    private Spinner changeLanguage;
 
     @Nullable
     @Override
@@ -70,6 +83,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         seOnImgEyeClickListener();
         seOnImgQuestionTypeClickListener();
         seOnImgQuestionSalaryClickListener();
+        setSpinnerChangeLanguage();
         return view;
     }
 
@@ -161,7 +175,50 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         imgEye = view.findViewById(R.id.profile_eye);
         imgQuestionType = view.findViewById(R.id.profile_add_type_question);
         imgQuestionSalary = view.findViewById(R.id.profile_salary_question);
+        changeLanguage = view.findViewById(R.id.change_language_spinner);
         setTextValues();
+    }
+
+    private void setSpinnerChangeLanguage() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.languages, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        changeLanguage.setAdapter(adapter);
+
+        changeLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.putExtra("changeLanguage", "yes");
+                if (i == 1) {
+                    updateResources(view.getContext(), "bg");
+                    getActivity().startActivity(intent);
+                    getActivity().finish();
+                } else if (i == 2) {
+                    updateResources(view.getContext(), "eng");
+                    getActivity().startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private boolean updateResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources resources = context.getResources();
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+        return true;
     }
 
 

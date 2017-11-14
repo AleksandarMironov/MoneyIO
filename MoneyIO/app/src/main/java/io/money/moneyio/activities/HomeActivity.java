@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         logOutDrawerMenuBtnListener();
         keyboardHideListener();
         showCaseView();
+        refreshLanguage();
         clickToolbarHideDrawerListener();
     }
 
@@ -155,6 +156,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 alert.show();
             }
         });
+    }
+
+    private void refreshLanguage() {
+        if (getIntent().hasExtra("changeLanguage")) {
+            String change = getIntent().getExtras().getString("changeLanguage");
+            if (change != null && !change.isEmpty() && change.equals("yes")) {
+                loadFragment(new Fragment_Profile());
+            }
+        }
     }
 
     public void keyboardHideListener(){

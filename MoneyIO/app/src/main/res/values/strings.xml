@@ -7,6 +7,12 @@
         <item>@string/my_stats_spinner</item>
     </string-array>
 
+    <string-array name="languages">
+        <item>Select Language</item>
+        <item>Bulgarian</item>
+        <item>English</item>
+    </string-array>
+
     <string name="combined">Combined</string>
     <string name="friends_stats">Friends stats</string>
     <string name="my_stats_spinner">My stats</string>
