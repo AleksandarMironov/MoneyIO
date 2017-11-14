@@ -52,6 +52,7 @@ public class FragmentTab_YearGraphic extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_graphics, container, false);
         initialiseElements();
+        setVisibility();
         setFilterClickListener();
         filterDataOnStart();
         setSpinnerSettings();
@@ -81,6 +82,15 @@ public class FragmentTab_YearGraphic extends Fragment {
         questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
         plusMinus = view.findViewById(R.id.ststistics_plusminus);
         activityText = view.findViewById(R.id.graphics_activity_text);
+    }
+
+    private void setVisibility(){
+        chart.setVisibility(View.VISIBLE);
+        questionCombined.setVisibility(View.VISIBLE);
+        pieChart.setVisibility(View.VISIBLE);
+        questionPie.setVisibility(View.VISIBLE);
+        horizontalBarChart.setVisibility(View.VISIBLE);
+        questionHorizontal.setVisibility(View.VISIBLE);
     }
 
     public void setQuestionListeners(){
@@ -191,14 +201,6 @@ public class FragmentTab_YearGraphic extends Fragment {
 
     //start the charts and set them visible/gone
     private void incomeExpenseYear() {
-
-        chart.setVisibility(View.VISIBLE);
-        questionCombined.setVisibility(View.VISIBLE);
-        pieChart.setVisibility(View.VISIBLE);
-        questionPie.setVisibility(View.VISIBLE);
-        horizontalBarChart.setVisibility(View.VISIBLE);
-        questionHorizontal.setVisibility(View.VISIBLE);
-
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr, plusMinus);
         GraphicUtilities.pieChart(pieChart, filteredArr, questionPie);
         GraphicUtilities.combinedBarChart(chart, filteredArr, questionHorizontal);
@@ -206,6 +208,8 @@ public class FragmentTab_YearGraphic extends Fragment {
 
         if (filteredArr.isEmpty()) {
             activityText.setVisibility(View.VISIBLE);
+        } else {
+            activityText.setVisibility(View.GONE);
         }
     }
 }

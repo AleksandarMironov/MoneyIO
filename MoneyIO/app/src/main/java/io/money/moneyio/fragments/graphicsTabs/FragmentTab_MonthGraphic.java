@@ -52,6 +52,7 @@ public class FragmentTab_MonthGraphic extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_graphics, container, false);
         initialiseElements();
+        setVisibility();
         filterDataOnStart();
         setFilterClickListener();
         setSpinnerSettings();
@@ -82,6 +83,15 @@ public class FragmentTab_MonthGraphic extends Fragment {
         questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
         plusMinus = view.findViewById(R.id.ststistics_plusminus);
         activityText = view.findViewById(R.id.graphics_activity_text);
+    }
+
+    private void setVisibility(){
+        chart.setVisibility(View.GONE);
+        questionCombined.setVisibility(View.GONE);
+        pieChart.setVisibility(View.VISIBLE);
+        questionPie.setVisibility(View.VISIBLE);
+        horizontalBarChart.setVisibility(View.VISIBLE);
+        questionHorizontal.setVisibility(View.VISIBLE);
     }
 
     public void setQuestionListeners(){
@@ -193,20 +203,14 @@ public class FragmentTab_MonthGraphic extends Fragment {
     }
     //start the charts and set them visible/gone
     private void incomeExpenseDay() {
-
-        chart.setVisibility(View.GONE);
-        questionCombined.setVisibility(View.GONE);
-        pieChart.setVisibility(View.VISIBLE);
-        questionPie.setVisibility(View.VISIBLE);
-        horizontalBarChart.setVisibility(View.VISIBLE);
-        questionHorizontal.setVisibility(View.VISIBLE);
-
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr, plusMinus);
         GraphicUtilities.pieChart(pieChart, filteredArr, questionPie);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr, questionHorizontal);
 
         if (filteredArr.isEmpty()) {
             activityText.setVisibility(View.VISIBLE);
+        } else {
+            activityText.setVisibility(View.GONE);
         }
     }
 }

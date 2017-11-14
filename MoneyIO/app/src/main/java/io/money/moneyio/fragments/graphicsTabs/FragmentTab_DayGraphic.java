@@ -53,6 +53,7 @@ public class FragmentTab_DayGraphic extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tab_fragment_graphics, container, false);
         initialiseElements();
+        settVisibility();
         setFilterClickListener();
         filterDataOnStart();
         setSpinnerSettings();
@@ -81,6 +82,15 @@ public class FragmentTab_DayGraphic extends Fragment {
         questionHorizontal = view.findViewById(R.id.statistics_question_horizontal_bar);
         plusMinus = view.findViewById(R.id.ststistics_plusminus);
         activityText = view.findViewById(R.id.graphics_activity_text);
+    }
+
+    private void settVisibility(){
+        chart.setVisibility(View.GONE);
+        questionCombined.setVisibility(View.GONE);
+        pieChart.setVisibility(View.GONE);
+        questionPie.setVisibility(View.GONE);
+        horizontalBarChart.setVisibility(View.VISIBLE);
+        questionHorizontal.setVisibility(View.VISIBLE);
     }
 
     public void setQuestionListeners(){
@@ -155,18 +165,13 @@ public class FragmentTab_DayGraphic extends Fragment {
 
     //start the charts and set them visible/gone
     private void incomeExpenseDay() {
-        chart.setVisibility(View.GONE);
-        questionCombined.setVisibility(View.GONE);
-        pieChart.setVisibility(View.GONE);
-        questionPie.setVisibility(View.GONE);
-        horizontalBarChart.setVisibility(View.VISIBLE);
-        questionHorizontal.setVisibility(View.VISIBLE);
-
         GraphicUtilities.dataFilerForCurrentTab(income, expense, overall, filteredArr, plusMinus);
         GraphicUtilities.horizontalBarChart(horizontalBarChart, filteredArr, questionHorizontal);
 
         if (filteredArr.isEmpty()) {
             activityText.setVisibility(View.VISIBLE);
+        } else {
+            activityText.setVisibility(View.GONE);
         }
     }
 }
