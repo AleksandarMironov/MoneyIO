@@ -214,7 +214,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         Resources resources = context.getResources();
 
         Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
+        configuration.setLocale(locale);
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 
