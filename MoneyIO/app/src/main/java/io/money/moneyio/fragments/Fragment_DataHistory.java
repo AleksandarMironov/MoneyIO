@@ -35,7 +35,7 @@ public class Fragment_DataHistory extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.DAY));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.MONTH));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.YEAR));
-        tabLayout.addTab(tabLayout.newTab().setText("PERIOD"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.PERIOD));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.viewPager);

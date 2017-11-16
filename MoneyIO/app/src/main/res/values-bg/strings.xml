@@ -122,4 +122,8 @@
     <string name="combined">Общи</string>
     <string name="friends_stats">Приятел</string>
     <string name="my_stats_spinner">Моите</string>
+    <string name="you_have_no_activity_for_this_period">Вие не сте били активен за този период!</string>
+    <string name="to">До</string>
+    <string name="from">От</string>
+    <string name="PERIOD">ПЕРИОД</string>
 </resources>

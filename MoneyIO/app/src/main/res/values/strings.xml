@@ -136,4 +136,8 @@
     <string name="remember">Remember</string>
     <string name="please_select">Please select</string>
     <string name="leva">lv</string>
+    <string name="to">TO</string>
+    <string name="from">FROM</string>
+    <string name="you_have_no_activity_for_this_period">You have no activity for this period.</string>
+    <string name="PERIOD">PERIOD</string>
 </resources>
