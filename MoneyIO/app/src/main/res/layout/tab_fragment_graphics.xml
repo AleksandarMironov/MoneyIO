@@ -15,7 +15,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:visibility="gone"
-            android:text="FROM"
+            android:text="@string/from"
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="center"
             android:textColor="#000000"/>
@@ -50,7 +50,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:visibility="gone"
-            android:text="TO"
+            android:text="@string/to"
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="center"
             android:textColor="#000000"/>
@@ -162,10 +162,10 @@
                     android:id="@+id/graphics_activity_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="You have no activity for this period."
+                    android:text="@string/you_have_no_activity_for_this_period"
                     android:textSize="20sp"
                     android:visibility="gone"
-                    android:textColor="#000000"
+                    android:textColor="@color/appSilver"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_gravity="center"/>
             </LinearLayout>

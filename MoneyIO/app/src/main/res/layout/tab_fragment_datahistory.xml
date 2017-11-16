@@ -87,7 +87,7 @@
             android:text="@string/you_have_no_activity_for_this_period"
             android:textSize="20sp"
             android:visibility="gone"
-            android:textColor="#000000"
+            android:textColor="@color/appSilver"
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="center"/>
     </LinearLayout>
