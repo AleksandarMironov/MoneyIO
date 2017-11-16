@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +41,6 @@ import java.util.Locale;
 
 import io.money.moneyio.R;
 import io.money.moneyio.activities.HomeActivity;
-import io.money.moneyio.activities.MainActivity;
 import io.money.moneyio.model.database.DatabaseHelperSQLite;
 import io.money.moneyio.model.recyclers.ShowCustomTypesRecyclerViewAdapter;
 import io.money.moneyio.model.utilities.MonthYearPicker;
@@ -192,10 +191,12 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
                 if (i == 1) {
                     updateResources(view.getContext(), "bg");
                     getActivity().startActivity(intent);
+                    changeLanguageInSharedPrefs("bg");
                     getActivity().finish();
                 } else if (i == 2) {
                     updateResources(view.getContext(), "eng");
                     getActivity().startActivity(intent);
+                    changeLanguageInSharedPrefs("eng");
                     getActivity().finish();
                 }
             }
@@ -219,6 +220,13 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 
         return true;
+    }
+
+    private void changeLanguageInSharedPrefs(String newLanguadge){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("language", newLanguadge);
+        editor.apply();
     }
 
 

@@ -5,7 +5,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -38,6 +42,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Locale;
+
 import io.money.moneyio.R;
 import io.money.moneyio.model.utilities.Utilities;
 
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        changeLanguage();
         setPersistence();
         removeActionBar();
         verifyPermissions(this);
@@ -81,6 +88,23 @@ public class MainActivity extends AppCompatActivity {
         if(!Utilities.isFirebasePersistence()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             Utilities.setIsFirebasePersistence(true);
+        }
+    }
+
+    private void changeLanguage (){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String language = preferences.getString("language", "nolanguage");
+
+        if (!language.equalsIgnoreCase("nolanguage")) {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+
+            Resources resources = getResources();
+
+            Configuration configuration = resources.getConfiguration();
+            configuration.setLocale(locale);
+
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         }
     }
 
