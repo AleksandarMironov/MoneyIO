@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (getIntent().hasExtra("changeLanguage")) {
             String change = getIntent().getExtras().getString("changeLanguage");
             if (change != null && !change.isEmpty() && change.equals("yes")) {
-                loadFragment(new Fragment_Profile());
+                drawerMenuButtonsAction(getString(R.string.my_profile), new Fragment_Profile());
             }
         }
     }
