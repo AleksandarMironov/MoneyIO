@@ -23,7 +23,7 @@ import io.money.moneyio.R;
 import io.money.moneyio.activities.HomeActivity;
 
 
-public class Utilities {
+public final class Utilities {
     private static boolean isFirebasePersistence = false;
     private static boolean hasFriend = false;
     private static int idGeneratorNotifications = 0;
@@ -46,8 +46,8 @@ public class Utilities {
         return isFirebasePersistence;
     }
 
-    public static void setIsFirebasePersistence(boolean isFirebasePersistence) {
-        Utilities.isFirebasePersistence = isFirebasePersistence;
+    public static void setIsFirebasePersistence(boolean isFirebasePersist) {
+        isFirebasePersistence = isFirebasePersist;
     }
 
     //checks for forbidden symbols

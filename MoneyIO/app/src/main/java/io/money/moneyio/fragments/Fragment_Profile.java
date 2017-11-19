@@ -218,7 +218,7 @@ public class Fragment_Profile extends Fragment implements  ShowCustomTypesRecycl
         configuration.setLocale(locale);
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
+        
         return true;
     }
 
