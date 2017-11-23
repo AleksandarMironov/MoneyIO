@@ -119,7 +119,7 @@ public class DatabaseHelperFirebase {
         String userMail = Utilities.filterMail(getEmail());
 
         final String addedFr = addedFriend;
-        base.child("friends").child(userMail).addValueEventListener(new ValueEventListener() {
+        base.child("friends").child(addedFriend + userMail).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AddFriend t = dataSnapshot.getValue(AddFriend.class);
@@ -147,12 +147,12 @@ public class DatabaseHelperFirebase {
 
     public void addFriend(String friendMail) {
         if (friendMail.equals(Utilities.filterMail(getEmail()))) {
-//            Toast.makeText(context, "You cannot add youself as friend.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "You cannot add youself as friend.", Toast.LENGTH_SHORT).show();
         } else {
             String mail = Utilities.filterMail(getEmail());
             String filteredFriendMail = Utilities.filterMail(friendMail);
             AddFriend friend = new AddFriend(getUid(), mail);
-            this.base.child("friends").child(filteredFriendMail).setValue(friend);
+            this.base.child("friends").child(mail + filteredFriendMail).setValue(friend);
             checkForFriend();
         }
     }
@@ -160,7 +160,7 @@ public class DatabaseHelperFirebase {
     public void deleteFriend(String friendMail) {
         base.child(usersIE).child(Utilities.filterMail(friendMail)).removeEventListener(friendEventListener);
         AddFriend friend = new AddFriend("NOFRIEND", "NOFRIEND");
-        this.base.child("friends").child(Utilities.filterMail(friendMail)).setValue(friend);
+        this.base.child("friends").child(Utilities.filterMail(getEmail()) + Utilities.filterMail(friendMail)).setValue(friend);
         base.child(friendUid).removeEventListener(friendEventListener);
         friendUid = " ";
         checkForFriend();
