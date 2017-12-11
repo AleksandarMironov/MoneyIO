@@ -1,4 +1,6 @@
 MoneyIO
+Check the latest version now on Google Play Store: 
+https://play.google.com/store/apps/details?id=io.money.moneyie&rdid=io.money.moneyie#details-reviews
 ===================
 IT Talents, Season 8, Android final project.
 ----------
